@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +31,8 @@ public class DefaultController {
 
     @GetMapping("/user/{id}")
     @Nullable
-    public List<User> getUser(@PathVariable("id") Long id){
+    public User getUser(@PathVariable("id") Long id){
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.map(Collections::singletonList).orElse(null);
+        return optionalUser.orElse(null);
     }
 }
