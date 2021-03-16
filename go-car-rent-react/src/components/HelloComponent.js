@@ -6,7 +6,7 @@ class HelloComponent extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            users: []
+            user: []
         }
     }
 
@@ -14,7 +14,7 @@ class HelloComponent extends React.Component {
 
         DefaultService.getHelloMessage().then((response) => {
             this.setState({
-                users: response.data
+                user: response.data
             })
         });
     }
@@ -22,14 +22,7 @@ class HelloComponent extends React.Component {
     render (){
         return(
             <div>
-                
-                Hello 
-                {
-                    this.state.users.map(
-                        user => user.email
-                    )
-                } 
-
+                {`Hello ${this.state.user.email}`}
             </div>
         )
     }
