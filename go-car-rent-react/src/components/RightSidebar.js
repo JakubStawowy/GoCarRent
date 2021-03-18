@@ -8,14 +8,13 @@ import PersonIcon from '@material-ui/icons/Person';
 import MessageIcon from '@material-ui/icons/Message';
 import SettingsIcon from '@material-ui/icons/Settings';
 
+import userImage from '../uploads/user.png';
+
 const useStyles = makeStyles((theme) => ({
     bar: {
         background: 'transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box',
-        // width: '16vw',
         height: '100%',
-        // position: 'fixed',
         position: 'relative',
-        // right: 0,
         justifyContent: 'space-around',
         boxShadow: 'none',
         paddingRight: '3em'
@@ -28,6 +27,21 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             color: 'white'
         }
+    },
+    circlePlate: {
+        display: "flex",
+        justifyContent: "flex-end"
+    },
+    circle: {
+        width: '10vw',
+        height: '10vw',
+        borderRadius: '50%',
+        background: "white"
+    },
+    img: {
+        borderRadius: '50%',
+        width: '100%',
+        objectFit: 'cover'
     }
 }));
 
@@ -36,6 +50,11 @@ export default function RightSidebar() {
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
+                <div className={classes.circlePlate}>
+                    <div className={classes.circle}>
+                        <img src={userImage} alt={''} className={classes.img}/>
+                    </div>
+                </div>
                 <NavLink to={"/user/profile"}>
                     <Button className={classes.button}>
                         <PersonIcon />

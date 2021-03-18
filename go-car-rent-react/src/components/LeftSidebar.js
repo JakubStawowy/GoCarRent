@@ -5,22 +5,18 @@ import AddIcon from '@material-ui/icons/Add';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import logoImage from '../uploads/graylogo2.png';
 
 const useStyles = makeStyles((theme) => ({
     bar: {
         background: 'transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box',
-        // width: '16vw',
         height: '100%',
-        // position: 'fixed',
-        position: 'realative',
-        // left: 0,
+        position: 'relative',
         justifyContent: 'space-around',
         boxShadow: 'none',
         paddingLeft: '3em',
-
     },
     button: {
-
         width: '100%',
         background: 'white',
         borderRadius: '30px 0 0 30px',
@@ -28,6 +24,15 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             color: 'white'
         }
+    },
+    circle: {
+        width: '10vw',
+        height: '10vw',
+        borderRadius: '50%',
+        background: "white",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }));
 
@@ -36,6 +41,9 @@ export default function LeftSidebar() {
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
+                <dev className={classes.circle}>
+                    <img src={logoImage} alt={''} style={{width: '100%', objectFit: 'cover'}}/>
+                </dev>
                 <NavLink to={"/add"}>
                     <Button className={classes.button}>
                         <AddIcon />

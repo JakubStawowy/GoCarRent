@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70d77224-5eb7-4f16-8aa7-30a64954ee67" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Advertisement.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/LeftSidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LeftSidebar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RightSidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RightSidebar.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +72,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616069791210</updated>
-      <workItem from="1616069792911" duration="22089000" />
+      <workItem from="1616069792911" duration="22601000" />
+      <workItem from="1616095531861" duration="1692000" />
     </task>
     <task id="LOCAL-00001" summary="Sidebar menus done // basic routing added">
       <created>1616079691946</created>
@@ -90,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616086404616</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="home page updated">
+      <created>1616092876921</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1616092876921</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,10 +112,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Sidebar menus done // basic routing added" />
     <MESSAGE value="page grid layout added" />
-    <option name="LAST_COMMIT_MESSAGE" value="page grid layout added" />
+    <MESSAGE value="home page updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="home page updated" />
   </component>
 </project>
