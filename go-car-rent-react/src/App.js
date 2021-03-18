@@ -12,6 +12,7 @@ import Profile from "./views/Profile";
 import UserCars from "./views/UserCars";
 import Settings from "./views/Settings";
 import Messages from "./views/Messages";
+import {Redirect} from "react-router";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
             <Switch>
                 <Grid container style={{height: '100vh'}}>
                     <LeftSidebar />
+                        <Route exact path={'/'}>
+                            <Redirect to={'/home'} />
+                        </Route>
                         <Route path={'/home'} component={Home}/>
                         <Route path={'/add'} component={Add}/>
                         <Route path={'/cars/rented'} component={RentedCars}/>

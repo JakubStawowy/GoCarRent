@@ -16,9 +16,11 @@ const useStyles = makeStyles((theme) => ({
         // left: 0,
         justifyContent: 'space-around',
         boxShadow: 'none',
-        paddingLeft: '3em'
+        paddingLeft: '3em',
+
     },
     button: {
+
         width: '100%',
         background: 'white',
         borderRadius: '30px 0 0 30px',
