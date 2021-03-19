@@ -41,29 +41,31 @@ export default function LeftSidebar() {
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
-                <dev className={classes.circle}>
-                    <img src={logoImage} alt={''} style={{width: '100%', objectFit: 'cover'}}/>
-                </dev>
+                <NavLink to={'/home'}>
+                    <div className={classes.circle}>
+                        <img src={logoImage} alt={''} style={{width: '100%', objectFit: 'cover'}}/>
+                    </div>
+                </NavLink>
                 <NavLink to={"/add"}>
-                    <Button className={classes.button}>
+                    <Button className={classes.button} size={'large'}>
                         <AddIcon />
                         <Typography variant={"button"}>add</Typography>
                     </Button>
                 </NavLink>
                 <NavLink to={"/home"}>
-                    <Button className={classes.button}>
+                    <Button className={classes.button} size={'large'}>
                         <HomeOutlinedIcon />
                         <Typography variant={"BUTTON"}>home</Typography>
                     </Button>
                 </NavLink>
                 <NavLink to={"/cars/rented"}>
-                    <Button className={classes.button}>
+                    <Button className={classes.button} size={'large'}>
                         <AirportShuttleIcon />
                         <Typography variant={"BUTTON"}>rented cars</Typography>
                     </Button>
                 </NavLink>
-                <NavLink to={"/logout"}>
-                    <Button className={classes.button}>
+                <NavLink to={"/login"}>
+                    <Button className={classes.button} size={'large'}>
                         <ExitToAppIcon />
                         <Typography variant={"BUTTON"}>logout</Typography>
                     </Button>

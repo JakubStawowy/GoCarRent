@@ -1,4 +1,4 @@
-import {Container, ListItemIcon, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Button, Container, ListItemIcon, makeStyles, Paper, Typography} from "@material-ui/core";
 import image from '../uploads/transit.png';
 import defaultImage from '../uploads/car.png';
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
@@ -45,9 +45,15 @@ export default function Advertisement(props) {
                     {props.price}
                 </Typography>
                 <ListItemIcon>
-                    <DirectionsCarIcon fontSize={"large"}/>
+                    <Button>
+                        <DirectionsCarIcon fontSize={"large"}/>
+                    </Button>
+                    <Button>
                     <PhoneEnabledIcon fontSize={"large"}/>
+                    </Button>
+                    <Button>
                     <MessageIcon fontSize={"large"}/>
+                    </Button>
                 </ListItemIcon>
             </Container>
         </Paper>

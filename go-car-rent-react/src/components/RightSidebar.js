@@ -50,33 +50,35 @@ export default function RightSidebar() {
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
-                <div className={classes.circlePlate}>
-                    <div className={classes.circle}>
-                        <img src={userImage} alt={''} className={classes.img}/>
+                <NavLink to={'/user/profile'}>
+                    <div className={classes.circlePlate}>
+                        <div className={classes.circle}>
+                            <img src={userImage} alt={''} className={classes.img}/>
+                        </div>
                     </div>
-                </div>
+                </NavLink>
                 <NavLink to={"/user/profile"}>
                     <Button className={classes.button}>
+                        <Typography variant={"BUTTON"} size={'large'}>profile</Typography>
                         <PersonIcon />
-                        <Typography variant={"BUTTON"}>profile</Typography>
                     </Button>
                 </NavLink>
                 <NavLink to={"/messages"}>
-                    <Button className={classes.button}>
-                        <MessageIcon />
+                    <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"}>messages</Typography>
+                        <MessageIcon />
                     </Button>
                 </NavLink>
                 <NavLink to={"/user/cars"}>
-                    <Button className={classes.button}>
-                        <DirectionsCarIcon />
+                    <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"}>your cars</Typography>
+                        <DirectionsCarIcon />
                     </Button>
                 </NavLink>
                 <NavLink to={"/settings"}>
-                    <Button className={classes.button}>
-                        <SettingsIcon />
+                    <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"}>settings</Typography>
+                        <SettingsIcon />
                     </Button>
                 </NavLink>
             </AppBar>
