@@ -1,19 +1,64 @@
 import React from 'react';
 import '../components/components.css';
-import {Container, Grid, makeStyles, Typography} from "@material-ui/core";
+import {Button, Container, List, ListItem, makeStyles, Typography} from "@material-ui/core";
+import userImage from '../uploads/user.png';
+import feedbacks from '../data/feedback';
+import Feedback from "../components/Feedback";
 
 const useStyles = makeStyles((theme) => ({
+
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%'
+    },
+    img: {
+        width: '20%',
+        borderRadius: '50%'
+    },
+    list: {
+        maxHeight: '30vh',
+        overflow: 'auto',
+        width: '100%'
+    },
+    button: {
+        background: '#4BBEBAE0',
+        color: 'white'
+    }
 }));
 
 export default function Profile() {
     const classes = useStyles();
+
     return (
-        <Grid item xs={8}>
-            <Container className={classes.container}>
-                <Typography component="div" className={classes.home}>
-                    Profile
-                </Typography>
-            </Container>
-        </Grid>
+        <Container className={classes.container}>
+            <img className={classes.img} src={userImage} alt={''}/>
+            <Typography variant={'h3'} gutterBottom={'true'}>
+                Hajiid Sriraccha
+            </Typography>
+            <Typography gutterBottom={'true'}>
+                <Button variant={'contained'} className={classes.button}>User announcements</Button>
+            </Typography>
+            <Typography variant={'h4'} gutterBottom={'true'}>
+                Feedback
+            </Typography>
+            <List className={classes.list}>
+                {feedbacks.map(
+                    feedback => {
+                        return (
+                            <ListItem>
+                                <Feedback
+                                    author={feedback.author}
+                                    content={feedback.content}
+                                    stars={feedback.stars}
+                                />
+                            </ListItem>
+                        )
+                    }
+                )}
+            </List>
+        </Container>
     );
 }

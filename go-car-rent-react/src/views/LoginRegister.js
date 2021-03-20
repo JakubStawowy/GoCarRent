@@ -3,7 +3,7 @@ import {
     Container,
     FormControl,
     makeStyles,
-    Paper, TextField, Typography
+    TextField, Typography
 } from "@material-ui/core";
 import logo from '../uploads/graylogo2.png';
 
@@ -39,7 +39,6 @@ const useStyles = makeStyles({
 export default function LoginRegister() {
     const classes = useStyles();
     return (
-        // <Container className={classes.container}>
         <Container className={classes.container}>
             <img className={classes.logo} src={logo} alt={''}/>
             <Card className={classes.cards}>
@@ -72,6 +71,5 @@ export default function LoginRegister() {
                 </FormControl>
             </Card>
         </Container>
-        // </Container>
     );
 }
