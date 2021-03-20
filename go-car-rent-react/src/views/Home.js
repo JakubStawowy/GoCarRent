@@ -1,6 +1,6 @@
 import React from 'react';
 import '../components/components.css';
-import {Button, Container, Grid, List, ListItem, makeStyles, Typography} from "@material-ui/core";
+import {Button, Container, Fab, Grid, List, ListItem, makeStyles, Typography} from "@material-ui/core";
 import Advertisement from "../components/Advertisement";
 import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     button: {
         background: '#4BBEBAE0',
         width: '40%',
-        borderRadius: '2em',
     }
 }));
 
@@ -30,12 +29,12 @@ export default function Home() {
     return (
             <Container className={classes.container}>
                 <Container className={classes.buttonContainer}>
-                    <Button className={classes.button}>
+                    <Fab variant={'extended'} className={classes.button}>
                         <SearchIcon fontSize={"large"} htmlColor={'white'} />
-                    </Button>
-                    <Button className={classes.button}>
+                    </Fab>
+                    <Fab variant={'extended'} className={classes.button}>
                         <TuneIcon fontSize={"large"} htmlColor={'white'}/>
-                    </Button>
+                    </Fab>
                 </Container>
                 <List className={classes.list}>
                     {carData.map(car => {

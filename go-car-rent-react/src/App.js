@@ -44,7 +44,7 @@ function App() {
         <div className={"container"}>
             <Switch>
                 <Grid container style={{height: '100vh'}}>
-                    <LeftSidebar />
+                    <Grid item component={LeftSidebar} />
                     <Grid container xs={8} className={classes.main}>
                         <Grid item className={classes.subContainer}>
                             <Route exact path={'/'}>
@@ -64,7 +64,7 @@ function App() {
                             <KeyboardArrowUpIcon/>
                         </Button>
                     </Grid>
-                    <RightSidebar />
+                    <Grid item component={RightSidebar} />
                 </Grid>
             </Switch>
         </div>
