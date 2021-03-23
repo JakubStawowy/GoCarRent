@@ -7,14 +7,15 @@ import RightSidebar from "./components/RightSidebar";
 import React from "react";
 import {Button, Grid, makeStyles} from "@material-ui/core";
 import Add from "./views/Add";
-import RentedCars from "./views/RentedCars";
-import Profile from "./views/Profile";
 import UserCars from "./views/UserCars";
+import Profile from "./views/Profile";
 import Settings from "./views/Settings";
 import LoginRegister from "./views/LoginRegister";
 import Messages from "./views/Messages";
 import {Redirect} from "react-router";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import logo from "./uploads/background-logo.png";
+import RentedCars from "./views/RentedCars";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -35,12 +36,21 @@ const useStyles = makeStyles((theme) => ({
     },
     subContainer: {
         flex: '16'
+    },
+    logo: {
+        position: 'fixed',
+        height: '90%',
+        left: '50%',
+        marginLeft: '-25%',
+        opacity: 0.3,
+        zIndex: -1
     }
 }));
 function App() {
     const classes = useStyles();
   return (
     <Router>
+        <img src={logo} alt={''} className={classes.logo}/>
         <div className={"container"}>
             <Switch>
                 <Grid container style={{height: '100vh'}}>
@@ -52,11 +62,11 @@ function App() {
                             </Route>
                             <Route path={'/home'} component={Home}/>
                             <Route path={'/add'} component={Add}/>
-                            <Route path={'/cars/rented'} component={RentedCars}/>
+                            <Route path={'/user/{id}/rented'} component={RentedCars}/>
                             <Route path={'/login'} component={LoginRegister}/>
-                            <Route path={'/user/profile'} component={Profile}/>
-                            <Route path={'/messages'} component={Messages}/>
-                            <Route path={'/user/cars'} component={UserCars}/>
+                            <Route path={'/user/{id}/profile'} component={Profile}/>
+                            <Route path={'/user/{id}/messages'} component={Messages}/>
+                            <Route path={'/user/{id}/cars'} component={UserCars}/>
                             <Route path={'/settings'} component={Settings}/>
                         </Grid>
                         <Button className={classes.footer}>

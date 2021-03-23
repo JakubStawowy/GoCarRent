@@ -5,7 +5,7 @@ import {
     makeStyles,
     TextField, Typography
 } from "@material-ui/core";
-import logo from '../uploads/graylogo2.png';
+import logo from '../uploads/logo.png';
 
 const useStyles = makeStyles({
     container: {
@@ -13,7 +13,6 @@ const useStyles = makeStyles({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        // marginTop: '2em'
         height: '100%'
     },
     form: {
@@ -23,7 +22,6 @@ const useStyles = makeStyles({
         padding: '1em',
     },
     button: {
-        // background: '#4BBEBAE0',
         marginTop: '1em'
     },
     logo: {
@@ -40,7 +38,7 @@ export default function LoginRegister() {
     const classes = useStyles();
     return (
         <Container className={classes.container}>
-            <img className={classes.logo} src={logo} alt={''}/>
+
             <Card className={classes.cards}>
                 <Typography variant={'h4'} align={'center'}>
                     Login

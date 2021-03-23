@@ -19,10 +19,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         flex: 8
     },
-    img: {
-       width: '40%',
-        borderRadius: '50%'
-    },
     message: {
        overflow: "hidden"
     }

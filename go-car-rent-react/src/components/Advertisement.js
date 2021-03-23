@@ -1,6 +1,5 @@
-import {Button, Container, ListItemIcon, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Button, Card, Container, ListItemIcon, makeStyles, Paper, Typography} from "@material-ui/core";
 import image from '../uploads/transit.png';
-import defaultImage from '../uploads/car.png';
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 import MessageIcon from "@material-ui/icons/Message";
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Advertisement(props) {
     const classes = useStyles();
     return (
-        <Paper className={classes.paper}>
+        <Card className={classes.paper}>
             <div className={classes.img}>
                 <img src={image} alt={"No-image"} style={{width: '100%', height: '100%', objectFit: 'cover'}}/>
             </div>
@@ -56,6 +55,6 @@ export default function Advertisement(props) {
                     </Button>
                 </ListItemIcon>
             </Container>
-        </Paper>
+        </Card>
     )
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './components.css';
-import {AppBar, makeStyles, Typography, Button, Badge, Grid} from "@material-ui/core";
+import {AppBar, makeStyles, Typography, Button, Badge, Grid, Avatar} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
@@ -35,8 +35,6 @@ const useStyles = makeStyles((theme) => ({
     circle: {
         width: '10vw',
         height: '10vw',
-        borderRadius: '50%',
-        background: "white"
     },
     img: {
         borderRadius: '50%',
@@ -50,26 +48,28 @@ export default function RightSidebar() {
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
-                <NavLink to={'/user/profile'}>
+                <NavLink to={'/user{id}/profile'}>
                     <div className={classes.circlePlate}>
-                        <div className={classes.circle}>
-                            <img src={userImage} alt={''} className={classes.img}/>
-                        </div>
+                        <Avatar
+                            src={userImage}
+                            alt={''}
+                            className={classes.circle}
+                        />
                     </div>
                 </NavLink>
-                <NavLink to={"/user/profile"}>
+                <NavLink to={"/user/{id}/profile"}>
                     <Button className={classes.button}>
                         <Typography variant={"BUTTON"} size={'large'}>profile</Typography>
                         <PersonIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/messages"}>
+                <NavLink to={"/user/{id}/messages"}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"}>messages</Typography>
                         <MessageIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/user/cars"}>
+                <NavLink to={"/user/{id}/cars"}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"}>your cars</Typography>
                         <DirectionsCarIcon />

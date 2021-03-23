@@ -1,4 +1,4 @@
-import {Card, Container, makeStyles, Typography} from "@material-ui/core";
+import {Avatar, Card, Container, makeStyles, Typography} from "@material-ui/core";
 import image from '../uploads/user.png';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
@@ -13,9 +13,8 @@ const useStyles = makeStyles((theme) => ({
         padding: '1em'
     },
     img: {
-        objectFit: 'cover',
-        borderRadius: '50%',
-        height: '15vh'
+        width: '10vh',
+        height: '10vh'
     },
     content: {
         height: '100%',
@@ -41,7 +40,7 @@ export default function Feedback(props) {
     const classes = useStyles();
     return (
         <Card className={classes.paper}>
-            <img src={image} alt={"No-image"} className={classes.img}/>
+            <Avatar src={image} alt={''} className={classes.img} />
             <Container className={classes.content} style={{padding: '1em'}}>
                 <Typography variant={'h6'} className={classes.feedbackTop}>
                     {props.author}

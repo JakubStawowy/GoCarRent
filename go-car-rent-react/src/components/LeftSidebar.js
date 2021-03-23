@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {AppBar, makeStyles, Typography, Button, Badge, Grid} from "@material-ui/core";
+import React from 'react';
+import {AppBar, makeStyles, Typography, Button, Grid, Box, Avatar} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
-import AddIcon from '@material-ui/icons/Add';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import logoImage from '../uploads/graylogo2.png';
+import logoImage from '../uploads/logo.png';
 
 const useStyles = makeStyles((theme) => ({
     bar: {
@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    logo: {
+        width: '100%',
+        height: '100%'
     }
 }));
 
@@ -42,13 +46,13 @@ export default function LeftSidebar() {
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
                 <NavLink to={'/home'}>
-                    <div className={classes.circle}>
-                        <img src={logoImage} alt={''} style={{width: '100%', objectFit: 'cover'}}/>
-                    </div>
+                    <Box className={classes.circle}>
+                        <Avatar src={logoImage} alt={''} className={classes.logo}/>
+                    </Box>
                 </NavLink>
                 <NavLink to={"/add"}>
                     <Button className={classes.button} size={'large'}>
-                        <AddIcon />
+                        <PostAddIcon />
                         <Typography variant={"button"}>add</Typography>
                     </Button>
                 </NavLink>
@@ -58,7 +62,7 @@ export default function LeftSidebar() {
                         <Typography variant={"BUTTON"}>home</Typography>
                     </Button>
                 </NavLink>
-                <NavLink to={"/cars/rented"}>
+                <NavLink to={"/user/{id}/rented"}>
                     <Button className={classes.button} size={'large'}>
                         <AirportShuttleIcon />
                         <Typography variant={"BUTTON"}>rented cars</Typography>
