@@ -29,6 +29,11 @@ public class Log implements Serializable {
         logTime = new Timestamp(System.currentTimeMillis());
     }
 
+    public Log(@NotNull String sessionId, User user) {
+        this.sessionId = sessionId;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
