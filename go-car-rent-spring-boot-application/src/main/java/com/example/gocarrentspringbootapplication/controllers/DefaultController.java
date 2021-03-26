@@ -29,7 +29,7 @@ public class DefaultController {
         return users;
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     @Nullable
     public User getUser(@PathVariable("id") Long id){
         Optional<User> optionalUser = userRepository.findById(id);

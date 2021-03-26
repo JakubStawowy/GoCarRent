@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70d77224-5eb7-4f16-8aa7-30a64954ee67" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/data/carBrands.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/rentedCars.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/userCars.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/graylogo2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Advertisement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Advertisement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Feedback.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Feedback.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LeftSidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LeftSidebar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MessageListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MessageListItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RightSidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RightSidebar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Add.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Add.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/LoginRegister.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/LoginRegister.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/RentedCars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/RentedCars.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/UserCars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/UserCars.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +82,7 @@
       <workItem from="1616253783207" duration="10558000" />
       <workItem from="1616354605813" duration="433000" />
       <workItem from="1616412692614" duration="12522000" />
+      <workItem from="1616481232169" duration="1802000" />
     </task>
     <task id="LOCAL-00001" summary="Sidebar menus done // basic routing added">
       <created>1616079691946</created>
@@ -147,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616259108866</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add/Cars table components added">
+      <created>1616481865313</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616481865313</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,6 +166,7 @@
     <MESSAGE value="LoginRegister component added" />
     <MESSAGE value="Profile component added" />
     <MESSAGE value="Chat component added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chat component added" />
+    <MESSAGE value="Add/Cars table components added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add/Cars table components added" />
   </component>
 </project>
