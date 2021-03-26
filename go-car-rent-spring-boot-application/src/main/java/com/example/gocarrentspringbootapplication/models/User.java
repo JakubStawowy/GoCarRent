@@ -1,5 +1,7 @@
 package com.example.gocarrentspringbootapplication.models;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -13,6 +15,7 @@ public class User implements Serializable {
     private Long id;
 
     @NotEmpty
+    @Column(unique = true)
     private String email;
 
     @NotEmpty
@@ -51,9 +54,13 @@ public class User implements Serializable {
             )
     private Set<Announcement> rent;
 
-    public User(String email, String password) {
+    public User(@NotEmpty String email, @NotEmpty String password, UserDetails userDetails) {
         this.email = email;
         this.password = password;
+        this.userDetails = userDetails;
+    }
+
+    public User() {
     }
 
     public Set<Announcement> getAnnouncements() {
@@ -110,10 +117,6 @@ public class User implements Serializable {
 
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
-    }
-
-
-    public User() {
     }
 
     public Long getId() {

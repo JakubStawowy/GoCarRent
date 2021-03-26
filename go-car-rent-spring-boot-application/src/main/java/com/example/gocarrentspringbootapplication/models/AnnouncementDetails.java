@@ -2,13 +2,14 @@ package com.example.gocarrentspringbootapplication.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "announcement_details")
-public class AnnouncementDetails {
+public class AnnouncementDetails implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

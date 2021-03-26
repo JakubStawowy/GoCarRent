@@ -23,6 +23,16 @@ public class UserDetails implements Serializable {
     @OneToOne(mappedBy = "userDetails")
     private User user;
 
+    public UserDetails(@NotEmpty String name, @NotEmpty String surname, String phone, String image) {
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.image = image;
+    }
+
+    public UserDetails() {
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
