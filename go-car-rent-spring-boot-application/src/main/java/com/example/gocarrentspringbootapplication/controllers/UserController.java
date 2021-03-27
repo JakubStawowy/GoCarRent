@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.controllers;
 
 import com.example.gocarrentspringbootapplication.models.User;
+import com.example.gocarrentspringbootapplication.models.UserDetails;
 import com.example.gocarrentspringbootapplication.repositories.UserRepository;
 import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @CrossOrigin
 @RestController
@@ -33,7 +36,15 @@ public class UserController {
     @Nullable
     public User getUser(@PathVariable("id") Long id){
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElse(null);
+        if(optionalUser.isPresent()){
+            Logger.getGlobal().log(Level.INFO, optionalUser.get().getEmail());
+        }else{
+            Logger.getGlobal().log(Level.INFO, "Nie udalo sie");
+        }
+//        return optionalUser.orElse(null);
+        return new User("email", "password", new UserDetails(
+                "name", "surname", "phone", "image"
+        ));
     }
 
     @PutMapping("/users/edit")

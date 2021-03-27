@@ -34,6 +34,8 @@ public class Log implements Serializable {
         this.user = user;
     }
 
+    public Log(){}
+
     public Long getId() {
         return id;
     }

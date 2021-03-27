@@ -1,5 +1,7 @@
 package com.example.gocarrentspringbootapplication.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -33,6 +35,7 @@ public class AnnouncementDetails implements Serializable {
     @Column(name = "car_model")
     private String carModel;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "announcementDetails")
     private Announcement announcement;
 

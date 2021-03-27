@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.models;
 
 import com.example.gocarrentspringbootapplication.components.RentStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -23,14 +24,17 @@ public class Announcement implements Serializable {
     @Enumerated(EnumType.STRING)
     private RentStatus rentStatus;
 
+//    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "announcement_details_id")
     private AnnouncementDetails announcementDetails;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id")
     private User author;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "rent")
     private Set<User> tenants;
 

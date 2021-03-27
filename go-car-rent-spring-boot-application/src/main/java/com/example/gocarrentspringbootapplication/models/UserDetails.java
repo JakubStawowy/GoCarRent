@@ -1,5 +1,7 @@
 package com.example.gocarrentspringbootapplication.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -20,6 +22,7 @@ public class UserDetails implements Serializable {
     private String phone;
     private String image;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "userDetails")
     private User user;
 
