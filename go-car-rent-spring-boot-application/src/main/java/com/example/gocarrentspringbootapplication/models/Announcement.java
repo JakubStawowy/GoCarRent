@@ -20,6 +20,7 @@ public class Announcement implements Serializable {
 
     @NotNull
     @Column(name = "rent_status")
+    @Enumerated(EnumType.STRING)
     private RentStatus rentStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -32,6 +33,16 @@ public class Announcement implements Serializable {
 
     @ManyToMany(mappedBy = "rent")
     private Set<User> tenants;
+
+    public Announcement(@NotEmpty String title, @NotNull RentStatus rentStatus, AnnouncementDetails announcementDetails, User author) {
+        this.title = title;
+        this.rentStatus = rentStatus;
+        this.announcementDetails = announcementDetails;
+        this.author = author;
+    }
+
+    public Announcement() {
+    }
 
     public Long getId() {
         return id;

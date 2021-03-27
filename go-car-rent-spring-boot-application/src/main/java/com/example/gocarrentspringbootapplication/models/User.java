@@ -63,6 +63,14 @@ public class User implements Serializable {
     public User() {
     }
 
+    public Set<Announcement> getRent() {
+        return rent;
+    }
+
+    public void setRent(Set<Announcement> rent) {
+        this.rent = rent;
+    }
+
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }

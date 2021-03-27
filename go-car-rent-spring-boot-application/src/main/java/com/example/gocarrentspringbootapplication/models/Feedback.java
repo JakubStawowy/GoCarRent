@@ -27,6 +27,16 @@ public class Feedback {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Feedback(@NotEmpty String content, @NotNull FeedbackRate rate, User author, User user) {
+        this.content = content;
+        this.rate = rate;
+        this.author = author;
+        this.user = user;
+    }
+
+    public Feedback() {
+    }
+
     public Long getId() {
         return id;
     }

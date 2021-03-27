@@ -19,8 +19,10 @@ public class AnnouncementDetails implements Serializable {
     private BigDecimal amount;
     @NotNull
     private Currency currency;
+
     @NotNull
     @Column(name = "time_unit")
+    @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;
 
     @NotNull
@@ -33,6 +35,17 @@ public class AnnouncementDetails implements Serializable {
 
     @OneToOne(mappedBy = "announcementDetails")
     private Announcement announcement;
+
+    public AnnouncementDetails(@NotNull BigDecimal amount, @NotNull Currency currency, @NotNull TimeUnit timeUnit, @NotNull String carBrand, @NotNull String carModel) {
+        this.amount = amount;
+        this.currency = currency;
+        this.timeUnit = timeUnit;
+        this.carBrand = carBrand;
+        this.carModel = carModel;
+    }
+
+    public AnnouncementDetails() {
+    }
 
     public Long getId() {
         return id;
