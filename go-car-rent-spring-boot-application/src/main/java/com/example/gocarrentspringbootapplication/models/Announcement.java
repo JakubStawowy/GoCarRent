@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -16,13 +17,14 @@ public class Announcement implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    private String title;
-
     @NotNull
     @Column(name = "rent_status")
     @Enumerated(EnumType.STRING)
     private RentStatus rentStatus;
+
+    @NotNull
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
 //    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
@@ -38,11 +40,19 @@ public class Announcement implements Serializable {
     @ManyToMany(mappedBy = "rent")
     private Set<User> tenants;
 
-    public Announcement(@NotEmpty String title, @NotNull RentStatus rentStatus, AnnouncementDetails announcementDetails, User author) {
-        this.title = title;
+    public Announcement(@NotNull RentStatus rentStatus, AnnouncementDetails announcementDetails, User author) {
         this.rentStatus = rentStatus;
         this.announcementDetails = announcementDetails;
         this.author = author;
+    }
+
+    @PrePersist
+    public void setCreatedAt() {
+        createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
     public Announcement() {
@@ -54,14 +64,6 @@ public class Announcement implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public AnnouncementDetails getAnnouncementDetails() {
@@ -86,5 +88,17 @@ public class Announcement implements Serializable {
 
     public void setRentStatus(RentStatus rentStatus) {
         this.rentStatus = rentStatus;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Set<User> getTenants() {
+        return tenants;
+    }
+
+    public void setTenants(Set<User> tenants) {
+        this.tenants = tenants;
     }
 }

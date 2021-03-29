@@ -1,11 +1,12 @@
 package com.example.gocarrentspringbootapplication.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,10 @@ public class User implements Serializable {
 
     @Transient
     private String confirmedPassword;
+
+    @NotNull
+    @Column(name = "created_at")
+    private Date createdAt;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_details_id", referencedColumnName = "id")
@@ -46,7 +51,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbackSent = new HashSet<>();
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbackReceived = new HashSet<>();
 
@@ -70,6 +75,15 @@ public class User implements Serializable {
     }
 
     public User() {
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    @PrePersist
+    public void setCreatedAt() {
+        this.createdAt = new Date(System.currentTimeMillis());
     }
 
     public Set<Announcement> getRent() {

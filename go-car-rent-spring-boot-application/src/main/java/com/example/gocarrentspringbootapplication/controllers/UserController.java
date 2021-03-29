@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -25,31 +23,29 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/")
     public List<User> getUsers(){
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
         return users;
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     @Nullable
     public User getUser(@PathVariable("id") Long id){
         Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()){
-            Logger.getGlobal().log(Level.INFO, optionalUser.get().getEmail());
-        }else{
-            Logger.getGlobal().log(Level.INFO, "Nie udalo sie");
-        }
-//        return optionalUser.orElse(null);
-        return new User("email", "password", new UserDetails(
-                "name", "surname", "phone", "image"
-        ));
+
+        return optionalUser.orElse(null);
     }
 
-    @PutMapping("/users/edit")
-    public User editUser(@RequestBody User user) {
-        userRepository.save(user);
-        return user;
+    @PutMapping(path = "/{id}/edit", consumes = "application/json")
+    @Nullable
+    public User editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        optionalUser.ifPresent(value->{
+            value.setUserDetails(details);
+            userRepository.save(value);
+        });
+        return optionalUser.orElse(null);
     }
 }

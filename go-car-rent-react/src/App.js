@@ -16,6 +16,7 @@ import {Redirect} from "react-router";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import logo from "./uploads/background-logo.png";
 import RentedCars from "./views/RentedCars";
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -47,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 function App() {
+
     const classes = useStyles();
+
   return (
     <Router>
         <img src={logo} alt={''} className={classes.logo}/>

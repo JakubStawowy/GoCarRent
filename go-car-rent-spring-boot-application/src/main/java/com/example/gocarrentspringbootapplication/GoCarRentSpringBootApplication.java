@@ -57,9 +57,9 @@ public class GoCarRentSpringBootApplication {
             ));
 
             announcementRepository.save(new Announcement(
-               "title1",
                RentStatus.FREE,
                new AnnouncementDetails(
+                       "title1",
                        new BigDecimal("12.33"),
                        Currency.getInstance("USD"),
                        TimeUnit.HOURS,

@@ -3,9 +3,10 @@ package com.example.gocarrentspringbootapplication.controllers;
 import com.example.gocarrentspringbootapplication.models.User;
 import com.example.gocarrentspringbootapplication.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api")
 public class RegisterController {
@@ -17,10 +18,9 @@ public class RegisterController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(value = "/register")
-    public String registerUser(@RequestBody User user) {
-        userRepository.save(user);
-
-        return user.getUserDetails().getName()+" "+user.getUserDetails().getSurname();
+    @PostMapping(value = "/register", consumes = "application/json")
+    @Nullable
+    public User registerUser(@RequestBody User user) {
+        return userRepository.save(user);
     }
 }

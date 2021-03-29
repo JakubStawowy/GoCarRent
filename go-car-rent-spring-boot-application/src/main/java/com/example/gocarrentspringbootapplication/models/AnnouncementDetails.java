@@ -3,6 +3,7 @@ package com.example.gocarrentspringbootapplication.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -16,6 +17,9 @@ public class AnnouncementDetails implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    private String title;
 
     @NotNull
     private BigDecimal amount;
@@ -39,7 +43,8 @@ public class AnnouncementDetails implements Serializable {
     @OneToOne(mappedBy = "announcementDetails")
     private Announcement announcement;
 
-    public AnnouncementDetails(@NotNull BigDecimal amount, @NotNull Currency currency, @NotNull TimeUnit timeUnit, @NotNull String carBrand, @NotNull String carModel) {
+    public AnnouncementDetails(@NotEmpty String title, @NotNull BigDecimal amount, @NotNull Currency currency, @NotNull TimeUnit timeUnit, @NotNull String carBrand, @NotNull String carModel) {
+        this.title = title;
         this.amount = amount;
         this.currency = currency;
         this.timeUnit = timeUnit;
@@ -48,6 +53,14 @@ public class AnnouncementDetails implements Serializable {
     }
 
     public AnnouncementDetails() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Long getId() {

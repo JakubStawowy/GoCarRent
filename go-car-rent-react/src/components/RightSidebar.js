@@ -48,7 +48,7 @@ export default function RightSidebar() {
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
-                <NavLink to={'/user{id}/profile'}>
+                <NavLink to={'/user/{id}/profile'}>
                     <div className={classes.circlePlate}>
                         <Avatar
                             src={userImage}

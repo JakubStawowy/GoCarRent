@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70d77224-5eb7-4f16-8aa7-30a64954ee67" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/controllers/UserController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RightSidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RightSidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/models/Feedback.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/models/Feedback.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/models/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +94,9 @@
       <workItem from="1616354605813" duration="433000" />
       <workItem from="1616412692614" duration="12522000" />
       <workItem from="1616481232169" duration="1802000" />
+      <workItem from="1616838932448" duration="171000" />
+      <workItem from="1616853231456" duration="3011000" />
+      <workItem from="1616931217762" duration="9890000" />
     </task>
     <task id="LOCAL-00001" summary="Sidebar menus done // basic routing added">
       <created>1616079691946</created>

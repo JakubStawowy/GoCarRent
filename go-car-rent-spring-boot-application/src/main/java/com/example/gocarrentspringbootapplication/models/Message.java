@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -20,6 +21,10 @@ public class Message implements Serializable {
     @Nullable
     private String file;
 
+    @NotNull
+    @Column(name = "sended_at")
+    private Timestamp sendedAt;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sender_id")
     private User sender;
@@ -27,6 +32,25 @@ public class Message implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "receiver_id")
     private User receiver;
+
+    public Message(@NotNull String content, @Nullable String file, User sender, User receiver) {
+        this.content = content;
+        this.file = file;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
+
+    public Message() {
+    }
+
+    public Timestamp getSendedAt() {
+        return sendedAt;
+    }
+
+    @PrePersist
+    public void setSendedAt() {
+        this.sendedAt = new Timestamp(System.currentTimeMillis());
+    }
 
     public Long getId() {
         return id;

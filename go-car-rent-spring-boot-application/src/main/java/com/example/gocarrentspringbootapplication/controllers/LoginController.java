@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api")
 public class LoginController {
@@ -23,11 +23,8 @@ public class LoginController {
         this.logRepository = logRepository;
     }
 
-    @PostMapping(value = "/login", consumes = "application/json")
-    public User loginUser(@RequestBody User user, HttpSession session) {
-        String email = user.getEmail();
-        String password = user.getPassword();
-
+    @PostMapping(value = "/login")
+    public User loginUser(HttpSession session, @RequestParam("email") String email, @RequestParam("password") String password) {
         User loggedUser = userRepository.getUserByEmailAndPassword(email, password);
         logRepository.save(new Log(
                 session.getId(),
