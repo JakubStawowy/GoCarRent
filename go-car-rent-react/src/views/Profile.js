@@ -4,7 +4,6 @@ import {Button, Container, List, ListItem, makeStyles, Typography} from "@materi
 import userImage from '../uploads/user.png';
 import feedbacks from '../data/feedback';
 import Feedback from "../components/Feedback";
-import axios from "axios";
 import getUserById from "../controllers/UserController";
 const useStyles = makeStyles((theme) => ({
 
@@ -37,7 +36,7 @@ export default function Profile() {
     const classes = useStyles();
 
     useEffect(  () => {
-        getUserById(49).then(r => {
+        getUserById(7).then(r => {
             setUserData(r);
         });
     }, []);

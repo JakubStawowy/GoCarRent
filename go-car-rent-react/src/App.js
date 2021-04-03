@@ -67,9 +67,9 @@ function App() {
                             <Route path={'/add'} component={Add}/>
                             <Route path={'/user/{id}/rented'} component={RentedCars}/>
                             <Route path={'/login'} component={LoginRegister}/>
-                            <Route path={'/user/{id}/profile'} component={Profile}/>
-                            <Route path={'/user/{id}/messages'} component={Messages}/>
-                            <Route path={'/user/{id}/cars'} component={UserCars}/>
+                            <Route path={'/users/{id}/profile'} component={Profile}/>
+                            <Route path={'/users/{id}/messages'} component={Messages}/>
+                            <Route path={'/users/{id}/cars'} component={UserCars}/>
                             <Route path={'/settings'} component={Settings}/>
                         </Grid>
                         <Button className={classes.footer}>
