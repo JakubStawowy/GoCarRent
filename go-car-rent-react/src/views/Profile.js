@@ -36,7 +36,7 @@ export default function Profile() {
     const classes = useStyles();
 
     useEffect(  () => {
-        getUserById(7).then(r => {
+        getUserById(33).then(r => {
             setUserData(r);
         });
     }, []);
