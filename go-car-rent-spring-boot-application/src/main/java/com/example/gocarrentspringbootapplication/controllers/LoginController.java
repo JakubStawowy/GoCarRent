@@ -4,6 +4,7 @@ import com.example.gocarrentspringbootapplication.models.Log;
 import com.example.gocarrentspringbootapplication.models.User;
 import com.example.gocarrentspringbootapplication.repositories.LogRepository;
 import com.example.gocarrentspringbootapplication.repositories.UserRepository;
+import com.example.gocarrentspringbootapplication.services.JsonWebTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,20 +17,26 @@ public class LoginController {
 
     private final UserRepository userRepository;
     private final LogRepository logRepository;
-
+    private final JsonWebTokenProvider jsonWebTokenProvider;
     @Autowired
-    public LoginController(UserRepository userRepository, LogRepository logRepository) {
+    public LoginController(UserRepository userRepository, LogRepository logRepository, JsonWebTokenProvider jsonWebTokenProvider) {
         this.userRepository = userRepository;
         this.logRepository = logRepository;
+        this.jsonWebTokenProvider = jsonWebTokenProvider;
     }
 
     @PostMapping(value = "/login")
-    public User loginUser(HttpSession session, @RequestParam("email") String email, @RequestParam("password") String password) {
+    public String loginUser(HttpSession session, @RequestParam("email") String email, @RequestParam("password") String password) {
         User loggedUser = userRepository.getUserByEmailAndPassword(email, password);
         logRepository.save(new Log(
                 session.getId(),
                 loggedUser
         ));
-        return loggedUser;
+        return jsonWebTokenProvider.generateToken(loggedUser);
+    }
+
+    @PostMapping(value = "/loginTest")
+    public String test(@RequestParam("email") String email, @RequestParam("password") String password) {
+        return "Logged: "+email+" "+password;
     }
 }

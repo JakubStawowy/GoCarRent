@@ -1,5 +1,6 @@
 package com.example.gocarrentspringbootapplication.models;
 
+import com.example.gocarrentspringbootapplication.components.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -26,6 +27,9 @@ public class User implements Serializable {
 
     @Transient
     private String confirmedPassword;
+
+    @NotNull
+    private UserRoles roles;
 
     @NotNull
     @Column(name = "created_at")
@@ -68,13 +72,26 @@ public class User implements Serializable {
             )
     private Set<Announcement> rent;
 
-    public User(@NotEmpty String email, @NotEmpty String password, UserDetails userDetails) {
+    public User(@NotEmpty String email, @NotEmpty String password, @NotNull UserRoles roles, UserDetails userDetails) {
         this.email = email;
         this.password = password;
         this.userDetails = userDetails;
+        this.roles = roles;
     }
 
     public User() {
+    }
+
+    public UserRoles getRoles() {
+        return roles;
+    }
+
+    public void setRoles(UserRoles roles) {
+        this.roles = roles;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getCreatedAt() {

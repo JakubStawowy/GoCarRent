@@ -51,7 +51,7 @@ export default function LeftSidebar() {
                     </Box>
                 </NavLink>
                 <NavLink to={"/add"}>
-                    <Button className={classes.button} size={'large'}>
+                    <Button className={classes.button} size={'large'} id={"addButton"}>
                         <PostAddIcon />
                         <Typography variant={"button"}>add</Typography>
                     </Button>
@@ -69,7 +69,7 @@ export default function LeftSidebar() {
                     </Button>
                 </NavLink>
                 <NavLink to={"/login"}>
-                    <Button className={classes.button} size={'large'}>
+                    <Button className={classes.button} size={'large'} id={"logoutButton"}>
                         <ExitToAppIcon />
                         <Typography variant={"BUTTON"}>logout</Typography>
                     </Button>

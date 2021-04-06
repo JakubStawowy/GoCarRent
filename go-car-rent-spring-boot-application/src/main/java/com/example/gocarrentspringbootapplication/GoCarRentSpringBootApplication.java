@@ -2,6 +2,7 @@ package com.example.gocarrentspringbootapplication;
 
 import com.example.gocarrentspringbootapplication.components.FeedbackRate;
 import com.example.gocarrentspringbootapplication.components.RentStatus;
+import com.example.gocarrentspringbootapplication.components.UserRoles;
 import com.example.gocarrentspringbootapplication.models.*;
 import com.example.gocarrentspringbootapplication.repositories.AnnouncementRepository;
 import com.example.gocarrentspringbootapplication.repositories.FeedbackRepository;
@@ -36,6 +37,7 @@ public class GoCarRentSpringBootApplication {
             User user = new User(
                     "user1@email.com",
                     "password",
+                    UserRoles.ROLE_ADMIN,
                     new UserDetails(
                             "name",
                             "surname",
@@ -48,6 +50,7 @@ public class GoCarRentSpringBootApplication {
             userRepository.save(new User(
                     "user2@email.com",
                     "password",
+                    UserRoles.ROLE_ADMIN,
                     new UserDetails(
                             "name2",
                             "surname2",
