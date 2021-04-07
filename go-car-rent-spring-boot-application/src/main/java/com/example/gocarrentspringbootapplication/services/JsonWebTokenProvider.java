@@ -21,7 +21,7 @@ public class JsonWebTokenProvider {
 
         return Jwts.builder()
                 .setSubject(user.getEmail())
-                .claim("roles", user.getRoles())
+                .claim("role", user.getRoles())
                 .claim("name", name)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+20000))

@@ -29,7 +29,8 @@ public class User implements Serializable {
     private String confirmedPassword;
 
     @NotNull
-    private UserRoles roles;
+    @Enumerated(EnumType.STRING)
+    private UserRoles role;
 
     @NotNull
     @Column(name = "created_at")
@@ -72,22 +73,22 @@ public class User implements Serializable {
             )
     private Set<Announcement> rent;
 
-    public User(@NotEmpty String email, @NotEmpty String password, @NotNull UserRoles roles, UserDetails userDetails) {
+    public User(@NotEmpty String email, @NotEmpty String password, @NotNull UserRoles role, UserDetails userDetails) {
         this.email = email;
         this.password = password;
         this.userDetails = userDetails;
-        this.roles = roles;
+        this.role = role;
     }
 
     public User() {
     }
 
     public UserRoles getRoles() {
-        return roles;
+        return role;
     }
 
-    public void setRoles(UserRoles roles) {
-        this.roles = roles;
+    public void setRoles(UserRoles role) {
+        this.role = role;
     }
 
     public void setCreatedAt(Date createdAt) {

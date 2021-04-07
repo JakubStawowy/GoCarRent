@@ -6,9 +6,11 @@ import com.example.gocarrentspringbootapplication.repositories.LogRepository;
 import com.example.gocarrentspringbootapplication.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.services.JsonWebTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -18,6 +20,7 @@ public class LoginController {
     private final UserRepository userRepository;
     private final LogRepository logRepository;
     private final JsonWebTokenProvider jsonWebTokenProvider;
+
     @Autowired
     public LoginController(UserRepository userRepository, LogRepository logRepository, JsonWebTokenProvider jsonWebTokenProvider) {
         this.userRepository = userRepository;
@@ -26,13 +29,18 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login")
+    @Nullable
     public String loginUser(HttpSession session, @RequestParam("email") String email, @RequestParam("password") String password) {
-        User loggedUser = userRepository.getUserByEmailAndPassword(email, password);
-        logRepository.save(new Log(
-                session.getId(),
-                loggedUser
-        ));
-        return jsonWebTokenProvider.generateToken(loggedUser);
+        Optional<User> loggedUser = userRepository.getUserByEmailAndPassword(email, password);
+
+        loggedUser.ifPresent(user->{
+            logRepository.save(new Log(
+                    session.getId(),
+                    user
+            ));
+        });
+
+        return loggedUser.map(jsonWebTokenProvider::generateToken).orElse(null);
     }
 
     @PostMapping(value = "/loginTest")

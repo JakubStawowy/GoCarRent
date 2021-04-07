@@ -2,6 +2,7 @@ package com.example.gocarrentspringbootapplication.filters;
 
 import com.example.gocarrentspringbootapplication.keys.TokenKeyRepository;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JsonWebTokenFilter extends BasicAuthenticationFilter {
     public JsonWebTokenFilter(AuthenticationManager authenticationManager) {
@@ -32,19 +35,24 @@ public class JsonWebTokenFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        UsernamePasswordAuthenticationToken result = getAuthenticationByToken(header);
-        SecurityContextHolder.getContext().setAuthentication(result);
-
-        chain.doFilter(request, response);
+        try {
+            UsernamePasswordAuthenticationToken result = getAuthenticationByToken(header);
+            SecurityContextHolder.getContext().setAuthentication(result);
+        } catch (ExpiredJwtException e) {
+            Logger.getGlobal().log(Level.INFO, e.getMessage());
+            SecurityContextHolder.clearContext();
+        } finally {
+            chain.doFilter(request, response);
+        }
     }
 
-    private UsernamePasswordAuthenticationToken getAuthenticationByToken(String header) {
+    private UsernamePasswordAuthenticationToken getAuthenticationByToken(String header) throws ExpiredJwtException {
 
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(TokenKeyRepository.getKey().getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(header.replace("Bearer ",""));
 
         String username = claimsJws.getBody().get("name").toString();
-        String roles = claimsJws.getBody().get("roles").toString();
+        String roles = claimsJws.getBody().get("role").toString();
 
         return new UsernamePasswordAuthenticationToken(
           username,
