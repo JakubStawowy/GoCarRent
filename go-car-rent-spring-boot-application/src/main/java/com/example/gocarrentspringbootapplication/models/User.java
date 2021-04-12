@@ -25,9 +25,6 @@ public class User implements Serializable {
     @NotEmpty
     private String password;
 
-    @Transient
-    private String confirmedPassword;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     private UserRoles role;
@@ -36,13 +33,16 @@ public class User implements Serializable {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @NotNull
+    private Boolean logged;
+
+    @NotNull
+    @JsonIgnore
+    private String salt;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Log> logs = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -56,7 +56,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbackSent = new HashSet<>();
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbackReceived = new HashSet<>();
 
@@ -83,6 +83,29 @@ public class User implements Serializable {
     public User() {
     }
 
+    @PrePersist
+    public void setCreatedAt() {
+        createdAt = new Date(System.currentTimeMillis());
+        logged = false;
+        role = UserRoles.ROLE_USER;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public Boolean getLogged() {
+        return logged;
+    }
+
+    public void setLogged(Boolean logged) {
+        this.logged = logged;
+    }
+
     public UserRoles getRoles() {
         return role;
     }
@@ -97,11 +120,6 @@ public class User implements Serializable {
 
     public Date getCreatedAt() {
         return createdAt;
-    }
-
-    @PrePersist
-    public void setCreatedAt() {
-        this.createdAt = new Date(System.currentTimeMillis());
     }
 
     public Set<Announcement> getRent() {
@@ -134,14 +152,6 @@ public class User implements Serializable {
 
     public void setFeedbackReceived(Set<Feedback> feedbackReceived) {
         this.feedbackReceived = feedbackReceived;
-    }
-
-    public Set<Log> getLogs() {
-        return logs;
-    }
-
-    public void setLogs(Set<Log> logs) {
-        this.logs = logs;
     }
 
     public Set<Message> getMessagesSent() {
@@ -190,13 +200,5 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmedPassword() {
-        return confirmedPassword;
-    }
-
-    public void setConfirmedPassword(String confirmedPassword) {
-        this.confirmedPassword = confirmedPassword;
     }
 }

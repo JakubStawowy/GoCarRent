@@ -1,6 +1,5 @@
 package com.example.gocarrentspringbootapplication.services;
 
-import com.example.gocarrentspringbootapplication.components.UserRoles;
 import com.example.gocarrentspringbootapplication.keys.TokenKeyRepository;
 import com.example.gocarrentspringbootapplication.models.User;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +13,7 @@ import java.util.Date;
 
 @Service
 public class JsonWebTokenProvider {
-    public String generateToken(User user) {
+    public String generateToken(final User user) {
 
         Key signingKey = new SecretKeySpec(TokenKeyRepository.getKey().getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS512.getJcaName());
         String name = user.getUserDetails().getName()+" "+user.getUserDetails().getSurname();

@@ -36,17 +36,21 @@ public class JsonWebTokenFilter extends BasicAuthenticationFilter {
         }
 
         try {
+
             UsernamePasswordAuthenticationToken result = getAuthenticationByToken(header);
             SecurityContextHolder.getContext().setAuthentication(result);
+
         } catch (ExpiredJwtException e) {
+
             Logger.getGlobal().log(Level.INFO, e.getMessage());
             SecurityContextHolder.clearContext();
+
         } finally {
             chain.doFilter(request, response);
         }
     }
 
-    private UsernamePasswordAuthenticationToken getAuthenticationByToken(String header) throws ExpiredJwtException {
+    private UsernamePasswordAuthenticationToken getAuthenticationByToken(final String header) throws ExpiredJwtException {
 
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(TokenKeyRepository.getKey().getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(header.replace("Bearer ",""));

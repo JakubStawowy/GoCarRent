@@ -3,7 +3,9 @@ package com.example.gocarrentspringbootapplication.controllers;
 import com.example.gocarrentspringbootapplication.models.User;
 import com.example.gocarrentspringbootapplication.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,8 +21,21 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register", consumes = "application/json")
-    @Nullable
-    public User registerUser(@RequestBody User user) {
-        return userRepository.save(user);
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        if(userRepository.getUserByEmail(user.getEmail()).isPresent()) {
+            return new ResponseEntity<>(
+                "User with email: "+user.getEmail()+" already exists",
+                    HttpStatus.CONFLICT
+            );
+        }
+        String salt = BCrypt.gensalt();
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), salt);
+        user.setPassword(hashedPassword);
+        user.setSalt(salt);
+        userRepository.save(user);
+        return new ResponseEntity<>(
+            "User "+user.getUserDetails().getName()+" "+user.getUserDetails().getSurname()+" registered successfully",
+                HttpStatus.OK
+        );
     }
 }
