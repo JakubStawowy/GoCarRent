@@ -6,7 +6,6 @@ import com.example.gocarrentspringbootapplication.services.JsonWebTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,6 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login")
-    @Nullable
     public ResponseEntity<String> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         Optional<User> userFoundedByEmail = userRepository.getUserByEmail(email);
         if(userFoundedByEmail.isPresent()) {

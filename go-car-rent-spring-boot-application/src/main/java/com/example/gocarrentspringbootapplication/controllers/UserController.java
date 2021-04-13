@@ -5,6 +5,8 @@ import com.example.gocarrentspringbootapplication.models.UserDetails;
 import com.example.gocarrentspringbootapplication.repositories.UserRepository;
 import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public List<User> getUsers(){
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
@@ -31,21 +33,20 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @Nullable
-    public User getUser(@PathVariable("id") Long id){
+    public ResponseEntity<User> getUser(@PathVariable("id") Long id){
         Optional<User> optionalUser = userRepository.findById(id);
-
-        return optionalUser.orElse(null);
+        return optionalUser.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping(path = "/{id}/edit", consumes = "application/json")
-    @Nullable
-    public User editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
+    public ResponseEntity<String> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        optionalUser.ifPresent(value->{
-            value.setUserDetails(details);
-            userRepository.save(value);
-        });
-        return optionalUser.orElse(null);
+        if(optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setUserDetails(details);
+            userRepository.save(optionalUser.get());
+            return new ResponseEntity<>("User "+user.getUserDetails()+" "+user.getUserDetails().getSurname()+" edited successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

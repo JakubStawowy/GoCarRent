@@ -4,6 +4,9 @@ import com.example.gocarrentspringbootapplication.models.Announcement;
 import com.example.gocarrentspringbootapplication.models.AnnouncementDetails;
 import com.example.gocarrentspringbootapplication.repositories.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +27,7 @@ public class AnnouncementController {
         this.repository = repository;
     }
 
-    @GetMapping(value = "/")
+    @GetMapping(value = {"/", ""})
     public List<Announcement> getAnnouncements() {
         List<Announcement> announcements = new ArrayList<>();
         repository.findAll().forEach(announcements::add);
@@ -33,32 +36,36 @@ public class AnnouncementController {
     }
 
     @GetMapping(value = "/{id}")
-    @Nullable
-    public Announcement getAnnouncement(@PathVariable("id") Long id) {
+    public ResponseEntity<Announcement> getAnnouncement(@PathVariable("id") Long id) {
         Optional<Announcement> optionalAnnouncement = repository.findById(id);
-        return optionalAnnouncement.orElse(null);
+        return optionalAnnouncement.map(announcement->new ResponseEntity<>(announcement, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(value = "/add", consumes = "application/json")
-    public Announcement addAnnouncement(@RequestBody Announcement announcement) {
+    public ResponseEntity<String> addAnnouncement(@RequestBody Announcement announcement) {
         repository.save(announcement);
-        return announcement;
+        return new ResponseEntity<>("Announcement added successfully", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}/remove")
-    public String removeAnnouncement(@PathVariable("id") Long id) {
-        repository.deleteById(id);
-        return "Announcement removed successfully";
+    public ResponseEntity<String> removeAnnouncement(@PathVariable("id") Long id) {
+        try {
+            repository.deleteById(id);
+            return new ResponseEntity<>("Announcement removed successfully", HttpStatus.OK);
+        } catch (EmptyResultDataAccessException ignored) {
+            return new ResponseEntity<>("Announcement with this id does not exist", HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping(value = "/{id}/edit", consumes = "application/json")
-    @Nullable
-    public Announcement editAnnouncement(@RequestBody AnnouncementDetails details, @PathVariable("id") Long id) {
+    public ResponseEntity<String> editAnnouncement(@RequestBody AnnouncementDetails details, @PathVariable("id") Long id) {
         Optional<Announcement> optionalAnnouncement = repository.findById(id);
-        optionalAnnouncement.ifPresent(value->{
-            value.setAnnouncementDetails(details);
-            repository.save(value);
-        });
-        return optionalAnnouncement.orElse(null);
+        if (optionalAnnouncement.isPresent()) {
+            Announcement announcement = optionalAnnouncement.get();
+            announcement.setAnnouncementDetails(details);
+            repository.save(announcement);
+            return new ResponseEntity<>("Announcement edited successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
