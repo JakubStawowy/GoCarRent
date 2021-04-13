@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../components/components.css';
 import {Button, Container, List, ListItem, makeStyles, Typography} from "@material-ui/core";
 import userImage from '../uploads/user.png';
 import feedbacks from '../data/feedback';
 import Feedback from "../components/Feedback";
-
+import getUserById from "../controllers/UserController";
 const useStyles = makeStyles((theme) => ({
 
     container: {
@@ -30,13 +30,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Profile() {
+    const [userData, setUserData] = useState({
+        userDetails: {}
+    });
     const classes = useStyles();
+
+    useEffect(  () => {
+        getUserById(33).then(r => {
+            setUserData(r);
+        });
+    }, []);
 
     return (
         <Container className={classes.container}>
             <img className={classes.img} src={userImage} alt={''}/>
             <Typography variant={'h3'} gutterBottom={'true'}>
-                Hajiid Sriraccha
+                {`${userData.userDetails.name} ${userData.userDetails.surname}`}
             </Typography>
             <Typography gutterBottom={'true'}>
                 <Button variant={'contained'} className={classes.button}>User announcements</Button>

@@ -44,7 +44,7 @@ export default function LoginRegister() {
                     Login
                 </Typography>
                 <FormControl className={classes.form} variant={'filled'}>
-                    <TextField type={'text'} label={'Email'}/>
+                    <TextField name={"emailField"} type={'text'} label={'Email'}/>
                     <TextField type={'password'} label={'Password'}/>
                     <Button
                         className={classes.button}

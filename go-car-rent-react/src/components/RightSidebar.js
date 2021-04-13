@@ -48,7 +48,7 @@ export default function RightSidebar() {
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
-                <NavLink to={'/user{id}/profile'}>
+                <NavLink to={'/users/{id}/profile'}>
                     <div className={classes.circlePlate}>
                         <Avatar
                             src={userImage}
@@ -57,19 +57,19 @@ export default function RightSidebar() {
                         />
                     </div>
                 </NavLink>
-                <NavLink to={"/user/{id}/profile"}>
+                <NavLink to={"/users/{id}/profile"}>
                     <Button className={classes.button}>
                         <Typography variant={"BUTTON"} size={'large'}>profile</Typography>
                         <PersonIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/user/{id}/messages"}>
+                <NavLink to={"/users/{id}/messages"}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"}>messages</Typography>
                         <MessageIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/user/{id}/cars"}>
+                <NavLink to={"/users/{id}/cars"}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"}>your cars</Typography>
                         <DirectionsCarIcon />
