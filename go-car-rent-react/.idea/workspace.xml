@@ -2,7 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70d77224-5eb7-4f16-8aa7-30a64954ee67" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/filters/JsonWebTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/filters/JsonWebTokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reducers/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reducers/isLogged.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/controllers/LogoutController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LeftSidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LeftSidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/UserController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/LoginRegister.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/LoginRegister.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/services/JsonWebTokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/services/JsonWebTokenProvider.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +103,10 @@
       <workItem from="1617031068426" duration="1169000" />
       <workItem from="1617081818385" duration="1464000" />
       <workItem from="1617911824332" duration="65000" />
+      <workItem from="1618896376704" duration="1570000" />
+      <workItem from="1618942092534" duration="5335000" />
+      <workItem from="1618996314314" duration="18000" />
+      <workItem from="1618997298840" duration="20707000" />
     </task>
     <task id="LOCAL-00001" summary="Sidebar menus done // basic routing added">
       <created>1616079691946</created>

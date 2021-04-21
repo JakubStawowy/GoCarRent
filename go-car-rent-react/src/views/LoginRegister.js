@@ -1,11 +1,14 @@
 import {
     Button, Card,
     Container,
-    FormControl,
     makeStyles,
     TextField, Typography
 } from "@material-ui/core";
-import logo from '../uploads/logo.png';
+
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import {loginUser} from "../actions/";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles({
     container: {
@@ -34,29 +37,62 @@ const useStyles = makeStyles({
         background: 'transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box',
     }
 });
+
 export default function LoginRegister() {
     const classes = useStyles();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const isLogged = useSelector(state=>state.isLogged);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(loginUser({
+            email: email,
+            password: password
+        })).then(() => {
+            history.push('/home');
+        });
+    }
+
+    const handleSubmitRegister = (e) => {
+        e.preventDefault();
+        alert(localStorage.getItem('token'));
+    }
+
     return (
         <Container className={classes.container}>
-
             <Card className={classes.cards}>
                 <Typography variant={'h4'} align={'center'}>
                     Login
                 </Typography>
-                <FormControl className={classes.form} variant={'filled'}>
-                    <TextField name={"emailField"} type={'text'} label={'Email'}/>
-                    <TextField type={'password'} label={'Password'}/>
+                <form className={classes.form} onSubmit={handleSubmit}>
+                    <TextField
+                        name={"emailField"}
+                        type={'text'}
+                        label={'Email'}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                        name={"passwordField"}
+                        type={'password'}
+                        label={'Password'}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                     <Button
+                        type={"submit"}
                         className={classes.button}
                         variant="contained"
                     >Login</Button>
-                </FormControl>
+                </form>
             </Card>
             <Card className={classes.cards}>
                 <Typography variant={'h4'} align={'center'}>
                     Register
                 </Typography>
-                <FormControl className={classes.form}>
+                <form className={classes.form} onSubmit={handleSubmitRegister}>
                     <TextField type={'text'} label={'Name'}/>
                     <TextField type={'text'} label={'Surname'}/>
                     <TextField type={'text'} label={'Email'}/>
@@ -65,8 +101,9 @@ export default function LoginRegister() {
                     <Button
                         className={classes.button}
                         variant="contained"
+                        type={"submit"}
                     >Register</Button>
-                </FormControl>
+                </form>
             </Card>
         </Container>
     );

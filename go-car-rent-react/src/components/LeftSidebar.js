@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {AppBar, makeStyles, Typography, Button, Grid, Box, Avatar} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 import PostAddIcon from '@material-ui/icons/PostAdd';
@@ -6,6 +6,10 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import logoImage from '../uploads/logo.png';
+import {logoutUser} from "../actions";
+import {useDispatch, useSelector} from "react-redux";
+
+import {useState} from "react";
 
 const useStyles = makeStyles((theme) => ({
     bar: {
@@ -42,6 +46,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LeftSidebar() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const [isLogged, setIsLogged] = useState(useSelector(state => state.isLogged));
+
+    const handleLogout = () => {
+        dispatch(logoutUser({
+            userId: localStorage.getItem('userId')
+        }));
+        setIsLogged(!isLogged);
+    };
+
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
@@ -69,10 +84,17 @@ export default function LeftSidebar() {
                     </Button>
                 </NavLink>
                 <NavLink to={"/login"}>
-                    <Button className={classes.button} size={'large'} id={"logoutButton"}>
-                        <ExitToAppIcon />
-                        <Typography variant={"BUTTON"}>logout</Typography>
-                    </Button>
+                    {isLogged.logged ? (
+                        <Button className={classes.button} size={'large'} id={"logoutButton"} onClick={handleLogout}>
+                            <ExitToAppIcon />
+                            <Typography variant={"BUTTON"}>logout</Typography>
+                        </Button>
+                    ) : (
+                        <Button className={classes.button} size={'large'} id={"logoutButton"} onClick={handleLogout}>
+                            <ExitToAppIcon />
+                            <Typography variant={"BUTTON"}>login</Typography>
+                        </Button>
+                    )}
                 </NavLink>
             </AppBar>
         </Grid>

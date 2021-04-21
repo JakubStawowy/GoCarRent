@@ -4,6 +4,7 @@ import com.example.gocarrentspringbootapplication.models.User;
 import com.example.gocarrentspringbootapplication.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.services.JsonWebTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -26,26 +27,16 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public ResponseEntity<Pair<Long, String>> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         Optional<User> userFoundedByEmail = userRepository.getUserByEmail(email);
         if(userFoundedByEmail.isPresent()) {
             Optional<User> user = userRepository.getUserByEmailAndPassword(email, BCrypt.hashpw(password, userFoundedByEmail.get().getSalt()));
             if(user.isPresent()) {
                 user.get().setLogged(true);
                 userRepository.save(user.get());
-                return new ResponseEntity<>(jsonWebTokenProvider.generateToken(user.get()), HttpStatus.OK);
+                Pair<Long, String> userIdWithToken = Pair.of(user.get().getId(), jsonWebTokenProvider.generateToken(user.get()));
+                return new ResponseEntity<>(userIdWithToken, HttpStatus.OK);
             }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @PostMapping(value = "/logout")
-    public ResponseEntity<?> logout(@RequestParam("id") Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()) {
-            user.get().setLogged(false);
-            userRepository.save(user.get());
-            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
