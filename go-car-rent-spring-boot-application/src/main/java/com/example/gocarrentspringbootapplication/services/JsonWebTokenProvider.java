@@ -23,7 +23,7 @@ public class JsonWebTokenProvider {
                 .claim("role", user.getRoles())
                 .claim("name", name)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+60000))
+                .setExpiration(new Date(System.currentTimeMillis()+120000))
                 .signWith(SignatureAlgorithm.HS512, signingKey)
 
                 .compact();
