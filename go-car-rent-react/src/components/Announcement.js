@@ -3,6 +3,8 @@ import image from '../uploads/transit.png';
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 import MessageIcon from "@material-ui/icons/Message";
+import SettingsIcon from '@material-ui/icons/Settings';
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Advertisement(props) {
+export default function Announcement(props) {
     const classes = useStyles();
     return (
         <Card className={classes.paper}>
@@ -53,6 +55,15 @@ export default function Advertisement(props) {
                     <Button>
                     <MessageIcon fontSize={"large"}/>
                     </Button>
+                    {
+                        props.authorId === parseInt(localStorage.getItem("userId")) &&
+                            <NavLink to={"/announcement/"+props.announcementId+"/edit"}>
+                                <Button>
+                                    <SettingsIcon fontSize={"large"}/>
+                                </Button>
+                            </NavLink>
+                    }
+
                 </ListItemIcon>
             </Container>
         </Card>

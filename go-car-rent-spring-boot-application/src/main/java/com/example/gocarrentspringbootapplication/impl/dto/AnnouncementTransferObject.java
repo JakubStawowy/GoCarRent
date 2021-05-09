@@ -1,9 +1,12 @@
 package com.example.gocarrentspringbootapplication.impl.dto;
 
+import com.example.gocarrentspringbootapplication.impl.models.Announcement;
+
 import java.io.Serializable;
 
 public class AnnouncementTransferObject implements Serializable {
 
+    private Long id;
     private final String title;
     private final String amount;
     private final String currency;
@@ -20,6 +23,21 @@ public class AnnouncementTransferObject implements Serializable {
         this.carBrand = carBrand;
         this.carModel = carModel;
         this.authorId = authorId;
+    }
+
+    public AnnouncementTransferObject(Announcement announcement) {
+        id = announcement.getId();
+        title = announcement.getAnnouncementDetails().getTitle();
+        amount = announcement.getAnnouncementDetails().getAmount().toPlainString();
+        currency = announcement.getAnnouncementDetails().getCurrency().getCurrencyCode();
+        timeUnit = announcement.getAnnouncementDetails().getTimeUnit().toString();
+        carBrand = announcement.getAnnouncementDetails().getCarBrand();
+        carModel = announcement.getAnnouncementDetails().getCarModel();
+        authorId = announcement.getAuthor().getId();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {

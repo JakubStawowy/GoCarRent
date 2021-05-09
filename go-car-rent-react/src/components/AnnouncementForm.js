@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import '../components/components.css';
 import {
     Button,
-    Card,
     Container, Fab,
-    FormControl, Grid,
+    Grid,
     makeStyles,
     MenuItem,
-    Select, TextareaAutosize,
+    Select,
     TextField,
     Typography
 } from "@material-ui/core";
@@ -17,6 +16,7 @@ import carBrands from "../data/carBrands";
 import ImageIcon from '@material-ui/icons/Image';
 import {useDispatch} from "react-redux";
 import {addAnnouncement} from "../actions/addAnnouncement";
+import {editAnnouncement} from "../actions/editAnnouncement";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Add() {
+export default function AnnouncementForm(props) {
     const classes = useStyles();
 
     const [title, setTitle] = useState('');
@@ -70,17 +70,24 @@ export default function Add() {
             "authorId": localStorage.getItem("userId")
         };
 
-        dispatch(addAnnouncement(data)).then(
-            () => alert('Announcement added successfully')
-        ).catch(
-            (error) => alert(error)
-        );
+        props.edit ?
+            dispatch(editAnnouncement(data, props.announcementId)).then(
+                () => alert('Announcement edited successfully')
+            ).catch(
+                (error) => alert(error)
+            )
+            :
+            dispatch(addAnnouncement(data)).then(
+                () => alert('Announcement added successfully')
+            ).catch(
+                (error) => alert(error)
+            );
     }
 
     return (
         <Container className={classes.container}>
             <Typography variant={'h4'} align={'center'}>
-                Add announcement
+                {props.edit ? "Edit announcement" : "Add announcement"}
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
                 <Grid container justify={'center'} className={classes.gridContainer}>
