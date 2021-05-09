@@ -41,7 +41,7 @@ export default function Advertisement(props) {
                     <Typography variant={"body1"}>{props.date}</Typography>
                 </Typography>
                 <Typography variant={'h6'}>
-                    {props.price}
+                    {props.price} {props.currency} / {props.timeUnit}
                 </Typography>
                 <ListItemIcon>
                     <Button>
