@@ -5,9 +5,10 @@ import {
     TextField, Typography
 } from "@material-ui/core";
 
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useState} from "react";
-import {loginUser} from "../actions/";
+import {loginUser} from "../actions/login";
+import {registerUser} from "../actions/register";
 import {useHistory} from "react-router";
 
 const useStyles = makeStyles({
@@ -42,22 +43,41 @@ export default function LoginRegister() {
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [registeredEmail, setRegisteredEmail] = useState('');
+    const [registeredPassword, setRegisteredPassword] = useState('');
+    const [confirmedPassword, setConfirmedPassword] = useState('');
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
     const dispatch = useDispatch();
     const history = useHistory();
-    const isLogged = useSelector(state=>state.isLogged);
-    const handleSubmit = (e) => {
+    const handleLoginSubmit = (e) => {
         e.preventDefault();
         dispatch(loginUser({
             email: email,
             password: password
         })).then(() => {
             history.push('/home');
+        }).catch(() => {
+           alert("Bad email or password");
         });
     }
 
     const handleSubmitRegister = (e) => {
         e.preventDefault();
-        alert(localStorage.getItem('token'));
+        dispatch(registerUser({
+            'email': registeredEmail,
+            'password': registeredPassword,
+            'userDetails': {
+                'name': name,
+                'surname': surname,
+                'phone': null,
+                'image': 'no-image'
+            }
+        })).then(() => {
+            alert('User registered');
+        }).catch((error) => {
+            alert(error);
+        });
     }
 
     return (
@@ -66,7 +86,7 @@ export default function LoginRegister() {
                 <Typography variant={'h4'} align={'center'}>
                     Login
                 </Typography>
-                <form className={classes.form} onSubmit={handleSubmit}>
+                <form className={classes.form} onSubmit={handleLoginSubmit}>
                     <TextField
                         name={"emailField"}
                         type={'text'}
@@ -93,11 +113,11 @@ export default function LoginRegister() {
                     Register
                 </Typography>
                 <form className={classes.form} onSubmit={handleSubmitRegister}>
-                    <TextField type={'text'} label={'Name'}/>
-                    <TextField type={'text'} label={'Surname'}/>
-                    <TextField type={'text'} label={'Email'}/>
-                    <TextField type={'password'} label={'Password'}/>
-                    <TextField type={'password'} label={'Confirm password'}/>
+                    <TextField type={'text'} label={'Name'} value={name} onChange={(e) => setName(e.target.value)}/>
+                    <TextField type={'text'} label={'Surname'} value={surname} onChange={(e) => setSurname(e.target.value)}/>
+                    <TextField type={'text'} label={'Email'} value={registeredEmail} onChange={(e) => setRegisteredEmail(e.target.value)}/>
+                    <TextField type={'password'} label={'Password'} value={registeredPassword} onChange={(e) => setRegisteredPassword(e.target.value)}/>
+                    <TextField type={'password'} label={'Confirm password'} value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)}/>
                     <Button
                         className={classes.button}
                         variant="contained"

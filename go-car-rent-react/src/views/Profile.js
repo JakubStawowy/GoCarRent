@@ -4,6 +4,7 @@ import {Button, Container, List, ListItem, makeStyles, Typography} from "@materi
 import userImage from '../uploads/user.png';
 import feedbacks from '../data/feedback';
 import Feedback from "../components/Feedback";
+import {getUserDetails} from "../actions/getUserDetails";
 const useStyles = makeStyles((theme) => ({
 
     container: {
@@ -29,22 +30,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Profile() {
+
     const [userData, setUserData] = useState({
-        userDetails: {}
+        name: '',
+        surname: ''
     });
+
     const classes = useStyles();
 
     useEffect(  () => {
-        // getUserById(5).then(r => {
-        //     setUserData(r);
-        // });
+        getUserDetails().then(response => {
+           setUserData(response.data);
+        });
     }, []);
 
     return (
         <Container className={classes.container}>
             <img className={classes.img} src={userImage} alt={''}/>
             <Typography variant={'h3'} gutterBottom={'true'}>
-                {`${userData.userDetails.name} ${userData.userDetails.surname}`}
+                {`${userData.name} ${userData.surname}`}
             </Typography>
             <Typography gutterBottom={'true'}>
                 <Button variant={'contained'} className={classes.button}>User announcements</Button>

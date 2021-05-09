@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {AppBar, makeStyles, Typography, Button, Grid, Box, Avatar} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 import PostAddIcon from '@material-ui/icons/PostAdd';
@@ -6,7 +6,7 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import logoImage from '../uploads/logo.png';
-import {logoutUser} from "../actions";
+import {logoutUser} from "../actions/logout";
 import {useDispatch, useSelector} from "react-redux";
 
 import {useState} from "react";
