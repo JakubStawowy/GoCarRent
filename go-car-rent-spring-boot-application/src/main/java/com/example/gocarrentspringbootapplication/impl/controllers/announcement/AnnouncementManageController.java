@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -53,16 +54,6 @@ public final class AnnouncementManageController {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-    }
-
-    @DeleteMapping(value = "/{id}/remove")
-    public ResponseEntity<Boolean> removeAnnouncement(@PathVariable("id") Long id) {
-        try {
-            announcementRepository.deleteById(id);
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } catch (EmptyResultDataAccessException ignored) {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
     }
 
     @PutMapping(value = "/{id}/edit", consumes = "application/json")

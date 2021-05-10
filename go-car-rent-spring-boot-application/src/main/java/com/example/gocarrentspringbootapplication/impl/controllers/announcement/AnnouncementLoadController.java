@@ -15,12 +15,12 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api/announcements")
-public class AnnouncementLoaderController {
+public class AnnouncementLoadController {
 
     private final AnnouncementRepository announcementRepository;
 
     @Autowired
-    public AnnouncementLoaderController(AnnouncementRepository announcementRepository) {
+    public AnnouncementLoadController(AnnouncementRepository announcementRepository) {
         this.announcementRepository = announcementRepository;
     }
 
