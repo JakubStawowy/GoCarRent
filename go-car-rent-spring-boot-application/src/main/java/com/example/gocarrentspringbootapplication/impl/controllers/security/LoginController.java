@@ -1,6 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.security;
 
-import com.example.gocarrentspringbootapplication.api.providers.TokenProvider;
+import com.example.gocarrentspringbootapplication.api.providers.ITokenProvider;
 import com.example.gocarrentspringbootapplication.api.security.IAuthorizeService;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api")
-public class LoginController {
+public final class LoginController {
 
     private final UserRepository userRepository;
-    private final TokenProvider tokenProvider;
+    private final ITokenProvider tokenProvider;
     private final IAuthorizeService authorizeService;
 
     @Autowired
-    public LoginController(UserRepository userRepository, TokenProvider tokenProvider, IAuthorizeService authorizeService) {
+    public LoginController(UserRepository userRepository, ITokenProvider tokenProvider, IAuthorizeService authorizeService) {
         this.userRepository = userRepository;
         this.tokenProvider = tokenProvider;
         this.authorizeService = authorizeService;

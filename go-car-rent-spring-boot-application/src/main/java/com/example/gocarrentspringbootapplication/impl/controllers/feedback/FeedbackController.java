@@ -15,7 +15,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/feedback")
-public class FeedbackController {
+public final class FeedbackController {
 
     private final FeedbackRepository repository;
 
@@ -25,7 +25,6 @@ public class FeedbackController {
     }
 
     @PostMapping(path = "/add", consumes = "application/json")
-    @Nullable
     public Feedback addFeedback(@RequestBody Feedback feedback) {
         return repository.save(feedback);
     }

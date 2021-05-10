@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api/announcements")
-public class AnnouncementRemoveController {
+public final class AnnouncementRemoveController {
 
     private final AnnouncementRepository announcementRepository;
     private final IAuthorizeService authorizeService;

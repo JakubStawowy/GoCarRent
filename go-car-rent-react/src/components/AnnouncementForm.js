@@ -20,6 +20,7 @@ import {addAnnouncement} from "../actions/addAnnouncement";
 import {editAnnouncement} from "../actions/editAnnouncement";
 import {deleteAnnouncement} from "../actions/deleteAnnouncement";
 import {useHistory} from "react-router";
+import {getAnnouncement} from "../actions/getAnnouncement";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -66,12 +67,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnnouncementForm(props) {
     const classes = useStyles();
-
-    const [title, setTitle] = useState('');
-    const [price, setPrice] = useState('');
-    const [timeUnit, setTimeUnit] = useState('');
-    const [brand, setBrand] = useState('');
-    const [model, setModel] = useState('');
+    const [announcement, setAnnouncement] = useState({
+        "title": '',
+        "price": '',
+        "timeUnit": '',
+        "brand": '',
+        "model": ''
+    });
+    const [title, setTitle] = useState(props.edit ? announcement.title : '');
+    const [price, setPrice] = useState(props.edit ? announcement.price : '');
+    const [timeUnit, setTimeUnit] = useState(props.edit ? announcement.timeUnit : '');
+    const [brand, setBrand] = useState(props.edit ? announcement.brand : '');
+    const [model, setModel] = useState(props.edit ? announcement.model : '');
     const [deleteStatus, setDeleteStatus] = useState(false);
     const [password, setPassword] = useState('');
 
@@ -82,6 +89,16 @@ export default function AnnouncementForm(props) {
         alert(message);
         history.replace(endpoint);
     }
+
+    useEffect(() => {
+        if (props.edit) {
+            dispatch(getAnnouncement(props.announcementId)).then((response) => {
+                setAnnouncement(response.data);
+                console.log(announcement);
+            }).catch((error) => handleSuccess(error, "/"));
+        }
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 

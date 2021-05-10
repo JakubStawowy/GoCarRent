@@ -30,8 +30,8 @@ export default function Home() {
     useEffect(() => {
        getAnnouncements().then((response) => {
            setAnnouncements(response.data);
-       })
-    });
+       });
+    }, []);
 
     return (
             <Container className={classes.container}>

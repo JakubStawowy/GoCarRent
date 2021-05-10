@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/users")
-public class UserManageController {
+public final class UserManageController {
 
     private final UserRepository userRepository;
 

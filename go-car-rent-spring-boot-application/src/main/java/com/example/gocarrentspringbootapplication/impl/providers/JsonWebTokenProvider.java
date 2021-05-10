@@ -1,6 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.providers;
 
-import com.example.gocarrentspringbootapplication.api.providers.TokenProvider;
+import com.example.gocarrentspringbootapplication.api.providers.ITokenProvider;
 import com.example.gocarrentspringbootapplication.impl.keys.TokenKeyRepository;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import io.jsonwebtoken.Jwts;
@@ -13,7 +13,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Service
-public final class JsonWebTokenProvider implements TokenProvider {
+public final class JsonWebTokenProvider implements ITokenProvider {
 
     @Override
     public String generateUserToken(final User user) {

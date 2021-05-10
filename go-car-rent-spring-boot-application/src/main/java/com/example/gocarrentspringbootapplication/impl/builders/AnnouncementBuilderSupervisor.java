@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public final class AnnouncementBuilderSupervisor implements IAnnouncementBuilderSupervisor {
 
     @Override
-    public Announcement construct(AnnouncementTransferObject announcementTransferObject, IAnnouncementBuilder announcementBuilder) {
+    public Announcement construct(final AnnouncementTransferObject announcementTransferObject, final IAnnouncementBuilder announcementBuilder) {
         return announcementBuilder
                 .setTitle(announcementTransferObject.getTitle())
                 .setAmount(announcementTransferObject.getAmount())
