@@ -68,11 +68,11 @@ const useStyles = makeStyles((theme) => ({
 export default function AnnouncementForm(props) {
     const classes = useStyles();
     const [announcement, setAnnouncement] = useState({
-        "title": '',
-        "price": '',
-        "timeUnit": '',
-        "brand": '',
-        "model": ''
+        title: '',
+        price: '',
+        timeUnit: '',
+        brand: '',
+        model: ''
     });
     const [title, setTitle] = useState(props.edit ? announcement.title : '');
     const [price, setPrice] = useState(props.edit ? announcement.price : '');
@@ -92,10 +92,11 @@ export default function AnnouncementForm(props) {
 
     useEffect(() => {
         if (props.edit) {
-            dispatch(getAnnouncement(props.announcementId)).then((response) => {
+            getAnnouncement(props.announcementId).then((response) => {
                 setAnnouncement(response.data);
+                console.log(response.data);
                 console.log(announcement);
-            }).catch((error) => handleSuccess(error, "/"));
+            })
         }
     }, []);
 

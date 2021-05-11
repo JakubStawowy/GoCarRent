@@ -27,6 +27,7 @@ public final class JsonWebTokenProvider implements ITokenProvider {
                 .claim("name", name)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+3600000))
+//                .setExpiration(new Date(System.currentTimeMillis()+10000))
                 .signWith(SignatureAlgorithm.HS512, signingKey)
 
                 .compact();

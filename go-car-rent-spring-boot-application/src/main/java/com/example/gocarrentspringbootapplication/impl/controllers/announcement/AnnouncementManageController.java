@@ -38,7 +38,7 @@ public final class AnnouncementManageController {
         this.announcementBuilderSupervisor = announcementBuilderSupervisor;
     }
     @PostMapping(value = "/add", consumes = "application/json")
-    public ResponseEntity<Boolean> addAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject) {
+    public ResponseEntity<?> addAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject) {
 
         Optional<User> author = userRepository.findById(announcementTransferObject.getAuthorId());
         announcementBuilder.refresh();
@@ -49,13 +49,13 @@ public final class AnnouncementManageController {
                     announcementBuilder
             );
             announcementRepository.save(announcement);
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(value = "/{id}/edit", consumes = "application/json")
-    public ResponseEntity<Boolean> editAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject, @PathVariable("id") Long id) {
+    public ResponseEntity<?> editAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject, @PathVariable("id") Long id) {
 
         announcementBuilder.refresh();
         Announcement announcement = announcementBuilderSupervisor.construct(
@@ -70,8 +70,8 @@ public final class AnnouncementManageController {
             announcement.setCreatedAt(optionalAnnouncement.get().getCreatedAt());
             announcement.setRentStatus(optionalAnnouncement.get().getRentStatus());
             announcementRepository.save(announcement);
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

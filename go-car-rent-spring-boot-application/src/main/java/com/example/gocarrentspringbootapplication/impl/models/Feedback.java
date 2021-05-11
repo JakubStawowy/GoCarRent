@@ -20,6 +20,7 @@ public class Feedback implements Serializable {
     private String content;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private FeedbackRate rate;
 
     @NotNull
@@ -71,8 +72,8 @@ public class Feedback implements Serializable {
         this.content = content;
     }
 
-    public FeedbackRate getRate() {
-        return rate;
+    public int getRate() {
+        return rate.ordinal();
     }
 
     public void setRate(FeedbackRate rate) {

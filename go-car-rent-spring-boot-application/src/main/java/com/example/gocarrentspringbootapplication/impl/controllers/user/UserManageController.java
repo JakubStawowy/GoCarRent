@@ -25,7 +25,7 @@ public final class UserManageController {
     }
 
     @PutMapping(path = "/{id}/edit", consumes = "application/json")
-    public ResponseEntity<Boolean> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
+    public ResponseEntity<?> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if(optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -34,8 +34,8 @@ public final class UserManageController {
             Logger.getGlobal().log(Level.INFO, details.getName());
             Logger.getGlobal().log(Level.INFO, user.getUserDetails().getName());
             userRepository.save(optionalUser.get());
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
