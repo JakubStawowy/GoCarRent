@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import '../components/components.css';
 import {Button, Container, List, ListItem, makeStyles, Typography} from "@material-ui/core";
 import userImage from '../uploads/user.png';
-import feedbacks from '../data/feedback';
 import Feedback from "../components/Feedback";
 import {getUserDetails} from "../actions/getUserDetails";
+import {useHistory} from "react-router";
+import {getFeedback} from "../actions/getFeedback";
+import {ERROR_FORBIDDEN} from "../data/errors";
 const useStyles = makeStyles((theme) => ({
 
     container: {
@@ -35,13 +37,26 @@ export default function Profile() {
         name: '',
         surname: ''
     });
+    const [feedback, setFeedback] = useState([]);
 
     const classes = useStyles();
+    const history = useHistory();
+
+    const handleError = (error) => {
+        if(error.response.status === ERROR_FORBIDDEN) {
+            localStorage.clear();
+            history.replace("/login");
+        }
+    }
 
     useEffect(  () => {
         getUserDetails().then(response => {
            setUserData(response.data);
-        });
+        }).catch((error) => handleError(error));
+
+        getFeedback(localStorage.getItem("userId")).then(
+            (response) => setFeedback(response.data)
+        ).catch((error) => handleError(error));
     }, []);
 
     return (
@@ -57,19 +72,24 @@ export default function Profile() {
                 Feedback
             </Typography>
             <List className={classes.list}>
-                {feedbacks.map(
-                    feedback => {
+                {feedback.length !== 0 ? feedback.map(
+                    singleFeedback => {
                         return (
                             <ListItem>
                                 <Feedback
-                                    author={feedback.author}
-                                    content={feedback.content}
-                                    stars={feedback.stars}
+                                    author={singleFeedback.author}
+                                    content={singleFeedback.content}
+                                    stars={singleFeedback.rate}
                                 />
                             </ListItem>
                         )
                     }
-                )}
+                )
+                    :
+                    <Typography variant={'h5'} gutterBottom={'true'}>
+                        {userData.name} does not have feedback yet
+                    </Typography>
+                }
             </List>
         </Container>
     );

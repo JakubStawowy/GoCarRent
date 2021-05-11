@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface FeedbackRepository extends CrudRepository<Feedback, Long> {
     List<Feedback> getFeedbacksByUserId(Long id);
+
 }

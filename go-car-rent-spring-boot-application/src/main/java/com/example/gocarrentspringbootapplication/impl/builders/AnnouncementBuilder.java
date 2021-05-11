@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.builders;
 
 import com.example.gocarrentspringbootapplication.api.builders.IAnnouncementBuilder;
+import com.example.gocarrentspringbootapplication.impl.components.FeedbackRate;
 import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
 import com.example.gocarrentspringbootapplication.impl.models.AnnouncementDetails;

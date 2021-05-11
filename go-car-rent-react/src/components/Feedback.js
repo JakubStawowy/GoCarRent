@@ -38,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Feedback(props) {
     const classes = useStyles();
+    let starsArray = [];
+    for(let i = 0 ; i < 5; i++) {
+        i <= props.stars ? starsArray[i] = true : starsArray[i] = false;
+    }
+
+    console.log(starsArray);
     return (
         <Card className={classes.paper}>
             <Avatar src={image} alt={''} className={classes.img} />
@@ -46,7 +52,7 @@ export default function Feedback(props) {
                     {props.author}
                     <div className={classes.stars}>
                         {
-                            props.stars.map(star => {
+                            starsArray.map(star => {
                                 if(star)
                                     return (
                                         <StarIcon />

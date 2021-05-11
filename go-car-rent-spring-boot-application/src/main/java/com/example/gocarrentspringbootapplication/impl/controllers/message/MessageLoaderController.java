@@ -10,7 +10,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/messages")
-public class MessageLoaderController {
+public final class MessageLoaderController {
 
     private final MessageRepository repository;
 

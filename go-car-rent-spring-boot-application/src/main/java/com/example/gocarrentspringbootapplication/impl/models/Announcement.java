@@ -1,7 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
 import com.example.gocarrentspringbootapplication.impl.components.RentStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "announcements")
-public class Announcement implements Serializable {
+public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,36 +24,29 @@ public class Announcement implements Serializable {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-//    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "announcement_details_id")
     private AnnouncementDetails announcementDetails;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id")
     private User author;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "rent")
     private Set<User> tenants;
 
-    public Announcement(AnnouncementDetails announcementDetails, User author) {
-        this.announcementDetails = announcementDetails;
-        this.author = author;
-    }
-
     @PrePersist
-    public void setCreatedAt() {
+    public void set() {
         createdAt = new Timestamp(System.currentTimeMillis());
         rentStatus = RentStatus.FREE;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Announcement() {
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
     public Long getId() {

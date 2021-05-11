@@ -19,7 +19,7 @@ public final class JsonWebTokenFilter extends BasicAuthenticationFilter {
 
     private final IAuthenticationTokenProvider<UsernamePasswordAuthenticationToken> authenticationTokenProvider;
 
-    public JsonWebTokenFilter(AuthenticationManager authenticationManager) {
+    public JsonWebTokenFilter(final AuthenticationManager authenticationManager) {
         super(authenticationManager);
         authenticationTokenProvider = new AuthenticationTokenProvider();
     }

@@ -16,7 +16,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/users")
-public class UserLoaderController {
+public final class UserLoaderController {
 
     private final UserRepository userRepository;
 
@@ -28,12 +28,7 @@ public class UserLoaderController {
     @GetMapping({"", "/"})
     public List<UserTransferObject> getUsers(){
         List<UserTransferObject> users = new ArrayList<>();
-        userRepository.findAll().forEach(user -> users.add(new UserTransferObject(
-                user.getUserDetails().getName(),
-                user.getUserDetails().getSurname(),
-                user.getEmail(),
-                user.getRoles()
-        )));
+        userRepository.findAll().forEach(user -> users.add(new UserTransferObject(user)));
         return users;
     }
 
@@ -41,11 +36,6 @@ public class UserLoaderController {
     public ResponseEntity<UserTransferObject> getUser(@PathVariable("id") Long id){
         Optional<User> optionalUser = userRepository.findById(id);
 
-        return optionalUser.map(user -> new ResponseEntity<>(new UserTransferObject(
-                user.getUserDetails().getName(),
-                user.getUserDetails().getSurname(),
-                user.getEmail(),
-                user.getRoles()
-        ), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return optionalUser.map(user -> new ResponseEntity<>(new UserTransferObject(user), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

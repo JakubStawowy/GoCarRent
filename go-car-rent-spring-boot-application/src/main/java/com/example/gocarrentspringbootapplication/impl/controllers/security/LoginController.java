@@ -1,43 +1,38 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.security;
 
-import com.example.gocarrentspringbootapplication.api.providers.TokenProvider;
+import com.example.gocarrentspringbootapplication.api.providers.ITokenProvider;
+import com.example.gocarrentspringbootapplication.api.security.IAuthorizeService;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
-import com.example.gocarrentspringbootapplication.impl.providers.JsonWebTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api")
-public class LoginController {
+public final class LoginController {
 
     private final UserRepository userRepository;
-    private final TokenProvider tokenProvider;
+    private final ITokenProvider tokenProvider;
+    private final IAuthorizeService authorizeService;
 
     @Autowired
-    public LoginController(UserRepository userRepository, TokenProvider tokenProvider) {
+    public LoginController(UserRepository userRepository, ITokenProvider tokenProvider, IAuthorizeService authorizeService) {
         this.userRepository = userRepository;
         this.tokenProvider = tokenProvider;
+        this.authorizeService = authorizeService;
     }
 
     @PostMapping(value = "/login")
     public ResponseEntity<Pair<Long, String>> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
-        Optional<User> userFoundedByEmail = userRepository.getUserByEmail(email);
-        if(userFoundedByEmail.isPresent()) {
-            Optional<User> user = userRepository.getUserByEmailAndPassword(email, BCrypt.hashpw(password, userFoundedByEmail.get().getSalt()));
-            if(user.isPresent()) {
-                user.get().setLogged(true);
-                userRepository.save(user.get());
-                Pair<Long, String> userIdWithToken = Pair.of(user.get().getId(), tokenProvider.generateUserToken(user.get()));
-                return new ResponseEntity<>(userIdWithToken, HttpStatus.OK);
-            }
+        User user;
+        if ((user = authorizeService.authorizeUserWithEmailAndPassword(email, password)) != null) {
+            user.setLogged(true);
+            userRepository.save(user);
+            return new ResponseEntity<>(Pair.of(user.getId(), tokenProvider.generateUserToken(user)), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

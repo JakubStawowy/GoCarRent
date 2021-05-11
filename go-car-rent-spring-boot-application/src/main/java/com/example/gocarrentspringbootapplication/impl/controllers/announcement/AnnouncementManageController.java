@@ -1,14 +1,13 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.announcement;
 
 import com.example.gocarrentspringbootapplication.api.builders.IAnnouncementBuilder;
+import com.example.gocarrentspringbootapplication.api.builders.IAnnouncementBuilderSupervisor;
 import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.dto.AnnouncementTransferObject;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
-import com.example.gocarrentspringbootapplication.impl.models.AnnouncementDetails;
 import com.example.gocarrentspringbootapplication.impl.dao.AnnouncementRepository;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,61 +20,58 @@ import java.util.Optional;
 @RequestMapping(value = "/api/announcements")
 public final class AnnouncementManageController {
 
-    private final AnnouncementRepository repository;
+    private final AnnouncementRepository announcementRepository;
     private final UserRepository userRepository;
     private final IAnnouncementBuilder announcementBuilder;
+    private final IAnnouncementBuilderSupervisor announcementBuilderSupervisor;
 
     @Autowired
     public AnnouncementManageController(
-            AnnouncementRepository repository,
+            AnnouncementRepository announcementRepository,
             UserRepository userRepository,
-            IAnnouncementBuilder announcementBuilder
+            IAnnouncementBuilder announcementBuilder,
+            IAnnouncementBuilderSupervisor announcementBuilderSupervisor
     ) {
-        this.repository = repository;
+        this.announcementRepository = announcementRepository;
         this.userRepository = userRepository;
         this.announcementBuilder = announcementBuilder;
+        this.announcementBuilderSupervisor = announcementBuilderSupervisor;
     }
     @PostMapping(value = "/add", consumes = "application/json")
-    public ResponseEntity<Boolean> addAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject) {
+    public ResponseEntity<?> addAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject) {
 
         Optional<User> author = userRepository.findById(announcementTransferObject.getAuthorId());
+        announcementBuilder.refresh();
 
         if(author.isPresent()) {
-            Announcement announcement = announcementBuilder
-                    .setTitle(announcementTransferObject.getTitle())
-                    .setAmount(announcementTransferObject.getAmount())
-                    .setCurrency(announcementTransferObject.getCurrency())
-                    .setTimeUnit(announcementTransferObject.getTimeUnit())
-                    .setCarBrand(announcementTransferObject.getCarBrand())
-                    .setCarModel(announcementTransferObject.getCarModel())
-                    .setAuthor(announcementTransferObject.getAuthorId())
-                    .build();
-
-            repository.save(announcement);
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            Announcement announcement = announcementBuilderSupervisor.construct(
+                    announcementTransferObject,
+                    announcementBuilder
+            );
+            announcementRepository.save(announcement);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-    }
-
-    @DeleteMapping(value = "/{id}/remove")
-    public ResponseEntity<Boolean> removeAnnouncement(@PathVariable("id") Long id) {
-        try {
-            repository.deleteById(id);
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } catch (EmptyResultDataAccessException ignored) {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(value = "/{id}/edit", consumes = "application/json")
-    public ResponseEntity<Boolean> editAnnouncement(@RequestBody AnnouncementDetails details, @PathVariable("id") Long id) {
-        Optional<Announcement> optionalAnnouncement = repository.findById(id);
+    public ResponseEntity<?> editAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject, @PathVariable("id") Long id) {
+
+        announcementBuilder.refresh();
+        Announcement announcement = announcementBuilderSupervisor.construct(
+                announcementTransferObject,
+                announcementBuilder
+        );
+
+        Optional<Announcement> optionalAnnouncement = announcementRepository.findById(id);
         if (optionalAnnouncement.isPresent()) {
-            Announcement announcement = optionalAnnouncement.get();
-            announcement.setAnnouncementDetails(details);
-            repository.save(announcement);
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            announcement.setId(optionalAnnouncement.get().getId());
+            announcement.getAnnouncementDetails().setId(optionalAnnouncement.get().getAnnouncementDetails().getId());
+            announcement.setCreatedAt(optionalAnnouncement.get().getCreatedAt());
+            announcement.setRentStatus(optionalAnnouncement.get().getRentStatus());
+            announcementRepository.save(announcement);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

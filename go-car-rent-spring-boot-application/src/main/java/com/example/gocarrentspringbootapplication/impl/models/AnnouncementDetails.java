@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "announcement_details")
-public class AnnouncementDetails implements Serializable {
+public class AnnouncementDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,18 +39,8 @@ public class AnnouncementDetails implements Serializable {
     @Column(name = "car_model")
     private String carModel;
 
-    @JsonIgnore
     @OneToOne(mappedBy = "announcementDetails")
     private Announcement announcement;
-
-    public AnnouncementDetails(@NotEmpty String title, @NotNull BigDecimal amount, @NotNull Currency currency, @NotNull TimeUnit timeUnit, @NotNull String carBrand, @NotNull String carModel) {
-        this.title = title;
-        this.amount = amount;
-        this.currency = currency;
-        this.timeUnit = timeUnit;
-        this.carBrand = carBrand;
-        this.carModel = carModel;
-    }
 
     public AnnouncementDetails() {
     }

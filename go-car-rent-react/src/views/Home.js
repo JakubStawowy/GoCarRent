@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import '../components/components.css';
-import {Button, Container, Fab, Grid, List, ListItem, makeStyles, Typography} from "@material-ui/core";
-import Advertisement from "../components/Advertisement";
+import {Container, Fab, List, ListItem, makeStyles} from "@material-ui/core";
+import Announcement from "../components/Announcement";
 import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
-import cars from '../data/cars';
-import {useSelector} from "react-redux";
-import {useHistory} from "react-router";
 import {getAnnouncements} from "../actions/getAnnouncements";
+import {useHistory} from "react-router";
+import {ERROR_FORBIDDEN} from "../data/errors";
 
 const useStyles = makeStyles((theme) => ({
     list: {
@@ -28,13 +27,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
     const classes = useStyles();
+    const history = useHistory();
 
     const [announcements, setAnnouncements] = useState([]);
     useEffect(() => {
        getAnnouncements().then((response) => {
+           console.log("Test");
            setAnnouncements(response.data);
-       })
-    });
+       }).catch((error) => {
+          if(error.response.status === ERROR_FORBIDDEN) {
+              localStorage.clear();
+              history.replace("/login");
+          }
+       });
+    }, []);
 
     return (
             <Container className={classes.container}>
@@ -50,12 +56,14 @@ export default function Home() {
                     {announcements.map(announcement => {
                         return (
                             <ListItem>
-                                <Advertisement
-                                    title={announcement.announcementDetails.title}
+                                <Announcement
+                                    announcementId={announcement.id}
+                                    title={announcement.title}
                                     date={announcement.createdAt}
-                                    price={announcement.announcementDetails.amount}
-                                    currency={announcement.announcementDetails.currency}
-                                    timeUnit={announcement.announcementDetails.timeUnit}
+                                    price={announcement.amount}
+                                    currency={announcement.currency}
+                                    timeUnit={announcement.timeUnit}
+                                    authorId={announcement.authorId}
                                 />
                             </ListItem>
                         );

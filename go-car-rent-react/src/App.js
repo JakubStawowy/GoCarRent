@@ -4,19 +4,19 @@ import LeftSidebar from "./components/LeftSidebar";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Home from "./views/Home";
 import RightSidebar from "./components/RightSidebar";
-import React, {useEffect} from "react";
+import React from "react";
 import {Button, Grid, makeStyles} from "@material-ui/core";
-import Add from "./views/Add";
+import AddAnnouncement from "./views/AddAnnouncement";
+import EditAnnouncement from "./views/EditAnnouncement";
 import UserCars from "./views/UserCars";
 import Profile from "./views/Profile";
 import Settings from "./views/Settings";
 import LoginRegister from "./views/LoginRegister";
 import Messages from "./views/Messages";
-import {Redirect, useHistory} from "react-router";
+import {Redirect} from "react-router";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import logo from "./uploads/background-logo.png";
 import RentedCars from "./views/RentedCars";
-import axios from 'axios';
 import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +66,8 @@ function App() {
                                     {loggedSelector.logged ? <Redirect to={'/home'}/> : <Redirect to={'/login'}/>}
                                 </Route>
                                 <Route path={'/home'} component={Home}/>
-                                <Route path={'/add'} component={Add}/>
+                                <Route path={'/announcement/:id/edit'} component={EditAnnouncement}/>
+                                <Route path={'/add'} component={AddAnnouncement}/>
                                 <Route path={'/user/{id}/rented'} component={RentedCars}/>
                                 <Route path={'/login'} component={LoginRegister}/>
                                 <Route path={'/users/{id}/profile'} component={Profile}/>

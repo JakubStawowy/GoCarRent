@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.dto;
 
 import com.example.gocarrentspringbootapplication.impl.components.UserRoles;
+import com.example.gocarrentspringbootapplication.impl.models.User;
 
 import java.io.Serializable;
 
@@ -10,12 +11,18 @@ public class UserTransferObject implements Serializable {
     private final String surname;
     private final String email;
     private final UserRoles role;
-
+/*
     public UserTransferObject(String name, String surname, String email, UserRoles role) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.role = role;
+    }*/
+    public UserTransferObject(User user) {
+        name = user.getUserDetails().getName();
+        surname = user.getUserDetails().getSurname();
+        email = user.getEmail();
+        role = user.getRoles();
     }
 
     public String getName() {
