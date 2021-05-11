@@ -1,6 +1,5 @@
-package com.example.gocarrentspringbootapplication.impl.controllers;
+package com.example.gocarrentspringbootapplication.impl.controllers.security;
 
-import com.example.gocarrentspringbootapplication.impl.controllers.security.LoginController;
 import com.example.gocarrentspringbootapplication.impl.models.TestUserProvider;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;

@@ -4,24 +4,25 @@ import com.example.gocarrentspringbootapplication.impl.components.UserRoles;
 
 public class TestUserProvider {
 
-    private final static String email = "john@email.com";
-    private final static String password = "password";
-    private final static UserRoles role = UserRoles.ROLE_USER;
-    private final static String username = "John";
-    private final static String surname = "Doe";
-    private final static String phone = "123123123";
-    private final static String photo = "no-photo";
+    public final static Long ID = (long) 1;
+    public final static String EMAIL = "john@email.com";
+    public final static String PASSWORD = "password";
+    public final static UserRoles ROLE = UserRoles.ROLE_USER;
+    public final static String USERNAME = "John";
+    public final static String SURNAME = "Doe";
+    public final static String PHONE = "123123123";
+    public final static String PHOTO = "no-photo";
 
     public static User getTestUser() {
         return new User(
-                email,
-                password,
-                role,
+                EMAIL,
+                PASSWORD,
+                ROLE,
                 new UserDetails(
-                        username,
-                        surname,
-                        phone,
-                        photo
+                        USERNAME,
+                        SURNAME,
+                        PHONE,
+                        PHOTO
                 )
         );
     }
