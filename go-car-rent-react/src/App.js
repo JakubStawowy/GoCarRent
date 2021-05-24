@@ -4,6 +4,7 @@ import LeftSidebar from "./components/LeftSidebar";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Home from "./views/Home";
 import RightSidebar from "./components/RightSidebar";
+import FilteringPanel from "./components/FilteringPanel";
 import React from "react";
 import {Button, Grid, makeStyles} from "@material-ui/core";
 import AddAnnouncement from "./views/AddAnnouncement";
@@ -67,10 +68,11 @@ function App() {
                                 </Route>
                                 <Route path={'/home'} component={Home}/>
                                 <Route path={'/announcement/:id/edit'} component={EditAnnouncement}/>
+                                <Route path={'/announcement/filter'} component={FilteringPanel}/>
                                 <Route path={'/add'} component={AddAnnouncement}/>
                                 <Route path={'/user/{id}/rented'} component={RentedCars}/>
                                 <Route path={'/login'} component={LoginRegister}/>
-                                <Route path={'/users/{id}/profile'} component={Profile}/>
+                                <Route path={'/users/:id/profile'} component={Profile}/>
                                 <Route path={'/users/{id}/messages'} component={Messages}/>
                                 <Route path={'/users/{id}/cars'} component={UserCars}/>
                                 <Route path={'/settings'} component={Settings}/>

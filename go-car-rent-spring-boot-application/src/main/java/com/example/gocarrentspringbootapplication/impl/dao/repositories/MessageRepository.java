@@ -1,4 +1,4 @@
-package com.example.gocarrentspringbootapplication.impl.dao;
+package com.example.gocarrentspringbootapplication.impl.dao.repositories;
 
 import com.example.gocarrentspringbootapplication.impl.models.Message;
 import org.springframework.data.repository.CrudRepository;

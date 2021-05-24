@@ -3,7 +3,7 @@ package com.example.gocarrentspringbootapplication.impl.controllers;
 import com.example.gocarrentspringbootapplication.impl.controllers.user.UserLoaderController;
 import com.example.gocarrentspringbootapplication.impl.models.TestUserProvider;
 import com.example.gocarrentspringbootapplication.impl.models.User;
-import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
+import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

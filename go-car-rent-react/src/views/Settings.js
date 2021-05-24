@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import '../components/components.css';
-import {Button, Container, Fab, FormControl, Grid, Input, makeStyles, Typography} from "@material-ui/core";
-
+import {Container, Fab, FormControl, Grid, Input, makeStyles, Typography} from "@material-ui/core";
+import {getUserDetails} from "../actions/getUserDetails";
+import {useHistory} from "react-router";
+import {saveUser} from "../actions/saveUser"
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100%',
@@ -39,42 +41,113 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Settings() {
+
+    /*  Hooks   */
     const classes = useStyles();
+    const history = useHistory();
+
+    /*  User Data   */
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmedPassword, setConfirmedPassword] = useState('');
+    const [phone, setPhone] = useState('');
+
+    useEffect(() => {
+        getUserDetails(localStorage.getItem('userId')).then((response) => {
+
+            setName(response.data.name);
+            setSurname(response.data.surname);
+            setPhone(response.data.phone);
+
+        }).catch((error) => {
+            if(error.response.status === 403) {
+                localStorage.clear();
+                history.replace('/login');
+            }
+        })
+    }, []);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        saveUser({
+            name,
+            surname,
+            phone
+        }).then(() => {
+            alert("User saved succesfully");
+            history.replace("/");
+        }).catch((error) => {
+            alert(error);
+            if(error.response.status === 403) {
+                localStorage.clear();
+                history.replace('/');
+            }
+        })
+    }
+
     return (
         <Container className={classes.container}>
             <Typography variant={'h4'} align={'center'}>
                 User settings
             </Typography>
-            <FormControl className={classes.form}>
+            <form className={classes.form} onSubmit={handleSubmit}>
                 <Grid container className={`${classes.container} ${classes.gridContainer}`}>
                     <Grid item xs={6} className={classes.item}>
-                        <Input type={'text'} className={classes.input} placeholder={"name"}/>
+                        <Input
+                            type={'text'}
+                            className={classes.input}
+                            placeholder={"name"}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Input type={'text'} className={classes.input} placeholder={"surname"}/>
+                        <Input
+                            type={'text'}
+                            className={classes.input}
+                            placeholder={"surname"}
+                            value={surname}
+                            onChange={(e) => setSurname(e.target.value)}
+                        />
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Input type={'text'} className={classes.input} placeholder={"password"}/>
+                        <Input
+                            type={'text'}
+                            className={classes.input}
+                            placeholder={"password"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Input type={'text'} className={classes.input} placeholder={"confirm password"}/>
+                        <Input
+                            type={'password'}
+                            className={classes.input}
+                            placeholder={"confirm password"}
+                            value={confirmedPassword}
+                            onChange={(e) => setConfirmedPassword(e.target.value)}
+                        />
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Input type={'text'} className={classes.input} placeholder={"phone"}/>
-                    </Grid>
-                    <Grid item xs={6} className={classes.item}>
-                        <Input type={'text'} className={classes.input} placeholder={"surname"}/>
+                        <Input
+                            type={'text'}
+                            className={classes.input}
+                            placeholder={"phone"}
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                        />
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
                         <Input type={'file'} className={classes.input}/>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Fab variant={'extended'} className={classes.button}>
+                        <Fab variant={'extended'} className={classes.button} type={"submit"}>
                             Change
                         </Fab>
                     </Grid>
                 </Grid>
-            </FormControl>
+            </form>
         </Container>
     );
 }

@@ -1,17 +1,15 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
-import com.example.gocarrentspringbootapplication.impl.components.FeedbackRate;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.gocarrentspringbootapplication.impl.enums.FeedbackRate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "user_feedback")
-public class Feedback implements Serializable {
+public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,12 +25,10 @@ public class Feedback implements Serializable {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id")
     private User author;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
@@ -72,8 +68,8 @@ public class Feedback implements Serializable {
         this.content = content;
     }
 
-    public int getRate() {
-        return rate.ordinal();
+    public FeedbackRate getRate() {
+        return rate;
     }
 
     public void setRate(FeedbackRate rate) {

@@ -2,10 +2,11 @@ package com.example.gocarrentspringbootapplication.impl.controllers.announcement
 
 import com.example.gocarrentspringbootapplication.api.builders.IAnnouncementBuilder;
 import com.example.gocarrentspringbootapplication.api.builders.IAnnouncementBuilderSupervisor;
-import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
+import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.dto.AnnouncementTransferObject;
+import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
-import com.example.gocarrentspringbootapplication.impl.dao.AnnouncementRepository;
+import com.example.gocarrentspringbootapplication.impl.dao.repositories.AnnouncementRepository;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,6 +71,17 @@ public final class AnnouncementManageController {
             announcement.setCreatedAt(optionalAnnouncement.get().getCreatedAt());
             announcement.setRentStatus(optionalAnnouncement.get().getRentStatus());
             announcementRepository.save(announcement);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{id}/block")
+    public ResponseEntity<?> blockAnnouncement(@PathVariable("id") Long announcementId) {
+        Optional<Announcement> announcement = announcementRepository.findById(announcementId);
+        if(announcement.isPresent()) {
+            announcement.get().setRentStatus(AnnouncementStatus.BLOCKED);
+            announcementRepository.save(announcement.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

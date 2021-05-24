@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.announcement;
 
 import com.example.gocarrentspringbootapplication.api.security.IAuthorizeService;
-import com.example.gocarrentspringbootapplication.impl.dao.AnnouncementRepository;
+import com.example.gocarrentspringbootapplication.impl.dao.repositories.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;

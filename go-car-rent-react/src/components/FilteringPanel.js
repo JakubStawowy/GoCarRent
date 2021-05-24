@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '../components/components.css';
 import {
-    Button, Card,
-    Container, Fab,
+    Button, Checkbox,
+    Container, Fab, FormControlLabel,
     Grid,
     makeStyles,
     MenuItem,
@@ -13,14 +13,9 @@ import {
 import PublishIcon from '@material-ui/icons/Publish';
 import RoomIcon from '@material-ui/icons/Room';
 import carBrands from "../data/carBrands";
-import ImageIcon from '@material-ui/icons/Image';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import {useDispatch} from "react-redux";
-import {addAnnouncement} from "../actions/addAnnouncement";
-import {editAnnouncement} from "../actions/editAnnouncement";
-import {deleteAnnouncement} from "../actions/deleteAnnouncement";
-import {useHistory} from "react-router";
-import {getAnnouncement} from "../actions/getAnnouncement";
+import SearchIcon from "@material-ui/icons/Search";
+import {getAnnouncements} from "../actions/getAnnouncements";
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -43,109 +38,33 @@ const useStyles = makeStyles((theme) => ({
         height: '80%',
         borderRadius: '2em'
     },
-    button: {
-        background: '#4BBEBAE0',
-    },
-    deleteButton: {
-        background: '#FA8072'
-    },
-    titleField: {
-        marginTop: '2em'
-    },
-    confirmArea: {
-        borderRadius: '2em',
-        background: '#FA8072',
-        display: 'flex',
-        justifyContent: 'center',
-        // alignItems: 'center'
-    },
-    confirmField: {
-        background: '#FCA294',
-        width: '40%',
-    }
 }));
 
-export default function AnnouncementForm(props) {
+export default function FilteringPanel(props) {
     const classes = useStyles();
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [timeUnit, setTimeUnit] = useState('');
     const [brand, setBrand] = useState('');
     const [model, setModel] = useState('');
-    const [deleteStatus, setDeleteStatus] = useState(false);
-    const [password, setPassword] = useState('');
-
-    const dispatch = useDispatch();
-    const history = useHistory();
-
-    const handleSuccess = (message, endpoint) => {
-        alert(message);
-        history.replace(endpoint);
-    }
-
-    useEffect(() => {
-        if (props.edit) {
-            getAnnouncement(props.announcementId).then((response) => {
-                setTitle(response.data.title);
-                setPrice(response.data.amount);
-                setTimeUnit(response.data.timeUnit);
-                setBrand(response.data.carBrand);
-                setModel(response.data.carModel);
-            })
-        }
-    }, []);
-
+    const [blocked, setBlocked] = useState(false);
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const data = {
-            "title": title,
-            "amount": price,
-            "currency": "PLN",
-            "timeUnit": timeUnit,
-            "carBrand": brand,
-            "carModel": model,
-            "authorId": localStorage.getItem("userId")
-        };
-
-        props.edit ?
-            dispatch(editAnnouncement(data, props.announcementId)).then(
-                () => handleSuccess('Announcement edited successfully', "/")
-            ).catch(
-                (error) => alert(error)
-            )
-            :
-            dispatch(addAnnouncement(data)).then(
-                () => handleSuccess('Announcement added successfully', "/")
-            ).catch(
-                (error) => alert(error)
-            );
+        props.action1();
+        getAnnouncements([
+            {
+                key: "rentStatus",
+                operation: "=",
+                value: "BLOCKED"
+            }
+        ]).then((response) => {
+            props.action2(response.data);
+        }).catch((error) => alert(error));
     }
 
-    const handleDelete = () => {
-        setDeleteStatus(true);
-    }
-
-    const handleConfirmedDelete = () => {
-        dispatch(deleteAnnouncement({
-            "announcementId": props.announcementId,
-            "password": password
-        })).then(
-            () => handleSuccess('Announcement deleted successfully', "/")
-        ).catch(
-            (error) => alert(error)
-        );
-    }
-
-    const handlePasswordChange = (e) => {
-        setPassword(e);
-    }
-
+    const changeBlocked = () => setBlocked(!blocked);
     return (
         <Container className={classes.container}>
-            <Typography variant={'h4'} align={'center'}>
-                {props.edit ? "Edit announcement" : "Add announcement"}
-            </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
                 <Grid container justify={'center'} className={classes.gridContainer}>
                     <Grid item xs={10} className={classes.titleField}>
@@ -169,7 +88,7 @@ export default function AnnouncementForm(props) {
                     <Grid item xs={5}>
                         <Select
                             displayEmpty
-                            className={classes.item}
+                            label={'TimeUnit'}
                             value={timeUnit}
                             onChange={(e) => setTimeUnit(e.target.value)}
                         >
@@ -219,40 +138,21 @@ export default function AnnouncementForm(props) {
                             <RoomIcon />
                         </Button>
                     </Grid>
-                    <Grid item xs={5}>
-                        <Button className={classes.item}>
-                            Image
-                            <ImageIcon />
-                        </Button>
-                    </Grid>
+                    {
+                        localStorage.getItem('role') === 'ROLE_ADMIN' &&
+                        <Grid item xs={5}>
+                            <Checkbox checked={blocked} onChange={changeBlocked} />
+                            <Typography>
+                                Blocked
+                            </Typography>
+                        </Grid>
+                    }
                 </Grid>
                 <Fab variant={'extended'} className={classes.button} type={"submit"}>
-                    {props.edit ? "Save": "Publish"}
-                    <PublishIcon />
+                    Search
+                    <SearchIcon fontSize={"large"}/>
                 </Fab>
             </form>
-
-            {(props.edit && !deleteStatus) &&
-            <Fab variant={'extended'} className={classes.deleteButton} onClick={handleDelete}>
-                Delete
-                <DeleteForeverIcon/>
-            </Fab>
-                }
-            {
-                deleteStatus &&
-                <Card className={classes.confirmArea}>
-                    <TextField
-                        label={'password'}
-                        type={'password'}
-                        value={password}
-                        onChange={(e) => handlePasswordChange(e.target.value)}
-                    />
-                    <Fab variant={"extended"} className={classes.confirmField} onClick={handleConfirmedDelete}>
-                        Confirm
-                        <DeleteForeverIcon />
-                    </Fab>
-                </Card>
-            }
         </Container>
     );
 }

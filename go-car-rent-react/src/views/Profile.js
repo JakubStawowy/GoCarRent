@@ -31,16 +31,19 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Profile() {
+export default function Profile(props) {
 
+    /*  Hooks   */
+    const classes = useStyles();
+    const history = useHistory();
+
+    /*  User Data   */
     const [userData, setUserData] = useState({
         name: '',
         surname: ''
     });
     const [feedback, setFeedback] = useState([]);
 
-    const classes = useStyles();
-    const history = useHistory();
 
     const handleError = (error) => {
         if(error.response.status === ERROR_FORBIDDEN) {
@@ -50,12 +53,15 @@ export default function Profile() {
     }
 
     useEffect(  () => {
-        getUserDetails().then(response => {
+        getUserDetails(props.match.params.id).then(response => {
            setUserData(response.data);
         }).catch((error) => handleError(error));
 
-        getFeedback(localStorage.getItem("userId")).then(
-            (response) => setFeedback(response.data)
+        getFeedback(props.match.params.id).then(
+            (response) => {
+                console.log(response.data)
+                setFeedback(response.data)
+            }
         ).catch((error) => handleError(error));
     }, []);
 
@@ -77,7 +83,8 @@ export default function Profile() {
                         return (
                             <ListItem>
                                 <Feedback
-                                    author={singleFeedback.author}
+                                    author={singleFeedback.authorName + ' ' + singleFeedback.authorSurname}
+                                    authorId={singleFeedback.authorId}
                                     content={singleFeedback.content}
                                     stars={singleFeedback.rate}
                                 />

@@ -5,6 +5,11 @@ import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 import MessageIcon from "@material-ui/icons/Message";
 import SettingsIcon from '@material-ui/icons/Settings';
 import {NavLink} from "react-router-dom";
+import BlockIcon from '@material-ui/icons/Block';
+import {useDispatch} from "react-redux";
+import {blockAnnouncement} from "../actions/blockAnnouncement";
+import {useHistory} from "react-router";
+import {useEffect, useState} from "react";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,10 +32,31 @@ const useStyles = makeStyles((theme) => ({
     },
     p: {
         padding: 0
+    },
+    cancelButton: {
+        background: '#FA8072'
+    },
+    blockButton: {
+        background: '#4BBEBAE0'
     }
 }));
 
 export default function Announcement(props) {
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const [isBlock, setIsBlock] = useState(false);
+    const changeBlock = () => setIsBlock(!isBlock);
+
+    const handleBlock = () => {
+        dispatch(blockAnnouncement(props.announcementId)).then(() => {
+            alert('Announcement blocked successfully');
+            history.replace('/');
+        }).catch((error) => {
+           alert(error);
+        });
+    }
+
     const classes = useStyles();
     return (
         <Card className={classes.paper}>
@@ -42,29 +68,73 @@ export default function Announcement(props) {
                     {props.title}
                     <Typography variant={"body1"}>{props.date}</Typography>
                 </Typography>
+                <NavLink to={'/users/' + props.authorId + '/profile'}>
+                    Author
+                </NavLink>
                 <Typography variant={'h6'}>
                     {props.price} {props.currency} / {props.timeUnit}
                 </Typography>
-                <ListItemIcon>
-                    <Button>
-                        <DirectionsCarIcon fontSize={"large"}/>
-                    </Button>
-                    <Button>
-                    <PhoneEnabledIcon fontSize={"large"}/>
-                    </Button>
-                    <Button>
-                    <MessageIcon fontSize={"large"}/>
-                    </Button>
                     {
-                        props.authorId === parseInt(localStorage.getItem("userId")) &&
-                            <NavLink to={"/announcement/"+props.announcementId+"/edit"}>
-                                <Button>
-                                    <SettingsIcon fontSize={"large"}/>
-                                </Button>
-                            </NavLink>
-                    }
+                        props.authorId === parseInt(localStorage.getItem("userId")) ?
+                            <ListItemIcon>
 
-                </ListItemIcon>
+                                <Button>
+                                    <DirectionsCarIcon fontSize={"large"}/>
+                                </Button>
+                                <NavLink to={"/announcement/"+props.announcementId+"/edit"}>
+                                    <Button>
+                                        <SettingsIcon fontSize={"large"}/>
+                                    </Button>
+                                </NavLink>
+                                {
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && !isBlock &&
+                                        <Button onClick={() => changeBlock()}>
+                                            <BlockIcon fontSize={'large'}/>
+                                        </Button>
+                                }
+                                {
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && isBlock &&
+                                        <div>
+                                            <Button onClick={() => handleBlock()} className={classes.blockButton}>
+                                                Confirm
+                                            </Button>
+                                            <Button onClick={() => changeBlock()} className={classes.cancelButton}>
+                                                Cancel
+                                            </Button>
+                                        </div>
+                                }
+                            </ListItemIcon>
+                           :
+                            <ListItemIcon>
+                                <Button>
+                                    <DirectionsCarIcon fontSize={"large"}/>
+                                </Button>
+                                <Button>
+                                    <PhoneEnabledIcon fontSize={"large"}/>
+                                </Button>
+                                <Button>
+                                    <MessageIcon fontSize={"large"}/>
+                                </Button>
+
+                                {
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && !isBlock &&
+                                    <Button onClick={() => changeBlock()}>
+                                        <BlockIcon fontSize={'large'}/>
+                                    </Button>
+                                }
+                                {
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && isBlock &&
+                                    <div>
+                                        <Button onClick={() => handleBlock()} className={classes.blockButton}>
+                                            Confirm
+                                        </Button>
+                                        <Button onClick={() => changeBlock()} className={classes.cancelButton}>
+                                            Cancel
+                                        </Button>
+                                    </div>
+                                }
+                            </ListItemIcon>
+                    }
             </Container>
         </Card>
     )

@@ -1,8 +1,9 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.security;
 
+import com.example.gocarrentspringbootapplication.impl.dto.LoginTransferObject;
 import com.example.gocarrentspringbootapplication.impl.models.TestUserProvider;
 import com.example.gocarrentspringbootapplication.impl.models.User;
-import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
+import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.providers.JsonWebTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -52,9 +52,9 @@ class LoginControllerTest {
 
     @Test
     void loginUser() {
-        ResponseEntity<Pair<Long, String>> responseEntity = loginController.loginUser(testUser.getEmail(), testUser.getPassword());
+        ResponseEntity<LoginTransferObject> responseEntity = loginController.loginUser(testUser.getEmail(), testUser.getPassword());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(0, Objects.requireNonNull(responseEntity.getBody()).getFirst());
-        assertEquals("token", responseEntity.getBody().getSecond());
+        assertEquals(0, Objects.requireNonNull(responseEntity.getBody()).getUserId());
+        assertEquals("token", responseEntity.getBody().getToken());
     }
 }
