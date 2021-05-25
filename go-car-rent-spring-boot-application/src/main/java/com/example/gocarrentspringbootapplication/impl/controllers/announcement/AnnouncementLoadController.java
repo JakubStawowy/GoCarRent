@@ -1,8 +1,8 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.announcement;
 
-import com.example.gocarrentspringbootapplication.api.providers.ISpecificationListProvider;
 import com.example.gocarrentspringbootapplication.api.dao.repositories.AnnouncementDetailsRepository;
 import com.example.gocarrentspringbootapplication.api.dao.repositories.AnnouncementRepository;
+import com.example.gocarrentspringbootapplication.api.providers.ISpecificationListProvider;
 import com.example.gocarrentspringbootapplication.impl.dto.AnnouncementTransferObject;
 import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
@@ -70,14 +70,14 @@ public final class AnnouncementLoadController {
         List<AnnouncementTransferObject> announcementTransferObjects = new ArrayList<>();
         try {
             ISpecificationListProvider<Announcement> specificationListProvider = new AnnouncementSpecificationListProvider();
-            List<Specification<Announcement>> specificationList = specificationListProvider.getSpecificationList(criteria);
+            List<Specification<Announcement>> specificationList = specificationListProvider.getSpecificationListWithCompressedCriteria(criteria);
 
             for (Announcement announcement: announcementRepository.findAll(specificationList.get(0))) {
                 announcementTransferObjects.add(new AnnouncementTransferObject(announcement));
             }
         } catch (Exception e) {
             ISpecificationListProvider<AnnouncementDetails> specificationListProvider = new AnnouncementDetailsSpecificationListProvider();
-            List<Specification<AnnouncementDetails>> specificationList = specificationListProvider.getSpecificationList(criteria);
+            List<Specification<AnnouncementDetails>> specificationList = specificationListProvider.getSpecificationListWithCompressedCriteria(criteria);
 
             for (AnnouncementDetails announcementDetails: announcementDetailsRepository.findAll(specificationList.get(0))) {
                 announcementTransferObjects.add(new AnnouncementTransferObject(announcementDetails.getAnnouncement()));
