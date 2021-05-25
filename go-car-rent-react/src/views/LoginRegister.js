@@ -10,6 +10,7 @@ import {useState} from "react";
 import {loginUser} from "../actions/login";
 import {registerUser} from "../actions/register";
 import {useHistory} from "react-router";
+import {ERROR_NOT_FOUND} from "../data/errors";
 
 const useStyles = makeStyles({
     container: {
@@ -57,8 +58,10 @@ export default function LoginRegister() {
             password: password
         })).then(() => {
             history.push('/home');
-        }).catch(() => {
-           alert("Bad email or password");
+        }).catch((error) => {
+            if (error.response !== undefined && error.response.status === ERROR_NOT_FOUND)
+                alert("Bad email or password");
+            else alert("Network error");
         });
     }
 

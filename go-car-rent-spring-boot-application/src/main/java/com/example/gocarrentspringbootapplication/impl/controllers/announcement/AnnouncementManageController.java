@@ -2,11 +2,11 @@ package com.example.gocarrentspringbootapplication.impl.controllers.announcement
 
 import com.example.gocarrentspringbootapplication.api.builders.IAnnouncementBuilder;
 import com.example.gocarrentspringbootapplication.api.builders.IAnnouncementBuilderSupervisor;
-import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
+import com.example.gocarrentspringbootapplication.api.dao.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.dto.AnnouncementTransferObject;
 import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
-import com.example.gocarrentspringbootapplication.impl.dao.repositories.AnnouncementRepository;
+import com.example.gocarrentspringbootapplication.api.dao.repositories.AnnouncementRepository;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

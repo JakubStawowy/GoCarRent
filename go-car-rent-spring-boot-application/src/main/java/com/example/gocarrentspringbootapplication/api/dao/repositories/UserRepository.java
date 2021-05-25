@@ -1,4 +1,4 @@
-package com.example.gocarrentspringbootapplication.impl.dao.repositories;
+package com.example.gocarrentspringbootapplication.api.dao.repositories;
 
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import org.springframework.data.repository.CrudRepository;

@@ -4,7 +4,7 @@ import com.example.gocarrentspringbootapplication.api.providers.ITokenProvider;
 import com.example.gocarrentspringbootapplication.api.security.IAuthorizeService;
 import com.example.gocarrentspringbootapplication.impl.dto.LoginTransferObject;
 import com.example.gocarrentspringbootapplication.impl.models.User;
-import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
+import com.example.gocarrentspringbootapplication.api.dao.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

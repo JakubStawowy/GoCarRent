@@ -1,6 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.providers;
 
-import com.example.gocarrentspringbootapplication.api.providers.ISpecificationListProvider;
+import com.example.gocarrentspringbootapplication.api.providers.SpecificationListProviderTemplate;
 import com.example.gocarrentspringbootapplication.impl.dao.specifications.AnnouncementSpecification;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
 import org.springframework.data.jpa.domain.Specification;
@@ -10,21 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public final class AnnouncementSpecificationListProvider implements ISpecificationListProvider<Announcement> {
-    private final String[] operations = {"<", ">", "="};
+public final class AnnouncementSpecificationListProvider extends SpecificationListProviderTemplate<Announcement> {
+
     @Override
     public List<Specification<Announcement>> getSpecificationList(String criteria) {
         List<Specification<Announcement>> result = new ArrayList<>();
-        String[] criteriaArray = criteria.split(";");
-        for (String spec: criteriaArray) {
-            int i;
-            for (i = 0; i < operations.length; i++)
-                if (spec.contains(operations[i])) break;
+        for (String[] specArray: getSpecificationSet(criteria))
+            result.add(new AnnouncementSpecification(specArray[0], specArray[1], specArray[2]));
 
-            String[] specArray = spec.split(operations[i]);
-            result.add(new AnnouncementSpecification(specArray[0], operations[i], specArray[1]));
-
-        }
         return result;
     }
 }

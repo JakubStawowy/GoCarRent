@@ -1,11 +1,8 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.concurrent.TimeUnit;
