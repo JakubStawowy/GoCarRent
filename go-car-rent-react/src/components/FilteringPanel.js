@@ -1,21 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import '../components/components.css';
 import {
-    Button, Checkbox,
-    Container, Fab, FormControlLabel,
+    Container, Fab,
     Grid,
     makeStyles,
     MenuItem,
     Select,
     TextField,
-    Typography
 } from "@material-ui/core";
-import PublishIcon from '@material-ui/icons/Publish';
-import RoomIcon from '@material-ui/icons/Room';
 import carBrands from "../data/carBrands";
 import SearchIcon from "@material-ui/icons/Search";
 import {getAnnouncements} from "../actions/getAnnouncements";
-
+import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -36,18 +32,19 @@ const useStyles = makeStyles((theme) => ({
     gridContainer: {
         background: 'transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box',
         height: '80%',
-        borderRadius: '2em'
+        borderRadius: '2em',
+        padding: '2em'
     },
 }));
 
 export default function FilteringPanel(props) {
     const classes = useStyles();
-    const [title, setTitle] = useState('');
-    const [price, setPrice] = useState('');
-    const [timeUnit, setTimeUnit] = useState('');
+    const [priceFrom, setPriceFrom] = useState('');
+    const [priceTo, setPriceTo] = useState('');
+    const [timeUnit, setTimeUnit] = useState('HOURS');
     const [brand, setBrand] = useState('');
     const [model, setModel] = useState('');
-    const [blocked, setBlocked] = useState(false);
+    const [status, setStatus] = useState('FREE');
     const handleSubmit = (e) => {
         e.preventDefault();
         props.action1();
@@ -55,34 +52,33 @@ export default function FilteringPanel(props) {
             {
                 key: "rentStatus",
                 operation: "=",
-                value: "BLOCKED"
+                value: status
             }
         ]).then((response) => {
             props.action2(response.data);
         }).catch((error) => alert(error));
     }
 
-    const changeBlocked = () => setBlocked(!blocked);
     return (
         <Container className={classes.container}>
             <form className={classes.form} onSubmit={handleSubmit}>
                 <Grid container justify={'center'} className={classes.gridContainer}>
-                    <Grid item xs={10} className={classes.titleField}>
+                    <Grid item xs={5}>
                         <TextField
                             type={'text'}
-                            label={'Title'}
+                            label={'Price from'}
                             className={classes.item}
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            value={priceFrom}
+                            onChange={(e) => setPriceFrom(e.target.value)}
                         />
                     </Grid>
                     <Grid item xs={5}>
                         <TextField
                             type={'text'}
-                            label={'Price'}
+                            label={'Price to'}
                             className={classes.item}
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
+                            value={priceTo}
+                            onChange={(e) => setPriceTo(e.target.value)}
                         />
                     </Grid>
                     <Grid item xs={5}>
@@ -90,6 +86,7 @@ export default function FilteringPanel(props) {
                             displayEmpty
                             label={'TimeUnit'}
                             value={timeUnit}
+                            className={classes.item}
                             onChange={(e) => setTimeUnit(e.target.value)}
                         >
                             <MenuItem value={"HOURS"}>
@@ -133,25 +130,37 @@ export default function FilteringPanel(props) {
                         </Select>
                     </Grid>
                     <Grid item xs={5}>
-                        <Button className={classes.item}>
-                            Localisation
-                            <RoomIcon />
-                        </Button>
+                        <Select
+                            displayEmpty
+                            className={classes.item}
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                        >
+                            {
+                                localStorage.getItem('role') === 'ROLE_ADMIN' &&
+                                <MenuItem selected={false} value={'BLOCKED'}>Blocked</MenuItem>
+                            }
+                            <MenuItem selected={false} value={'FREE'}>Free</MenuItem>
+                            <MenuItem selected={false} value={'RENTED'}>Rented</MenuItem>
+                            <MenuItem selected={false} value={'RETURNED'}>Returned</MenuItem>
+
+                        </Select>
+
                     </Grid>
-                    {
-                        localStorage.getItem('role') === 'ROLE_ADMIN' &&
-                        <Grid item xs={5}>
-                            <Checkbox checked={blocked} onChange={changeBlocked} />
-                            <Typography>
-                                Blocked
-                            </Typography>
-                        </Grid>
-                    }
+
+                    <Grid item xs={5}>
+                        <Fab variant={'extended'} className={classes.button} type={"submit"}>
+                            Search
+                            <SearchIcon fontSize={"large"}/>
+                        </Fab>
+                    </Grid>
+                    <Grid item xs={5}>
+                        <Fab variant={'extended'} className={classes.button} onClick={props.action1}>
+                            Cancel
+                            <ClearIcon fontSize={"large"}/>
+                        </Fab>
+                    </Grid>
                 </Grid>
-                <Fab variant={'extended'} className={classes.button} type={"submit"}>
-                    Search
-                    <SearchIcon fontSize={"large"}/>
-                </Fab>
             </form>
         </Container>
     );

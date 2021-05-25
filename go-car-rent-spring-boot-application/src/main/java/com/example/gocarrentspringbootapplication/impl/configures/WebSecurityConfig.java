@@ -24,6 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/swagger*").permitAll()
                 .antMatchers(HttpMethod.GET, "/v2/*").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/announcements/{id}/block").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/announcements/{id}/unlock").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/announcements/blocked").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated();

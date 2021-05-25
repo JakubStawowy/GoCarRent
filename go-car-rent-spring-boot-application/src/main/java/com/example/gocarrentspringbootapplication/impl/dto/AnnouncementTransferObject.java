@@ -1,5 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.dto;
 
+import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
 
 import java.io.Serializable;
@@ -14,8 +15,9 @@ public class AnnouncementTransferObject implements Serializable {
     private final String carBrand;
     private final String carModel;
     private final Long authorId;
+    private final AnnouncementStatus status;
 
-    public AnnouncementTransferObject(String title, String amount, String currency, String timeUnit, String carBrand, String carModel, Long authorId) {
+    public AnnouncementTransferObject(String title, String amount, String currency, String timeUnit, String carBrand, String carModel, Long authorId, AnnouncementStatus status) {
         this.title = title;
         this.amount = amount;
         this.currency = currency;
@@ -23,6 +25,7 @@ public class AnnouncementTransferObject implements Serializable {
         this.carBrand = carBrand;
         this.carModel = carModel;
         this.authorId = authorId;
+        this.status = status;
     }
 
     public AnnouncementTransferObject(Announcement announcement) {
@@ -34,6 +37,7 @@ public class AnnouncementTransferObject implements Serializable {
         carBrand = announcement.getAnnouncementDetails().getCarBrand();
         carModel = announcement.getAnnouncementDetails().getCarModel();
         authorId = announcement.getAuthor().getId();
+        status = announcement.getRentStatus();
     }
 
     public Long getId() {
@@ -66,5 +70,9 @@ public class AnnouncementTransferObject implements Serializable {
 
     public Long getAuthorId() {
         return authorId;
+    }
+
+    public AnnouncementStatus getStatus() {
+        return status;
     }
 }

@@ -8,9 +8,10 @@ import {NavLink} from "react-router-dom";
 import BlockIcon from '@material-ui/icons/Block';
 import {useDispatch} from "react-redux";
 import {blockAnnouncement} from "../actions/blockAnnouncement";
+import {unlockAnnouncement} from "../actions/unlockAnnouncement";
 import {useHistory} from "react-router";
-import {useEffect, useState} from "react";
-
+import {useState} from "react";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 const useStyles = makeStyles((theme) => ({
     paper: {
         height: '30vh',
@@ -57,6 +58,15 @@ export default function Announcement(props) {
         });
     }
 
+    const handleUnlock = () => {
+        dispatch(unlockAnnouncement(props.announcementId)).then(() => {
+            alert('Announcement unlocked successfully');
+            history.replace('/');
+        }).catch((error) => {
+           alert(error);
+        });
+    }
+
     const classes = useStyles();
     return (
         <Card className={classes.paper}>
@@ -87,13 +97,13 @@ export default function Announcement(props) {
                                     </Button>
                                 </NavLink>
                                 {
-                                    localStorage.getItem("role") === 'ROLE_ADMIN' && !isBlock &&
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && props.status !== 'BLOCKED' && !isBlock &&
                                         <Button onClick={() => changeBlock()}>
                                             <BlockIcon fontSize={'large'}/>
                                         </Button>
                                 }
                                 {
-                                    localStorage.getItem("role") === 'ROLE_ADMIN' && isBlock &&
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && props.status !== 'BLOCKED' && isBlock &&
                                         <div>
                                             <Button onClick={() => handleBlock()} className={classes.blockButton}>
                                                 Confirm
@@ -102,6 +112,12 @@ export default function Announcement(props) {
                                                 Cancel
                                             </Button>
                                         </div>
+                                }
+                                {
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && props.status === 'BLOCKED' &&
+                                        <Button onClick={() => handleUnlock()}>
+                                            <LockOpenIcon fontSize={'large'}/>
+                                        </Button>
                                 }
                             </ListItemIcon>
                            :
@@ -117,13 +133,13 @@ export default function Announcement(props) {
                                 </Button>
 
                                 {
-                                    localStorage.getItem("role") === 'ROLE_ADMIN' && !isBlock &&
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && props.status !== 'BLOCKED' && !isBlock &&
                                     <Button onClick={() => changeBlock()}>
                                         <BlockIcon fontSize={'large'}/>
                                     </Button>
                                 }
                                 {
-                                    localStorage.getItem("role") === 'ROLE_ADMIN' && isBlock &&
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && props.status !== 'BLOCKED' && isBlock &&
                                     <div>
                                         <Button onClick={() => handleBlock()} className={classes.blockButton}>
                                             Confirm
@@ -133,6 +149,13 @@ export default function Announcement(props) {
                                         </Button>
                                     </div>
                                 }
+                                {
+                                    localStorage.getItem("role") === 'ROLE_ADMIN' && props.status === 'BLOCKED' &&
+                                    <Button onClick={() => handleUnlock()}>
+                                        <LockOpenIcon fontSize={'large'}/>
+                                    </Button>
+                                }
+
                             </ListItemIcon>
                     }
             </Container>

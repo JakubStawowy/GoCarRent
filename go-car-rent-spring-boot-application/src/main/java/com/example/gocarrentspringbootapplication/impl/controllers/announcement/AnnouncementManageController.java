@@ -86,4 +86,15 @@ public final class AnnouncementManageController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("/{id}/unlock")
+    public ResponseEntity<?> unlockAnnouncement(@PathVariable("id") Long announcementId) {
+        Optional<Announcement> announcement = announcementRepository.findById(announcementId);
+        if(announcement.isPresent()) {
+            announcement.get().setRentStatus(AnnouncementStatus.FREE);
+            announcementRepository.save(announcement.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

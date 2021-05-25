@@ -50,23 +50,23 @@ export default function Home() {
     }
 
 
-
     return (
             <Container className={classes.container}>
-                {
-                    !filtersOpen ?
-                        <Container className={classes.buttonContainer}>
-                            <Fab variant={'extended'} className={classes.button}>
-                                <SearchIcon fontSize={"large"} htmlColor={'white'} />
-                            </Fab>
-                            <Fab variant={'extended'} className={classes.button} onClick={changeFiltersOpen}>
-                                <TuneIcon fontSize={"large"} htmlColor={'white'}/>
-                            </Fab>
-                        </Container>
-                        :
-                        <FilteringPanel action1={changeFiltersOpen} action2={setAnnouncements}/>
-                }
                 <List className={classes.list}>
+
+                    {
+                        !filtersOpen ?
+                            <Container className={classes.buttonContainer}>
+                                <Fab variant={'extended'} className={classes.button}>
+                                    <SearchIcon fontSize={"large"} htmlColor={'white'} />
+                                </Fab>
+                                <Fab variant={'extended'} className={classes.button} onClick={changeFiltersOpen}>
+                                    <TuneIcon fontSize={"large"} htmlColor={'white'}/>
+                                </Fab>
+                            </Container>
+                            :
+                            <FilteringPanel action1={changeFiltersOpen} action2={setAnnouncements} />
+                    }
                     {announcements.map(announcement => {
                         return (
                             <ListItem>
@@ -78,6 +78,7 @@ export default function Home() {
                                     currency={announcement.currency}
                                     timeUnit={announcement.timeUnit}
                                     authorId={announcement.authorId}
+                                    status={announcement.status}
                                 />
                             </ListItem>
                         );
