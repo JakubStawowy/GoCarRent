@@ -3,7 +3,7 @@ package com.example.gocarrentspringbootapplication.impl.controllers.security;
 import com.example.gocarrentspringbootapplication.impl.dto.LoginTransferObject;
 import com.example.gocarrentspringbootapplication.impl.models.TestUserProvider;
 import com.example.gocarrentspringbootapplication.impl.models.User;
-import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
+import com.example.gocarrentspringbootapplication.api.dao.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.providers.JsonWebTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

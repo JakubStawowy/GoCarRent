@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.providers;
 
 import com.example.gocarrentspringbootapplication.api.providers.ITokenProvider;
-import com.example.gocarrentspringbootapplication.impl.keys.TokenKeyRepository;
+import com.example.gocarrentspringbootapplication.impl.repositories.TokenKeyRepository;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,7 +18,7 @@ public class JsonWebTokenProvider implements ITokenProvider {
     @Override
     public String generateUserToken(final User user) {
 
-        Key signingKey = new SecretKeySpec(TokenKeyRepository.getKey().getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS512.getJcaName());
+        Key signingKey = new SecretKeySpec(TokenKeyRepository.KEY.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS512.getJcaName());
         String name = user.getUserDetails().getName()+" "+user.getUserDetails().getSurname();
 
         return Jwts.builder()

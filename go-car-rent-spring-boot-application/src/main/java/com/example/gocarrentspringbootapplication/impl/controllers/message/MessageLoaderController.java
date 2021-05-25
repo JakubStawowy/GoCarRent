@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.message;
 
 import com.example.gocarrentspringbootapplication.impl.models.Message;
-import com.example.gocarrentspringbootapplication.impl.dao.repositories.MessageRepository;
+import com.example.gocarrentspringbootapplication.api.dao.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

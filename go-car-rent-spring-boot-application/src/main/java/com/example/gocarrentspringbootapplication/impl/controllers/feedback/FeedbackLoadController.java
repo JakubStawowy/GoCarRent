@@ -1,6 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.feedback;
 
-import com.example.gocarrentspringbootapplication.impl.dao.repositories.FeedbackRepository;
+import com.example.gocarrentspringbootapplication.api.dao.repositories.FeedbackRepository;
 import com.example.gocarrentspringbootapplication.impl.dto.FeedbackTransferObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

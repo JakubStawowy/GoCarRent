@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.providers;
 
 import com.example.gocarrentspringbootapplication.api.providers.IAuthenticationTokenProvider;
-import com.example.gocarrentspringbootapplication.impl.keys.TokenKeyRepository;
+import com.example.gocarrentspringbootapplication.impl.repositories.TokenKeyRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -19,7 +19,7 @@ public final class AuthenticationTokenProvider implements IAuthenticationTokenPr
     @Override
     public UsernamePasswordAuthenticationToken getAuthenticationToken(final String header) throws ExpiredJwtException {
 
-        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(TokenKeyRepository.getKey().getBytes(StandardCharsets.UTF_8))
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(TokenKeyRepository.KEY.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(header.replace("Bearer ",""));
 
         String username = claimsJws.getBody().get("name").toString();

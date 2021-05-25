@@ -1,6 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.user;
 
-import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
+import com.example.gocarrentspringbootapplication.api.dao.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import com.example.gocarrentspringbootapplication.impl.models.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
