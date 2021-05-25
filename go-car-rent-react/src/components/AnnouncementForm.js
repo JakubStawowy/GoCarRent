@@ -67,18 +67,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnnouncementForm(props) {
     const classes = useStyles();
-    const [announcement, setAnnouncement] = useState({
-        title: '',
-        price: '',
-        timeUnit: '',
-        brand: '',
-        model: ''
-    });
-    const [title, setTitle] = useState(props.edit ? announcement.title : '');
-    const [price, setPrice] = useState(props.edit ? announcement.price : '');
-    const [timeUnit, setTimeUnit] = useState(props.edit ? announcement.timeUnit : '');
-    const [brand, setBrand] = useState(props.edit ? announcement.brand : '');
-    const [model, setModel] = useState(props.edit ? announcement.model : '');
+    const [title, setTitle] = useState('');
+    const [price, setPrice] = useState('');
+    const [timeUnit, setTimeUnit] = useState('');
+    const [brand, setBrand] = useState('');
+    const [model, setModel] = useState('');
     const [deleteStatus, setDeleteStatus] = useState(false);
     const [password, setPassword] = useState('');
 
@@ -93,9 +86,11 @@ export default function AnnouncementForm(props) {
     useEffect(() => {
         if (props.edit) {
             getAnnouncement(props.announcementId).then((response) => {
-                setAnnouncement(response.data);
-                console.log(response.data);
-                console.log(announcement);
+                setTitle(response.data.title);
+                setPrice(response.data.amount);
+                setTimeUnit(response.data.timeUnit);
+                setBrand(response.data.carBrand);
+                setModel(response.data.carModel);
             })
         }
     }, []);

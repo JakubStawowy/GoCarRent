@@ -7,6 +7,8 @@ import TuneIcon from '@material-ui/icons/Tune';
 import {getAnnouncements} from "../actions/getAnnouncements";
 import {useHistory} from "react-router";
 import {ERROR_FORBIDDEN} from "../data/errors";
+import {NavLink} from "react-router-dom";
+import FilteringPanel from "../components/FilteringPanel";
 
 const useStyles = makeStyles((theme) => ({
     list: {
@@ -30,6 +32,7 @@ export default function Home() {
     const history = useHistory();
 
     const [announcements, setAnnouncements] = useState([]);
+    const [filtersOpen, setFiltersOpen] = useState(false);
     useEffect(() => {
        getAnnouncements().then((response) => {
            console.log("Test");
@@ -42,17 +45,28 @@ export default function Home() {
        });
     }, []);
 
+    const changeFiltersOpen = () => {
+        setFiltersOpen(!filtersOpen);
+    }
+
+
     return (
             <Container className={classes.container}>
-                <Container className={classes.buttonContainer}>
-                    <Fab variant={'extended'} className={classes.button}>
-                        <SearchIcon fontSize={"large"} htmlColor={'white'} />
-                    </Fab>
-                    <Fab variant={'extended'} className={classes.button}>
-                        <TuneIcon fontSize={"large"} htmlColor={'white'}/>
-                    </Fab>
-                </Container>
                 <List className={classes.list}>
+
+                    {
+                        !filtersOpen ?
+                            <Container className={classes.buttonContainer}>
+                                <Fab variant={'extended'} className={classes.button}>
+                                    <SearchIcon fontSize={"large"} htmlColor={'white'} />
+                                </Fab>
+                                <Fab variant={'extended'} className={classes.button} onClick={changeFiltersOpen}>
+                                    <TuneIcon fontSize={"large"} htmlColor={'white'}/>
+                                </Fab>
+                            </Container>
+                            :
+                            <FilteringPanel action1={changeFiltersOpen} action2={setAnnouncements} />
+                    }
                     {announcements.map(announcement => {
                         return (
                             <ListItem>
@@ -64,6 +78,7 @@ export default function Home() {
                                     currency={announcement.currency}
                                     timeUnit={announcement.timeUnit}
                                     authorId={announcement.authorId}
+                                    status={announcement.status}
                                 />
                             </ListItem>
                         );

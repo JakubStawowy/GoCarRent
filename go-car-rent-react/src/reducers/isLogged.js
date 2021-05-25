@@ -7,8 +7,10 @@ const loginReducer = (state = init, action) => {
         case 'LOGIN': {
             if (action.payload !== undefined) {
                 state.logged = true;
-                localStorage.setItem('userId', action.payload.data.first);
-                localStorage.setItem('token', action.payload.data.second);
+                console.log(action.payload);
+                localStorage.setItem('userId', action.payload.data.userId);
+                localStorage.setItem('token', action.payload.data.token);
+                localStorage.setItem('role', action.payload.data.role);
             }
             return state;
         }

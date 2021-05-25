@@ -13,7 +13,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Service
-public final class JsonWebTokenProvider implements ITokenProvider {
+public class JsonWebTokenProvider implements ITokenProvider {
 
     @Override
     public String generateUserToken(final User user) {
@@ -29,7 +29,6 @@ public final class JsonWebTokenProvider implements ITokenProvider {
                 .setExpiration(new Date(System.currentTimeMillis()+3600000))
 //                .setExpiration(new Date(System.currentTimeMillis()+10000))
                 .signWith(SignatureAlgorithm.HS512, signingKey)
-
                 .compact();
     }
 }

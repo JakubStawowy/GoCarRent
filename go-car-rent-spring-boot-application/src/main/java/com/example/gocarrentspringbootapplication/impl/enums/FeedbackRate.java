@@ -1,4 +1,4 @@
-package com.example.gocarrentspringbootapplication.impl.components;
+package com.example.gocarrentspringbootapplication.impl.enums;
 
 public enum FeedbackRate {
     ONE,

@@ -2,10 +2,10 @@ package com.example.gocarrentspringbootapplication.impl.controllers.security;
 
 import com.example.gocarrentspringbootapplication.api.providers.ITokenProvider;
 import com.example.gocarrentspringbootapplication.api.security.IAuthorizeService;
+import com.example.gocarrentspringbootapplication.impl.dto.LoginTransferObject;
 import com.example.gocarrentspringbootapplication.impl.models.User;
-import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
+import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +27,17 @@ public final class LoginController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<Pair<Long, String>> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public ResponseEntity<LoginTransferObject> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         User user;
         if ((user = authorizeService.authorizeUserWithEmailAndPassword(email, password)) != null) {
             user.setLogged(true);
             userRepository.save(user);
-            return new ResponseEntity<>(Pair.of(user.getId(), tokenProvider.generateUserToken(user)), HttpStatus.OK);
+            return new ResponseEntity<>(new LoginTransferObject(
+                    user.getId(),
+                    tokenProvider.generateUserToken(user),
+                    user.getRoles()
+                    ), HttpStatus.OK
+            );
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

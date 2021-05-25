@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -35,15 +36,11 @@ public final class JsonWebTokenFilter extends BasicAuthenticationFilter {
         }
 
         try {
-
             UsernamePasswordAuthenticationToken result = authenticationTokenProvider.getAuthenticationToken(header);
             SecurityContextHolder.getContext().setAuthentication(result);
-
         } catch (ExpiredJwtException e) {
-
             Logger.getGlobal().log(Level.INFO, e.getMessage());
             SecurityContextHolder.clearContext();
-
         } finally {
             chain.doFilter(request, response);
         }

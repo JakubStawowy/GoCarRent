@@ -1,10 +1,9 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
-import com.example.gocarrentspringbootapplication.impl.components.RentStatus;
+import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -18,7 +17,7 @@ public class Announcement {
     @NotNull
     @Column(name = "rent_status")
     @Enumerated(EnumType.STRING)
-    private RentStatus rentStatus;
+    private AnnouncementStatus rentStatus;
 
     @NotNull
     @Column(name = "created_at")
@@ -38,7 +37,7 @@ public class Announcement {
     @PrePersist
     public void set() {
         createdAt = new Timestamp(System.currentTimeMillis());
-        rentStatus = RentStatus.FREE;
+        rentStatus = AnnouncementStatus.FREE;
     }
 
     public void setCreatedAt(Timestamp createdAt) {
@@ -73,11 +72,11 @@ public class Announcement {
         this.author = author;
     }
 
-    public RentStatus getRentStatus() {
+    public AnnouncementStatus getRentStatus() {
         return rentStatus;
     }
 
-    public void setRentStatus(RentStatus rentStatus) {
+    public void setRentStatus(AnnouncementStatus rentStatus) {
         this.rentStatus = rentStatus;
     }
 

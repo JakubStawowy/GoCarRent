@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.security;
 
 import com.example.gocarrentspringbootapplication.impl.models.User;
-import com.example.gocarrentspringbootapplication.impl.dao.UserRepository;
+import com.example.gocarrentspringbootapplication.impl.dao.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

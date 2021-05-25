@@ -1,6 +1,5 @@
 package com.example.gocarrentspringbootapplication.impl.configures;
 
-
 import com.example.gocarrentspringbootapplication.impl.filters.JsonWebTokenFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,6 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger*").permitAll()
                 .antMatchers(HttpMethod.GET, "/v2/*").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/announcements/{id}/block").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/announcements/{id}/unlock").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/announcements/blocked").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated();
     }

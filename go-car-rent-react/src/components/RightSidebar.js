@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import './components.css';
 import {AppBar, makeStyles, Typography, Button, Badge, Grid, Avatar} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
@@ -48,7 +48,7 @@ export default function RightSidebar() {
     return (
         <Grid item xs>
             <AppBar className={classes.bar} position={'relative'}>
-                <NavLink to={'/users/{id}/profile'}>
+                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'}>
                     <div className={classes.circlePlate}>
                         <Avatar
                             src={userImage}
@@ -57,7 +57,7 @@ export default function RightSidebar() {
                         />
                     </div>
                 </NavLink>
-                <NavLink to={"/users/{id}/profile"}>
+                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'}>
                     <Button className={classes.button}>
                         <Typography variant={"BUTTON"} size={'large'}>profile</Typography>
                         <PersonIcon />

@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.feedback;
 
 import com.example.gocarrentspringbootapplication.impl.models.Feedback;
-import com.example.gocarrentspringbootapplication.impl.dao.FeedbackRepository;
+import com.example.gocarrentspringbootapplication.impl.dao.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
