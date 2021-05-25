@@ -1,0 +1,19 @@
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar {
+    background: transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box;
+    width: 16vw;
+    height: 100%;
+    position: fixed;
+}
+
+.sidebar-left {
+    left: 0;
+}
+
+.sidebar-right {
+    right: 0;
+}
