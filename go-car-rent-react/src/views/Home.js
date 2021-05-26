@@ -10,7 +10,7 @@ import FilteringPanel from "../components/FilteringPanel";
 
 const useStyles = makeStyles((theme) => ({
     list: {
-        maxHeight: '72vh',
+        maxHeight: '85vh',
         marginTop: '2em',
         overflow: 'auto'
     },

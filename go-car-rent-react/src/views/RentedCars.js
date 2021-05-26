@@ -1,18 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../components/components.css';
 import {
-    Button,
     Container, Fab,
     makeStyles, Paper, Table, TableBody,
     TableCell,
     TableContainer,
     TableHead,
-    TableRow, Typography,
+    TableRow,
 } from "@material-ui/core";
-
-import rentedCars from "../data/rentedCars";
-import CheckIcon from '@material-ui/icons/Check';
-import ClearIcon from '@material-ui/icons/Clear';
+import {useHistory} from "react-router";
+import {getUserAnnouncements} from "../actions/getUserAnnouncements";
+import {getTenantRents} from "../actions/getTenantRents";
 
 const useStyles = makeStyles((theme) => ({
     tableHead: {
@@ -40,6 +38,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RentedCars() {
     const classes = useStyles();
+    const history = useHistory();
+    const [rentedCars, setRentedCars] = useState([]);
+
+    useEffect(() => {
+        getTenantRents(localStorage.getItem('userId')).then((response) => {
+            setRentedCars(response.data);
+        }).catch(() => {
+            localStorage.clear();
+            history.replace("/login");
+        });
+    }, []);
+
     return (
         <Container className={classes.container}>
             <TableContainer component={Paper}>
@@ -56,20 +66,20 @@ export default function RentedCars() {
                     </TableHead>
                     <TableBody>
                         {
-                            rentedCars.map(car => {
+                            rentedCars.map(rent => {
                                 let statusComponent;
-                                switch (car.status) {
-                                    case 'rented':
+                                switch (rent.announcement.status) {
+                                    case 'RENTED':
                                         statusComponent = (
                                             <Fab variant={"extended"}>
-                                                Return
+                                                Rented
                                             </Fab>
                                         );
                                         break;
-                                    case 'waiting':
+                                    case 'RETURNED':
                                         statusComponent = (
                                             <Fab variant={"extended"} className={classes.waiting}>
-                                                Waiting
+                                                Returned
                                             </Fab>
                                         );
                                         break;
@@ -82,11 +92,11 @@ export default function RentedCars() {
                                 }
                                 return (
                                     <TableRow>
-                                        <TableCell align={"center"}>{car.brand}</TableCell>
-                                        <TableCell align={"center"}>{car.model}</TableCell>
-                                        <TableCell align={"center"}>{car.price}</TableCell>
-                                        <TableCell align={"center"}>{car.time}</TableCell>
-                                        <TableCell align={"center"}>{car.fee}</TableCell>
+                                        <TableCell align={"center"}>{rent.announcement.carBrand}</TableCell>
+                                        <TableCell align={"center"}>{rent.announcement.carModel}</TableCell>
+                                        <TableCell align={"center"}>{rent.announcement.amount}</TableCell>
+                                        <TableCell align={"center"}>20</TableCell>
+                                        <TableCell align={"center"}>30</TableCell>
                                         <TableCell align={"center"}>
                                             {statusComponent}
                                         </TableCell>

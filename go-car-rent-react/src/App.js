@@ -79,10 +79,6 @@ function App() {
                                 <Route path={'/users/{id}/cars'} component={UserCars}/>
                                 <Route path={'/settings'} component={Settings}/>
                             </Grid>
-                            <Button className={classes.footer}>
-                                Footer
-                                <KeyboardArrowUpIcon/>
-                            </Button>
                         </Grid>
                         <Grid item component={RightSidebar}/>
                     </Grid>

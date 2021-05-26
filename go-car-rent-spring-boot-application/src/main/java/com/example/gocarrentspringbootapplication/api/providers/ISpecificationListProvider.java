@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.api.providers;
 
 import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
+import com.example.gocarrentspringbootapplication.impl.repositories.AnnouncementKeysRepository;
 import com.example.gocarrentspringbootapplication.impl.repositories.OperationsRepository;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -25,7 +26,7 @@ public interface ISpecificationListProvider<T> {
             else result.add(new String[]{specArray[0], OperationsRepository.OPERATIONS[i], specArray[1]});
         }
         if (!criteria.contains(AnnouncementStatus.BLOCKED.toString()))
-            result.add(new String[]{"rentStatus", OperationsRepository.NOT_EQUAL, AnnouncementStatus.BLOCKED.toString()});
+            result.add(new String[]{AnnouncementKeysRepository.STATUS, OperationsRepository.NOT_EQUAL, AnnouncementStatus.BLOCKED.toString()});
 
         return getSpecificationListWithDecompressedCriteria(result);
     }
