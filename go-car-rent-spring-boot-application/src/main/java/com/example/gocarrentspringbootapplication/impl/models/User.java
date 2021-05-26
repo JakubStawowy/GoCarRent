@@ -43,34 +43,31 @@ public class User {
     @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> messagesSent = new HashSet<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> messagesReceived = new HashSet<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbackSent = new HashSet<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbackReceived = new HashSet<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Announcement> announcements = new HashSet<>();
 
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "car_rent",
-            joinColumns = {@JoinColumn(name = "tenant_id")},
-            inverseJoinColumns = {@JoinColumn(name = "announcement_id")}
-            )
-    private Set<Announcement> rent;
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "car_rent",
+//            joinColumns = {@JoinColumn(name = "tenant_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "announcement_id")}
+//            )
+//    private Set<Announcement> rent;
+
+    @OneToMany(mappedBy = "tenant")
+    private Set<Rent> rents;
 
     public User(@NotEmpty String email, @NotEmpty String password, @NotNull UserRoles role, UserDetails userDetails) {
         this.email = email;
@@ -119,14 +116,6 @@ public class User {
 
     public Date getCreatedAt() {
         return createdAt;
-    }
-
-    public Set<Announcement> getRent() {
-        return rent;
-    }
-
-    public void setRent(Set<Announcement> rent) {
-        this.rent = rent;
     }
 
     public Set<Announcement> getAnnouncements() {
@@ -199,5 +188,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserRoles getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoles role) {
+        this.role = role;
+    }
+
+    public Set<Rent> getRents() {
+        return rents;
+    }
+
+    public void setRents(Set<Rent> rents) {
+        this.rents = rents;
     }
 }

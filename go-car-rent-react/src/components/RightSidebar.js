@@ -1,6 +1,6 @@
-import React, {Component, useEffect, useState} from 'react';
+import React from 'react';
 import './components.css';
-import {AppBar, makeStyles, Typography, Button, Badge, Grid, Avatar} from "@material-ui/core";
+import {AppBar, makeStyles, Typography, Button, Grid, Avatar} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
@@ -40,13 +40,18 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '50%',
         width: '100%',
         objectFit: 'cover'
-    }
+    },
+    label: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }
+    },
 }));
 
 export default function RightSidebar() {
     const classes = useStyles();
     return (
-        <Grid item xs>
+        <Grid item xs >
             <AppBar className={classes.bar} position={'relative'}>
                 <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'}>
                     <div className={classes.circlePlate}>
@@ -59,25 +64,25 @@ export default function RightSidebar() {
                 </NavLink>
                 <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'}>
                     <Button className={classes.button}>
-                        <Typography variant={"BUTTON"} size={'large'}>profile</Typography>
+                        <Typography variant={"BUTTON"} size={'large'} className={classes.label}>profile</Typography>
                         <PersonIcon />
                     </Button>
                 </NavLink>
                 <NavLink to={"/users/{id}/messages"}>
                     <Button className={classes.button} size={'large'}>
-                        <Typography variant={"BUTTON"}>messages</Typography>
+                        <Typography variant={"BUTTON"} className={classes.label}>messages</Typography>
                         <MessageIcon />
                     </Button>
                 </NavLink>
                 <NavLink to={"/users/{id}/cars"}>
                     <Button className={classes.button} size={'large'}>
-                        <Typography variant={"BUTTON"}>your cars</Typography>
+                        <Typography variant={"BUTTON"} className={classes.label}>your cars</Typography>
                         <DirectionsCarIcon />
                     </Button>
                 </NavLink>
                 <NavLink to={"/settings"}>
                     <Button className={classes.button} size={'large'}>
-                        <Typography variant={"BUTTON"}>settings</Typography>
+                        <Typography variant={"BUTTON"} className={classes.label}>settings</Typography>
                         <SettingsIcon />
                     </Button>
                 </NavLink>

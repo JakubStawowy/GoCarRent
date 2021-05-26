@@ -8,11 +8,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public final class AuthenticationTokenProvider implements IAuthenticationTokenProvider<UsernamePasswordAuthenticationToken> {
 
@@ -24,7 +21,6 @@ public final class AuthenticationTokenProvider implements IAuthenticationTokenPr
 
         String username = claimsJws.getBody().get("name").toString();
         String roles = claimsJws.getBody().get("role").toString();
-        Logger.getGlobal().log(Level.INFO, "ROLE: " + roles);
         return new UsernamePasswordAuthenticationToken(
                 username,
                 null,

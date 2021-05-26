@@ -1,10 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
-import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -14,15 +10,6 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "rent_status")
-    @Enumerated(EnumType.STRING)
-    private AnnouncementStatus rentStatus;
-
-    @NotNull
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "announcement_details_id")
     private AnnouncementDetails announcementDetails;
@@ -31,22 +18,10 @@ public class Announcement {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @ManyToMany(mappedBy = "rent")
-    private Set<User> tenants;
-
-    @PrePersist
-    public void set() {
-        createdAt = new Timestamp(System.currentTimeMillis());
-        rentStatus = AnnouncementStatus.FREE;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
+//    @ManyToMany(mappedBy = "rent")
+//    private Set<User> tenants;
+    @OneToMany(mappedBy = "announcement")
+    private Set<Rent> rents;
 
     public Long getId() {
         return id;
@@ -72,19 +47,11 @@ public class Announcement {
         this.author = author;
     }
 
-    public AnnouncementStatus getRentStatus() {
-        return rentStatus;
+    public Set<Rent> getRents() {
+        return rents;
     }
 
-    public void setRentStatus(AnnouncementStatus rentStatus) {
-        this.rentStatus = rentStatus;
-    }
-
-    public Set<User> getTenants() {
-        return tenants;
-    }
-
-    public void setTenants(Set<User> tenants) {
-        this.tenants = tenants;
+    public void setRents(Set<Rent> rents) {
+        this.rents = rents;
     }
 }

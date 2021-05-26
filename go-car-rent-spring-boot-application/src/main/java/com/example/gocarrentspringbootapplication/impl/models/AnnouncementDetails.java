@@ -1,9 +1,12 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
+import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Currency;
 import java.util.concurrent.TimeUnit;
 
@@ -36,10 +39,25 @@ public class AnnouncementDetails {
     @Column(name = "car_model")
     private String carModel;
 
+    @NotNull
+    @Column(name = "rent_status")
+    @Enumerated(EnumType.STRING)
+    private AnnouncementStatus rentStatus;
+
+    @NotNull
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
     @OneToOne(mappedBy = "announcementDetails")
     private Announcement announcement;
 
     public AnnouncementDetails() {
+    }
+
+    @PrePersist
+    public void set() {
+        createdAt = new Timestamp(System.currentTimeMillis());
+        rentStatus = AnnouncementStatus.FREE;
     }
 
     public String getTitle() {
@@ -104,5 +122,21 @@ public class AnnouncementDetails {
 
     public void setAnnouncement(Announcement announcement) {
         this.announcement = announcement;
+    }
+
+    public AnnouncementStatus getRentStatus() {
+        return rentStatus;
+    }
+
+    public void setRentStatus(AnnouncementStatus rentStatus) {
+        this.rentStatus = rentStatus;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 }

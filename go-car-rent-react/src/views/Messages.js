@@ -26,7 +26,10 @@ const useStyles = makeStyles((theme) => ({
         padding: '0 1em',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        [theme.breakpoints.down('sm')]: {
+            display:'none'
+        }
     },
     messages: {
         flex: 4,

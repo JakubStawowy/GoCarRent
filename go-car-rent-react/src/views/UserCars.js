@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import '../components/components.css';
 import {
     Container,
@@ -8,12 +8,12 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Typography
 } from "@material-ui/core";
 
-import userCars from "../data/userCars";
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
+import {getUserAnnouncements} from "../actions/getUserAnnouncements";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme) => ({
     tableHead: {
@@ -32,6 +32,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserCars() {
     const classes = useStyles();
+    const history = useHistory();
+    const [userCars, setUserCars] = useState([]);
+    useEffect(() => {
+        getUserAnnouncements(localStorage.getItem('userId')).then((response) => {
+            setUserCars(response.data);
+        }).catch(() => {
+            localStorage.clear();
+            history.replace("/login");
+        });
+    }, []);
+
     return (
         <Container className={classes.container}>
             <TableContainer component={Paper}>
@@ -51,11 +62,11 @@ export default function UserCars() {
                             userCars.map(car => {
                                 return (
                                   <TableRow>
-                                      <TableCell align={"center"}>{car.brand}</TableCell>
-                                      <TableCell align={"center"}>{car.model}</TableCell>
-                                      <TableCell align={"center"}>{car.price}</TableCell>
+                                      <TableCell align={"center"}>{car.carBrand}</TableCell>
+                                      <TableCell align={"center"}>{car.carModel}</TableCell>
+                                      <TableCell align={"center"}>{car.amount} {car.currency} / {car.timeUnit.substr(0, 1)}</TableCell>
                                       {
-                                          car.rented ?
+                                          car.status === 'RENTED' ?
                                               <TableCell align={"center"}>
                                                   <CheckIcon className={classes.check}/>
                                               </TableCell>
@@ -64,8 +75,8 @@ export default function UserCars() {
                                                   <ClearIcon className={classes.clear}/>
                                               </TableCell>
                                       }
-                                      <TableCell align={"center"}>{car.time}</TableCell>
-                                      <TableCell align={"center"}>{car.fee}</TableCell>
+                                      <TableCell align={"center"}>12</TableCell>
+                                      <TableCell align={"center"}>34</TableCell>
                                   </TableRow>
                                 );
                             })
