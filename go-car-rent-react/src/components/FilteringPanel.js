@@ -41,20 +41,68 @@ export default function FilteringPanel(props) {
     const classes = useStyles();
     const [priceFrom, setPriceFrom] = useState('');
     const [priceTo, setPriceTo] = useState('');
-    const [timeUnit, setTimeUnit] = useState('HOURS');
+    const [timeUnit, setTimeUnit] = useState('');
     const [brand, setBrand] = useState('');
     const [model, setModel] = useState('');
-    const [status, setStatus] = useState('FREE');
+    const [status, setStatus] = useState('');
+
+    const validatePrice = (price) => {
+        return /^\d+\.?\d$/.test(price);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         props.action1();
-        getAnnouncements([
-            {
+        let body = [];
+        if (validatePrice(priceTo)) {
+            body.push({
+                key: "amount",
+                operation: "<=",
+                value: priceTo
+            });
+        }
+
+        if (validatePrice(priceFrom)) {
+            body.push({
+                key: "amount",
+                operation: ">=",
+                value: priceFrom
+            });
+        }
+
+        if (timeUnit !== '') {
+            body.push({
+               key: "timeUnit",
+               operation: "=",
+               value: timeUnit
+            });
+        }
+
+        if (status !== '') {
+            body.push({
                 key: "rentStatus",
                 operation: "=",
                 value: status
-            }
-        ]).then((response) => {
+            });
+        }
+
+        if (brand !== '') {
+            body.push({
+                key: "carBrand",
+                operation: "=",
+                value: brand
+            });
+        }
+
+        if (model !== '') {
+            body.push({
+               key: "carModel",
+               operation: "=",
+               value: model
+            });
+        }
+
+        getAnnouncements(body).then((response) => {
             props.action2(response.data);
         }).catch((error) => alert(error));
     }

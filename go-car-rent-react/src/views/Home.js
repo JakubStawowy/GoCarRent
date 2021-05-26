@@ -6,7 +6,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
 import {getAnnouncements} from "../actions/getAnnouncements";
 import {useHistory} from "react-router";
-import {ERROR_FORBIDDEN} from "../data/errors";
 import FilteringPanel from "../components/FilteringPanel";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,14 +47,17 @@ export default function Home() {
     const changeSearchOpen = () => setSearchOpen(!searchOpen);
 
     const handleSearch = (searchValue) => {
-        (searchValue !== undefined) &&
-        getAnnouncements([{
-            key: "title",
-            operation: "=",
-            value: searchValue
-        }]).then((response) => {
-            setAnnouncements(response.data);
-        }).catch((error) => {
+        let body = [];
+        searchValue !== undefined && searchValue !== '' &&
+            body.push({
+                key: "title",
+                operation: "=",
+                value: searchValue
+            });
+
+        getAnnouncements(body).then((response) =>
+            setAnnouncements(response.data)
+        ).catch((error) => {
             alert(error);
             if(error.response === undefined) {
                 localStorage.clear();

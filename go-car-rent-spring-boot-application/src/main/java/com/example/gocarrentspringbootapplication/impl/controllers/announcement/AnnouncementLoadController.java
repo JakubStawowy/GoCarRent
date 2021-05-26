@@ -4,20 +4,15 @@ import com.example.gocarrentspringbootapplication.api.dao.repositories.Announcem
 import com.example.gocarrentspringbootapplication.api.dao.repositories.AnnouncementRepository;
 import com.example.gocarrentspringbootapplication.api.providers.ISpecificationListProvider;
 import com.example.gocarrentspringbootapplication.impl.dto.AnnouncementTransferObject;
-import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
 import com.example.gocarrentspringbootapplication.impl.models.AnnouncementDetails;
-import com.example.gocarrentspringbootapplication.impl.providers.AnnouncementDetailsSpecificationListProvider;
-import com.example.gocarrentspringbootapplication.impl.providers.AnnouncementSpecificationListProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -26,35 +21,26 @@ public final class AnnouncementLoadController {
 
     private final AnnouncementRepository announcementRepository;
     private final AnnouncementDetailsRepository announcementDetailsRepository;
-//    private final ISpecificationListProvider<Announcement> specificationListProvider;
-
+    private final ISpecificationListProvider<AnnouncementDetails> specificationListProvider;
     @Autowired
-    public AnnouncementLoadController(AnnouncementRepository announcementRepository, AnnouncementDetailsRepository announcementDetailsRepository
-            /*,
-                                      ISpecificationListProvider<Announcement> specificationListProvider*/) {
+    public AnnouncementLoadController(
+            AnnouncementRepository announcementRepository,
+            AnnouncementDetailsRepository announcementDetailsRepository,
+            ISpecificationListProvider<AnnouncementDetails> specificationListProvider
+    ) {
         this.announcementRepository = announcementRepository;
         this.announcementDetailsRepository = announcementDetailsRepository;
-//        this.specificationListProvider = specificationListProvider;
+        this.specificationListProvider = specificationListProvider;
     }
 
     @GetMapping(value = {"/", ""})
     public List<AnnouncementTransferObject> getAnnouncements() {
-        List<AnnouncementTransferObject> announcements = new ArrayList<>();
-        announcementRepository.findAll().forEach(announcement -> {
-            if(!announcement.getRentStatus().equals(AnnouncementStatus.BLOCKED))
-                announcements.add(new AnnouncementTransferObject(announcement));
-        });
-        return announcements;
+        return getFilteredAnnouncements("rentStatus!=BLOCKED");
     }
 
     @GetMapping(value = "/blocked")
     public List<AnnouncementTransferObject> getBlockedAnnouncements() {
-        List<AnnouncementTransferObject> announcements = new ArrayList<>();
-        announcementRepository.findAll().forEach(announcement -> {
-            if(announcement.getRentStatus().equals(AnnouncementStatus.BLOCKED))
-                announcements.add(new AnnouncementTransferObject(announcement));
-        });
-        return announcements;
+        return getFilteredAnnouncements("rentStatus=BLOCKED");
     }
 
     @GetMapping(value = "/{id}")
@@ -67,22 +53,18 @@ public final class AnnouncementLoadController {
 
     @GetMapping(value = "/filter")
     public List<AnnouncementTransferObject> getFilteredAnnouncements(@RequestParam("criteria") String criteria) {
+
         List<AnnouncementTransferObject> announcementTransferObjects = new ArrayList<>();
-        try {
-            ISpecificationListProvider<Announcement> specificationListProvider = new AnnouncementSpecificationListProvider();
-            List<Specification<Announcement>> specificationList = specificationListProvider.getSpecificationListWithCompressedCriteria(criteria);
+        LinkedList<Specification<AnnouncementDetails>> specificationList =
+                (LinkedList<Specification<AnnouncementDetails>>) specificationListProvider.getSpecificationListWithCompressedCriteria(criteria);
 
-            for (Announcement announcement: announcementRepository.findAll(specificationList.get(0))) {
-                announcementTransferObjects.add(new AnnouncementTransferObject(announcement));
-            }
-        } catch (Exception e) {
-            ISpecificationListProvider<AnnouncementDetails> specificationListProvider = new AnnouncementDetailsSpecificationListProvider();
-            List<Specification<AnnouncementDetails>> specificationList = specificationListProvider.getSpecificationListWithCompressedCriteria(criteria);
+        Specification<AnnouncementDetails> specification = specificationList.pop();
+        for (Specification<AnnouncementDetails> spec: specificationList)
+            specification = specification.and(spec);
 
-            for (AnnouncementDetails announcementDetails: announcementDetailsRepository.findAll(specificationList.get(0))) {
-                announcementTransferObjects.add(new AnnouncementTransferObject(announcementDetails.getAnnouncement()));
-            }
-        }
+        for (AnnouncementDetails announcementDetails: announcementDetailsRepository.findAll(specification))
+            announcementTransferObjects.add(new AnnouncementTransferObject(announcementDetails.getAnnouncement()));
+
         return announcementTransferObjects;
     }
 }

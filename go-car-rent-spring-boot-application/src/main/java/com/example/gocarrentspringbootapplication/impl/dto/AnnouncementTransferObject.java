@@ -37,7 +37,7 @@ public class AnnouncementTransferObject implements Serializable {
         carBrand = announcement.getAnnouncementDetails().getCarBrand();
         carModel = announcement.getAnnouncementDetails().getCarModel();
         authorId = announcement.getAuthor().getId();
-        status = announcement.getRentStatus();
+        status = announcement.getAnnouncementDetails().getRentStatus();
     }
 
     public Long getId() {

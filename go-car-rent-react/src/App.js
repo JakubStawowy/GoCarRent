@@ -6,7 +6,7 @@ import Home from "./views/Home";
 import RightSidebar from "./components/RightSidebar";
 import FilteringPanel from "./components/FilteringPanel";
 import React from "react";
-import {Button, Grid, makeStyles} from "@material-ui/core";
+import {Button, Grid, List, makeStyles} from "@material-ui/core";
 import AddAnnouncement from "./views/AddAnnouncement";
 import EditAnnouncement from "./views/EditAnnouncement";
 import UserCars from "./views/UserCars";
@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        maxHeight: '100vh',
+        overflow: 'auto'
     },
     footer: {
         background: '#6A6464C2 0% 0% no-repeat padding-box',
@@ -59,9 +61,9 @@ function App() {
             <img src={logo} alt={''} className={classes.logo}/>
             <div className={"container"}>
                 <Switch>
-                    <Grid container style={{height: '100vh'}}>
-                        <Grid item component={LeftSidebar} />
-                        <Grid container xs={8} className={classes.main}>
+                    <Grid container style={{height: '100vh'}} wrap={"nowrap"}>
+                        <Grid item component={LeftSidebar}/>
+                        <Grid container xs={8} component={List} className={classes.main} wrap={'nowrap'}>
                             <Grid item className={classes.subContainer}>
                                 <Route exact path={'/'}>
                                     {loggedSelector.logged ? <Redirect to={'/home'}/> : <Redirect to={'/login'}/>}
@@ -82,7 +84,7 @@ function App() {
                                 <KeyboardArrowUpIcon/>
                             </Button>
                         </Grid>
-                        <Grid item component={RightSidebar} />
+                        <Grid item component={RightSidebar}/>
                     </Grid>
                 </Switch>
             </div>

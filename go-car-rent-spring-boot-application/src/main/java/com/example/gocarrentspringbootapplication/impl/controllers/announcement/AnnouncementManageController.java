@@ -68,8 +68,8 @@ public final class AnnouncementManageController {
         if (optionalAnnouncement.isPresent()) {
             announcement.setId(optionalAnnouncement.get().getId());
             announcement.getAnnouncementDetails().setId(optionalAnnouncement.get().getAnnouncementDetails().getId());
-            announcement.setCreatedAt(optionalAnnouncement.get().getCreatedAt());
-            announcement.setRentStatus(optionalAnnouncement.get().getRentStatus());
+            announcement.getAnnouncementDetails().setCreatedAt(optionalAnnouncement.get().getAnnouncementDetails().getCreatedAt());
+            announcement.getAnnouncementDetails().setRentStatus(optionalAnnouncement.get().getAnnouncementDetails().getRentStatus());
             announcementRepository.save(announcement);
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -80,7 +80,7 @@ public final class AnnouncementManageController {
     public ResponseEntity<?> blockAnnouncement(@PathVariable("id") Long announcementId) {
         Optional<Announcement> announcement = announcementRepository.findById(announcementId);
         if(announcement.isPresent()) {
-            announcement.get().setRentStatus(AnnouncementStatus.BLOCKED);
+            announcement.get().getAnnouncementDetails().setRentStatus(AnnouncementStatus.BLOCKED);
             announcementRepository.save(announcement.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -91,7 +91,7 @@ public final class AnnouncementManageController {
     public ResponseEntity<?> unlockAnnouncement(@PathVariable("id") Long announcementId) {
         Optional<Announcement> announcement = announcementRepository.findById(announcementId);
         if(announcement.isPresent()) {
-            announcement.get().setRentStatus(AnnouncementStatus.FREE);
+            announcement.get().getAnnouncementDetails().setRentStatus(AnnouncementStatus.FREE);
             announcementRepository.save(announcement.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }

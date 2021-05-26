@@ -1,6 +1,6 @@
 import {
     Button, Card,
-    Container,
+    Container, Grid, List,
     makeStyles,
     TextField, Typography
 } from "@material-ui/core";
@@ -37,6 +37,9 @@ const useStyles = makeStyles({
     cards: {
         opacity: '1',
         background: 'transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box',
+    },
+    list: {
+        maxHeight: '100vh'
     }
 });
 
@@ -84,8 +87,8 @@ export default function LoginRegister() {
     }
 
     return (
-        <Container className={classes.container}>
-            <Card className={classes.cards}>
+        <Grid container className={classes.container} >
+            <Grid item component={Card} className={classes.cards}>
                 <Typography variant={'h4'} align={'center'}>
                     Login
                 </Typography>
@@ -110,8 +113,8 @@ export default function LoginRegister() {
                         variant="contained"
                     >Login</Button>
                 </form>
-            </Card>
-            <Card className={classes.cards}>
+            </Grid>
+            <Grid item component={Card} className={classes.cards}>
                 <Typography variant={'h4'} align={'center'}>
                     Register
                 </Typography>
@@ -127,7 +130,7 @@ export default function LoginRegister() {
                         type={"submit"}
                     >Register</Button>
                 </form>
-            </Card>
-        </Container>
+            </Grid>
+        </Grid>
     );
 }

@@ -1,5 +1,6 @@
 package com.example.gocarrentspringbootapplication.api.providers;
 
+import com.example.gocarrentspringbootapplication.impl.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.impl.repositories.OperationsRepository;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -19,10 +20,13 @@ public interface ISpecificationListProvider<T> {
             for (i = 0; i < OperationsRepository.OPERATIONS.length; i++)
                 if (spec.contains(OperationsRepository.OPERATIONS[i])) break;
 
-            String[] specArray = spec.split(OperationsRepository.OPERATIONS[i]);
+            final String[] specArray = spec.split(OperationsRepository.OPERATIONS[i]);
             if (specArray.length == 1) result.add(new String[]{specArray[0], OperationsRepository.OPERATIONS[i], ""});
             else result.add(new String[]{specArray[0], OperationsRepository.OPERATIONS[i], specArray[1]});
         }
+        if (!criteria.contains(AnnouncementStatus.BLOCKED.toString()))
+            result.add(new String[]{"rentStatus", OperationsRepository.NOT_EQUAL, AnnouncementStatus.BLOCKED.toString()});
+
         return getSpecificationListWithDecompressedCriteria(result);
     }
 }

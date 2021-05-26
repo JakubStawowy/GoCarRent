@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         width: '100%',
         height: '100%'
+    },
+    label: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }
     }
 }));
 
@@ -68,31 +73,31 @@ export default function LeftSidebar() {
                 <NavLink to={"/add"}>
                     <Button className={classes.button} size={'large'} id={"addButton"}>
                         <PostAddIcon />
-                        <Typography variant={"button"}>add</Typography>
+                        <Typography variant={"button"} className={classes.label}>add</Typography>
                     </Button>
                 </NavLink>
                 <NavLink to={"/home"}>
                     <Button className={classes.button} size={'large'}>
                         <HomeOutlinedIcon />
-                        <Typography variant={"BUTTON"}>home</Typography>
+                        <Typography variant={"BUTTON"} className={classes.label}>home</Typography>
                     </Button>
                 </NavLink>
                 <NavLink to={"/user/{id}/rented"}>
                     <Button className={classes.button} size={'large'}>
                         <AirportShuttleIcon />
-                        <Typography variant={"BUTTON"}>rented cars</Typography>
+                        <Typography variant={"BUTTON"} className={classes.label}>rented cars</Typography>
                     </Button>
                 </NavLink>
                 <NavLink to={"/login"}>
                     {isLogged.logged ? (
                         <Button className={classes.button} size={'large'} id={"logoutButton"} onClick={handleLogout}>
                             <ExitToAppIcon />
-                            <Typography variant={"BUTTON"}>logout</Typography>
+                            <Typography variant={"BUTTON"} className={classes.label}>logout</Typography>
                         </Button>
                     ) : (
                         <Button className={classes.button} size={'large'} id={"logoutButton"} onClick={handleLogout}>
                             <ExitToAppIcon />
-                            <Typography variant={"BUTTON"}>login</Typography>
+                            <Typography variant={"BUTTON"} className={classes.label}>login</Typography>
                         </Button>
                     )}
                 </NavLink>

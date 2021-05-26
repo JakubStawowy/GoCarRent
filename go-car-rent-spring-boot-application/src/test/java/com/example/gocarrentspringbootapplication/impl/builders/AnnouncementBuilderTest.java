@@ -35,8 +35,8 @@ class AnnouncementBuilderTest {
 
         Announcement testAnnouncement = TestAnnouncementProvider.getTestAnnouncement();
         assertEquals(testAnnouncement.getAuthor().getId(), announcement.getAuthor().getId());
-        assertEquals(testAnnouncement.getCreatedAt(), announcement.getCreatedAt());
-        assertEquals(testAnnouncement.getRentStatus(), announcement.getRentStatus());
+        assertEquals(testAnnouncement.getAnnouncementDetails().getCreatedAt(), announcement.getAnnouncementDetails().getCreatedAt());
+        assertEquals(testAnnouncement.getAnnouncementDetails().getRentStatus(), announcement.getAnnouncementDetails().getRentStatus());
         assertEquals(testAnnouncement.getAnnouncementDetails().getTitle(), announcement.getAnnouncementDetails().getTitle());
         assertEquals(testAnnouncement.getAnnouncementDetails().getAmount(), announcement.getAnnouncementDetails().getAmount());
         assertEquals(testAnnouncement.getAnnouncementDetails().getCurrency(), announcement.getAnnouncementDetails().getCurrency());

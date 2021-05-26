@@ -6,12 +6,11 @@ public enum AnnouncementStatus {
     RETURNED,
     BLOCKED;
     public static AnnouncementStatus get(String status) {
-        switch (status) {
-            case "FREE": return AnnouncementStatus.FREE;
-            case "RENTED": return AnnouncementStatus.RENTED;
-            case "RETURNED": return AnnouncementStatus.RETURNED;
-            case "BLOCKED": return AnnouncementStatus.BLOCKED;
-            default: return null;
-        }
+        if (status.equals(FREE.toString())) return AnnouncementStatus.FREE;
+        if (status.equals(RENTED.toString())) return AnnouncementStatus.RENTED;
+        if (status.equals(RETURNED.toString())) return AnnouncementStatus.RETURNED;
+        if (status.equals(BLOCKED.toString())) return AnnouncementStatus.BLOCKED;
+        if (status.equals(FREE.toString())) return AnnouncementStatus.FREE;
+        return null;
     }
 }

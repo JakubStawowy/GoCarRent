@@ -6,15 +6,13 @@ import com.example.gocarrentspringbootapplication.impl.models.AnnouncementDetail
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public final class AnnouncementDetailsSpecificationListProvider implements ISpecificationListProvider<AnnouncementDetails> {
     @Override
     public List<Specification<AnnouncementDetails>> getSpecificationListWithDecompressedCriteria(Set<String[]> criteria) {
-        List<Specification<AnnouncementDetails>> result = new ArrayList<>();
+        List<Specification<AnnouncementDetails>> result = new LinkedList<>();
         for (String[] specArray: criteria)
             result.add(new AnnouncementDetailsSpecification(specArray[0], specArray[1], specArray[2]));
 
