@@ -38,6 +38,7 @@ public final class AnnouncementLoadController {
         return getFilteredAnnouncements("rentStatus!=BLOCKED");
     }
 
+    // TOREMOVE
     @GetMapping(value = "/blocked")
     public List<AnnouncementTransferObject> getBlockedAnnouncements() {
         return getFilteredAnnouncements("rentStatus=BLOCKED");

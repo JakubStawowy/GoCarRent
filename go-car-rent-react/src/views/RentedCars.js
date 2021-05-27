@@ -95,8 +95,8 @@ export default function RentedCars() {
                                         <TableCell align={"center"}>{rent.announcement.carBrand}</TableCell>
                                         <TableCell align={"center"}>{rent.announcement.carModel}</TableCell>
                                         <TableCell align={"center"}>{rent.announcement.amount}</TableCell>
-                                        <TableCell align={"center"}>20</TableCell>
-                                        <TableCell align={"center"}>30</TableCell>
+                                        <TableCell align={"center"}>{rent.rentTime} {rent.announcement.timeUnit.substr(0, 1)}</TableCell>
+                                        <TableCell align={"center"}>{rent.fee} {rent.announcement.currency}</TableCell>
                                         <TableCell align={"center"}>
                                             {statusComponent}
                                         </TableCell>

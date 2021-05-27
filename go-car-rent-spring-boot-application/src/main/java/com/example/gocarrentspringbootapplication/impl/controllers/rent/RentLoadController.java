@@ -1,13 +1,14 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.rent;
 
 import com.example.gocarrentspringbootapplication.api.dao.repositories.RentRepository;
+import com.example.gocarrentspringbootapplication.api.system.IPeriodConverter;
+import com.example.gocarrentspringbootapplication.api.system.IRentPropertiesManager;
 import com.example.gocarrentspringbootapplication.impl.dto.AnnouncementTransferObject;
 import com.example.gocarrentspringbootapplication.impl.dto.RentTransferObject;
 import com.example.gocarrentspringbootapplication.impl.models.Rent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +18,12 @@ import java.util.List;
 public class RentLoadController {
 
     private final RentRepository rentRepository;
+    private final IRentPropertiesManager rentPropertiesManager;
 
     @Autowired
-    public RentLoadController(RentRepository rentRepository) {
+    public RentLoadController(RentRepository rentRepository, IRentPropertiesManager rentPropertiesManager) {
         this.rentRepository = rentRepository;
+        this.rentPropertiesManager = rentPropertiesManager;
     }
 
     @GetMapping(value = "/tenant/{id}")
@@ -30,10 +33,11 @@ public class RentLoadController {
         for (Rent rent: rents)
             rentTransferObjects.add(new RentTransferObject(
                     new AnnouncementTransferObject(rent.getAnnouncement()),
-                    new BigDecimal("100"),
+                    rentPropertiesManager.getFee(rent),
                     rent.getRentedAt(),
-                    rent.getRentedAt()
+                    rentPropertiesManager.getRentDays(rent)
             ));
         return rentTransferObjects;
     }
+
 }

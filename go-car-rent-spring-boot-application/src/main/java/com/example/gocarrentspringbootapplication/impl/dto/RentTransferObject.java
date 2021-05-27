@@ -8,9 +8,9 @@ public class RentTransferObject {
     private final AnnouncementTransferObject announcement;
     private final BigDecimal fee;
     private final Timestamp rentedAt;
-    private final Timestamp rentTime;
+    private final BigDecimal rentTime;
 
-    public RentTransferObject(AnnouncementTransferObject announcement, BigDecimal fee, Timestamp rentedAt, Timestamp rentTime) {
+    public RentTransferObject(AnnouncementTransferObject announcement, BigDecimal fee, Timestamp rentedAt, BigDecimal rentTime) {
         this.announcement = announcement;
         this.fee = fee;
         this.rentedAt = rentedAt;
@@ -29,7 +29,7 @@ public class RentTransferObject {
         return rentedAt;
     }
 
-    public Timestamp getRentTime() {
+    public BigDecimal getRentTime() {
         return rentTime;
     }
 }

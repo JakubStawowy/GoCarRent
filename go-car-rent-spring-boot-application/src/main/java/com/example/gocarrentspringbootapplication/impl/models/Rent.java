@@ -1,5 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -22,6 +24,10 @@ public class Rent {
     @NotNull
     @Column(name = "rented_at")
     private Timestamp rentedAt;
+
+    @Nullable
+    @Column(name = "returned_at")
+    private Timestamp returnedAt;
 
     @PrePersist
     public void setInitial() {
@@ -58,5 +64,14 @@ public class Rent {
 
     public void setRentedAt(Timestamp rentedAt) {
         this.rentedAt = rentedAt;
+    }
+
+    @Nullable
+    public Timestamp getReturnedAt() {
+        return returnedAt;
+    }
+
+    public void setReturnedAt(@Nullable Timestamp returnedAt) {
+        this.returnedAt = returnedAt;
     }
 }
