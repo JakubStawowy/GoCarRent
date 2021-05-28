@@ -6,5 +6,5 @@ import java.math.BigDecimal;
 
 public interface IRentPropertiesManager {
     BigDecimal getFee(Rent rent);
-    BigDecimal getRentDays(Rent rent);
+    BigDecimal getRentTime(Rent rent);
 }

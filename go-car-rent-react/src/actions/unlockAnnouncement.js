@@ -1,13 +1,13 @@
 import axios from 'axios';
+import {BASE_UNLOCK_ANNOUNCEMENT_URL} from "./urlRepository";
 
-export const unlockAnnouncement = (announcementID) => async (dispatch) => {
+export const unlockAnnouncement = (announcementId) => async (dispatch) => {
 
-    const url = "http://localhost:8080/api/announcements/" + announcementID + "/unlock";
     const config = {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
     }
 
-    return await axios.put(url, null, config);
+    return await axios.put(BASE_UNLOCK_ANNOUNCEMENT_URL.replace(":announcementId", announcementId), null, config);
 }

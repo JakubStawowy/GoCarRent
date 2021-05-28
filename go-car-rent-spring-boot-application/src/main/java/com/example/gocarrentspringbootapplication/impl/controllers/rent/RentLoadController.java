@@ -1,7 +1,6 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.rent;
 
 import com.example.gocarrentspringbootapplication.api.dao.repositories.RentRepository;
-import com.example.gocarrentspringbootapplication.api.system.IPeriodConverter;
 import com.example.gocarrentspringbootapplication.api.system.IRentPropertiesManager;
 import com.example.gocarrentspringbootapplication.impl.dto.AnnouncementTransferObject;
 import com.example.gocarrentspringbootapplication.impl.dto.RentTransferObject;
@@ -35,7 +34,7 @@ public class RentLoadController {
                     new AnnouncementTransferObject(rent.getAnnouncement()),
                     rentPropertiesManager.getFee(rent),
                     rent.getRentedAt(),
-                    rentPropertiesManager.getRentDays(rent)
+                    rentPropertiesManager.getRentTime(rent)
             ));
         return rentTransferObjects;
     }

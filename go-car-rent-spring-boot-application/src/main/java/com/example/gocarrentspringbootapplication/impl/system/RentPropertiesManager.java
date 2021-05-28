@@ -24,18 +24,17 @@ public final class RentPropertiesManager implements IRentPropertiesManager {
     @Override
     public BigDecimal getFee(Rent rent) {
 
-        BigDecimal amount = rent.getAnnouncement().getAnnouncementDetails().getAmount();
         BigDecimal period;
 
-        if ((period = getRentDays(rent)) != null)
-            return amount.multiply(period);
+        if ((period = getRentTime(rent)) != null)
+            return rent.getAnnouncement().getAnnouncementDetails().getAmount().multiply(period);
 
         return null;
     }
 
     @Nullable
     @Override
-    public BigDecimal getRentDays(Rent rent) {
+    public BigDecimal getRentTime(Rent rent) {
 
         TimeUnit timeUnit = rent.getAnnouncement().getAnnouncementDetails().getTimeUnit();
         long period = periodConverter.getPeriod(rent.getRentedAt(), rent.getReturnedAt());

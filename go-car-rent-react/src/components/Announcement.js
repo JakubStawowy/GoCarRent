@@ -9,9 +9,12 @@ import BlockIcon from '@material-ui/icons/Block';
 import {useDispatch} from "react-redux";
 import {blockAnnouncement} from "../actions/blockAnnouncement";
 import {unlockAnnouncement} from "../actions/unlockAnnouncement";
+import {registerRent} from "../actions/registerRent";
 import {useHistory} from "react-router";
 import {useState} from "react";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         height: '30vh',
@@ -47,15 +50,17 @@ export default function Announcement(props) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [isBlock, setIsBlock] = useState(false);
-    const changeBlock = () => setIsBlock(!isBlock);
+    const classes = useStyles();
 
+    const changeBlock = () => setIsBlock(!isBlock);
     const handleBlock = () => {
         dispatch(blockAnnouncement(props.announcementId)).then(() => {
             alert('Announcement blocked successfully');
             history.replace('/');
         }).catch((error) => {
-           alert(error);
+            alert(error);
         });
+
     }
 
     const handleUnlock = () => {
@@ -63,11 +68,18 @@ export default function Announcement(props) {
             alert('Announcement unlocked successfully');
             history.replace('/');
         }).catch((error) => {
-           alert(error);
+            alert(error);
         });
     }
 
-    const classes = useStyles();
+    const handleRentRequest = () => {
+        dispatch(registerRent(props.announcementId, localStorage.getItem('userId'))).then(() => {
+           alert("Rent registered successfully");
+        }).catch((error) => {
+            alert(error);
+        });
+    }
+
     return (
         <Card className={classes.paper}>
             <div className={classes.img}>
@@ -131,7 +143,13 @@ export default function Announcement(props) {
                                 <Button>
                                     <MessageIcon fontSize={"large"}/>
                                 </Button>
+                                {
+                                    props.authorId !== parseInt(localStorage.getItem("userId")) &&
+                                        <Button onClick={() => handleRentRequest()}>
+                                            <AssignmentIcon fontSize={'large'}/>
+                                        </Button>
 
+                                }
                                 {
                                     localStorage.getItem("role") === 'ROLE_ADMIN' && props.status !== 'BLOCKED' && !isBlock &&
                                     <Button onClick={() => changeBlock()}>

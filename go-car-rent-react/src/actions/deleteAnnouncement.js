@@ -1,12 +1,17 @@
 import axios from 'axios';
+import {BASE_DELETE_ANNOUNCEMENT_URL} from "./urlRepository";
 
 export const deleteAnnouncement = (data) => async (dispatch) => {
-    const url = "http://localhost:8080/api/announcements/" + data.announcementId + "/remove?userId=" + localStorage.getItem('userId') + "&password=" + data.password;
-    console.log(url);
+
     const config = {
         headers: {
             "Authorization": "Bearer " + localStorage.getItem('token')
         }
     }
-    await axios.delete(url, config);
+
+    await axios.delete(BASE_DELETE_ANNOUNCEMENT_URL
+        .replace(":announcementId", data.announcementId)
+        .replace(":userId", localStorage.getItem('userId'))
+        .replace(":password", data.password),
+        config);
 }

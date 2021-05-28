@@ -1,9 +1,10 @@
 package com.example.gocarrentspringbootapplication.impl.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class RentTransferObject {
+public class RentTransferObject implements Serializable {
 
     private final AnnouncementTransferObject announcement;
     private final BigDecimal fee;

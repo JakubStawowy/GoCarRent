@@ -1,12 +1,11 @@
 import axios from 'axios';
+import {BASE_FEEDBACK_URL} from "./urlRepository";
 
 export const getFeedback = async (userId) => {
-    const url = "http://localhost:8080/api/feedback/user/"+userId;
-    console.log(url);
     const config = {
         headers: {
             Authorization: "Bearer " + localStorage.getItem('token')
         }
     }
-    return await axios.get(url, config);
+    return await axios.get(BASE_FEEDBACK_URL.replace(":userId", userId), config);
 }

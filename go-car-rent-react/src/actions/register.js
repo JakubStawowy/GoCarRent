@@ -1,6 +1,6 @@
 import axios from "axios";
+import {BASE_REGISTER_URL} from "./urlRepository";
 
 export const registerUser = (data) => async (dispatch) => {
-    const url = 'http://localhost:8080/api/register';
-    await axios.post(url, data);
+    await axios.post(BASE_REGISTER_URL, data);
 };

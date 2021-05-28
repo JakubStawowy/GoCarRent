@@ -29,6 +29,14 @@ public class Rent {
     @Column(name = "returned_at")
     private Timestamp returnedAt;
 
+    public Rent(Announcement announcement, User tenant) {
+        this.announcement = announcement;
+        this.tenant = tenant;
+    }
+
+    public Rent() {
+    }
+
     @PrePersist
     public void setInitial() {
         rentedAt = new Timestamp(System.currentTimeMillis());

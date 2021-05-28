@@ -58,14 +58,6 @@ public class User {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Announcement> announcements = new HashSet<>();
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "car_rent",
-//            joinColumns = {@JoinColumn(name = "tenant_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "announcement_id")}
-//            )
-//    private Set<Announcement> rent;
-
     @OneToMany(mappedBy = "tenant")
     private Set<Rent> rents;
 
