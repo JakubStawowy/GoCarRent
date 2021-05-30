@@ -55,4 +55,6 @@ public class RentManageController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 }

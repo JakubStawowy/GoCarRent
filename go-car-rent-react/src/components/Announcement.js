@@ -1,4 +1,4 @@
-import {Button, Card, Container, ListItemIcon, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Button, Card, Container, ListItemIcon, makeStyles, Typography} from "@material-ui/core";
 import image from '../uploads/transit.png';
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
@@ -7,13 +7,11 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import {NavLink} from "react-router-dom";
 import BlockIcon from '@material-ui/icons/Block';
 import {useDispatch} from "react-redux";
-import {blockAnnouncement} from "../actions/blockAnnouncement";
-import {unlockAnnouncement} from "../actions/unlockAnnouncement";
-import {registerRent} from "../actions/registerRent";
 import {useHistory} from "react-router";
 import {useState} from "react";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import {blockAnnouncement, registerRent, unlockAnnouncement} from "../actions/actionRepository";
 
 const useStyles = makeStyles((theme) => ({
     paper: {

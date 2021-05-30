@@ -9,8 +9,7 @@ import {
     TableRow,
 } from "@material-ui/core";
 import {useHistory} from "react-router";
-import {getUserAnnouncements} from "../actions/getUserAnnouncements";
-import {getTenantRents} from "../actions/getTenantRents";
+import {getTenantRents} from "../actions/actionRepository";
 
 const useStyles = makeStyles((theme) => ({
     tableHead: {
