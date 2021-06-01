@@ -1,9 +1,11 @@
 package com.example.gocarrentspringbootapplication.amqp.controllers;
 
+import com.example.gocarrentspringbootapplication.amqp.api.IQueueService;
 import com.example.gocarrentspringbootapplication.amqp.dao.MessageRepository;
 import com.example.gocarrentspringbootapplication.amqp.dto.MessageTransferObject;
 import com.example.gocarrentspringbootapplication.amqp.po.Message;
 import com.example.gocarrentspringbootapplication.amqp.api.QueueTemplateRepository;
+import com.rabbitmq.client.ShutdownSignalException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +21,13 @@ public class MessageController {
 
     private final MessageRepository messageRepository;
     private final RabbitTemplate rabbitTemplate;
-
+    private final IQueueService queueService;
 
     @Autowired
-    public MessageController(MessageRepository messageRepository, RabbitTemplate rabbitTemplate) {
+    public MessageController(MessageRepository messageRepository, RabbitTemplate rabbitTemplate, IQueueService queueService) {
         this.messageRepository = messageRepository;
         this.rabbitTemplate = rabbitTemplate;
+        this.queueService = queueService;
     }
 
     @GetMapping("/user")
@@ -52,8 +55,9 @@ public class MessageController {
 
         List<MessageTransferObject> result = new LinkedList<>();
         MessageTransferObject buffer;
-
-        while ((buffer = (MessageTransferObject) rabbitTemplate.receiveAndConvert(QueueTemplateRepository.QUEUE_TEMPLATE.replace(":uid", userId.toString()))) != null) {
+        final String queueName = QueueTemplateRepository.QUEUE_TEMPLATE.replace(":uid", userId.toString());
+        queueService.putNewQueue(queueName);
+        while ((buffer = (MessageTransferObject) rabbitTemplate.receiveAndConvert(queueName)) != null) {
             result.add(buffer);
         }
 

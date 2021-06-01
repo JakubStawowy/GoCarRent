@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
     },
     blockButton: {
         background: '#4BBEBAE0'
+    },
+    image: {
+        width: '15vw',
+        height: '15vw',
+        objectFit: 'cover'
     }
 }));
 
@@ -79,11 +84,10 @@ export default function Announcement(props) {
         alert(error);
     });
 
-
     return (
         <Card className={classes.paper}>
             <div className={classes.img}>
-                <img src={image} alt={"No-image"} style={{width: '100%', height: '100%', objectFit: 'cover'}}/>
+                <img src={image} alt={"No-image"} className={classes.image}/>
             </div>
             <Container className={classes.content} style={{padding: '1em'}}>
                 <Typography variant={"h5"}>

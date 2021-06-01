@@ -102,5 +102,5 @@ export const sendRentReturnProcessMessage = async (body) => {
 }
 
 export const getAllUserMessages = async (userId) => await axios.get(BASE_GET_ALL_USER_MESSAGES_URL.replace(":userId", userId), getConfig());
-export const deleteMessage = async (messageId) => await axios.put(BASE_ARCHIVE_MESSAGE_URL.replace(":messageId", messageId), getConfig());
+export const deleteMessage = async (messageId) => await axios.put(BASE_ARCHIVE_MESSAGE_URL.replace(":messageId", messageId),null, getConfig());
 export const deleteRent = async (rentId) => await axios.delete(BASE_DELETE_RENT_URL.replace(":rentId", rentId), getConfig());

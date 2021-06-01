@@ -10,13 +10,18 @@ import {loginUser, registerUser} from "../actions/actionRepository";
 import {useHistory} from "react-router";
 import {ERROR_NOT_FOUND} from "../data/errors";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     container: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        height: '100%'
+        height: '100%',
+
+        [theme.breakpoints.down('xs')]: {
+            maxHeight: "86vh",
+            overflow: 'auto'
+        }
     },
     form: {
         display: 'flex',
@@ -39,7 +44,7 @@ const useStyles = makeStyles({
     list: {
         maxHeight: '100vh'
     }
-});
+}));
 
 export default function LoginRegister() {
     const classes = useStyles();

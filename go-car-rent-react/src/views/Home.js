@@ -12,9 +12,15 @@ const useStyles = makeStyles((theme) => ({
     list: {
         maxHeight: '85vh',
         marginTop: '2em',
-        overflow: 'auto'
+        overflow: 'auto',
+
+        [theme.breakpoints.down('xs')]: {
+            maxHeight: '75vh',
+        },
     },
-    container: {marginTop: '2em'},
+    container: {
+        marginTop: '2em',
+    },
     buttonContainer: {
         display: "flex",
         justifyContent: "space-around",

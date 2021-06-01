@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Home from "./views/Home";
 import RightSidebar from "./components/RightSidebar";
 import FilteringPanel from "./components/FilteringPanel";
-import React from "react";
+import React, {useState} from "react";
 import {Grid, List, makeStyles} from "@material-ui/core";
 import AddAnnouncement from "./views/AddAnnouncement";
 import EditAnnouncement from "./views/EditAnnouncement";
@@ -18,32 +18,27 @@ import {Redirect} from "react-router";
 import logo from "./uploads/background-logo.png";
 import RentedCars from "./views/RentedCars";
 import {useSelector} from "react-redux";
+import Footer from "./components/Footer";
 
 const useStyles = makeStyles((theme) => ({
     main: {
+        [theme.breakpoints.down('xs')]: {
+            maxWidth: '100%',
+            flexBasis: '100%'
+        },
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         maxHeight: '100vh',
         overflow: 'auto'
     },
-    footer: {
-        background: '#6A6464C2 0% 0% no-repeat padding-box',
-        opacity: 1,
-        display: 'flex',
-        justifyContent: 'end',
-        borderRadius: 0,
-        '&:hover': {
-            background: '#8C8686E4 0% 0% no-repeat padding-box'
-        },
-        flex: '1'
-    },
     subContainer: {
-        flex: '16'
+        flex: '16',
     },
     logo: {
         position: 'fixed',
-        height: '90%',
+        // height: '90%',
+        width: '50vw',
         left: '50%',
         marginLeft: '-25%',
         opacity: 0.3,
@@ -54,14 +49,18 @@ function App() {
 
     const classes = useStyles();
     const loggedSelector = useSelector((state) => state.isLogged);
-
+    const [compressedMenuOpened, setCompressedMenuOpened] = useState(true);
+    const openMenu = () => setCompressedMenuOpened(!compressedMenuOpened);
     return (
         <Router>
             <img src={logo} alt={''} className={classes.logo}/>
             <div className={"container"}>
                 <Switch>
                     <Grid container style={{height: '100vh'}} wrap={"nowrap"}>
-                        <Grid item component={LeftSidebar}/>
+                        {
+                            compressedMenuOpened &&
+                            <Grid item component={LeftSidebar}/>
+                        }
                         <Grid container xs={8} component={List} className={classes.main} wrap={'nowrap'}>
                             <Grid item className={classes.subContainer}>
                                 <Route exact path={'/'}>
@@ -79,7 +78,11 @@ function App() {
                                 <Route path={'/settings'} component={Settings}/>
                             </Grid>
                         </Grid>
-                        <Grid item component={RightSidebar}/>
+                        {
+                            compressedMenuOpened &&
+                            <Grid item component={RightSidebar}/>
+                        }
+                        <Grid item component={Footer} action={openMenu}/>
                     </Grid>
                 </Switch>
             </div>

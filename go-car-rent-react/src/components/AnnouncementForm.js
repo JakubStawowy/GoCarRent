@@ -29,7 +29,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+
+        [theme.breakpoints.down('xs')]: {
+            height: '88vh'
+        }
     },
     form: {
         height: '70%',

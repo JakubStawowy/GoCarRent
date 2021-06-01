@@ -17,7 +17,16 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         justifyContent: 'space-around',
         boxShadow: 'none',
-        paddingRight: '3em'
+        paddingRight: '3em',
+
+        [theme.breakpoints.down('xs')]: {
+            // display: 'none'
+            height: '88vh',
+            position: 'fixed',
+            right: 0,
+            width: '50%',
+            padding: '0 1em 0 1em'
+        }
     },
     button: {
         background: 'white',
@@ -26,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
         color: '#4BBEBAE0',
         '&:hover': {
             color: 'white'
+        },
+
+        [theme.breakpoints.down('xs')]: {
+            borderRadius: '30px'
         }
     },
     circlePlate: {
@@ -46,14 +59,25 @@ const useStyles = makeStyles((theme) => ({
             display: 'none'
         }
     },
+    root: {
+        [theme.breakpoints.down('xs')]: {
+            // display: 'none'
+        }
+    }
 }));
 
 export default function RightSidebar() {
     const classes = useStyles();
+
+    const handleNavLinkClick = (e) => {
+        localStorage.getItem('token') === null &&
+        e.preventDefault();
+    }
+
     return (
-        <Grid item xs >
+        <Grid item xs className={classes.root}>
             <AppBar className={classes.bar} position={'relative'}>
-                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'}>
+                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'} onClick={(e)=>handleNavLinkClick(e)}>
                     <div className={classes.circlePlate}>
                         <Avatar
                             src={userImage}
@@ -62,25 +86,25 @@ export default function RightSidebar() {
                         />
                     </div>
                 </NavLink>
-                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'}>
+                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button}>
                         <Typography variant={"BUTTON"} size={'large'} className={classes.label}>profile</Typography>
                         <PersonIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/users/{id}/messages"}>
+                <NavLink to={"/users/{id}/messages"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"} className={classes.label}>messages</Typography>
                         <MessageIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/users/{id}/cars"}>
+                <NavLink to={"/users/{id}/cars"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"} className={classes.label}>your cars</Typography>
                         <DirectionsCarIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/settings"}>
+                <NavLink to={"/settings"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"} className={classes.label}>settings</Typography>
                         <SettingsIcon />

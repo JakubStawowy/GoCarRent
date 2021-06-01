@@ -1,6 +1,5 @@
 import {Avatar, Button, Card, Container, makeStyles, Typography} from "@material-ui/core";
 import image from '../uploads/user.png';
-import {useHistory} from "react-router";
 import {
     REQUEST_FOR_RENT_CONSENT,
     REQUEST_FOR_RENT_REALIZATION, REQUEST_FOR_RENT_RETURN,
@@ -9,14 +8,15 @@ import {
 } from "../data/messageTypes";
 import {deleteMessage, sendMessage, sendRentReturnProcessMessage} from "../actions/actionRepository";
 import {useEffect} from "react";
+import AirportShuttleIcon from "@material-ui/icons/AirportShuttle";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        // height: '15vh',
-        width: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
+        alignItems: 'center',
         padding: '1em'
     },
     img: {
@@ -42,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
     },
     feedbackAuthorLabel: {
 
+    },
+    cancelButton: {
+        background: '#FA8072'
+    },
+    okButton: {
+        background: '#4BBEBAE0'
     }
 }));
 
@@ -50,6 +56,7 @@ export default function Message(props) {
 
     /*  Hooks   */
     const classes = useStyles();
+    const history = useHistory();
     useEffect(() => {
         console.log(props.body);
     }, []);
@@ -72,37 +79,43 @@ export default function Message(props) {
             .catch((error)=>alert(error));
     }
 
+    const handleAction = (action) => action.then(()=> {
+                alert("Success");
+                deleteMessage(props.body.messageId).catch((error) => alert(error));
+            }).catch((error)=>alert(error));
+
+
     return (
         <Card className={classes.paper}>
-            <Avatar src={image} alt={''} className={classes.img} />
+            <AirportShuttleIcon fontSize={'large'}/>
             <Container className={classes.content} style={{padding: '1em'}}>
                 <Typography variant={"h5"}>
                     {
                         props.body.rentMessageType === REQUEST_FOR_RENT_CONSENT && <div>
-                            <Button>Author</Button> wants to rent car from you
-                            <Button>Announcement</Button>
-                            <Button onClick={() => {
-
-                                sendMessage({
-                                    messageType: RESPONSE_FOR_RENT_CONSENT,
-                                    tenantId: props.body.authorId,
-                                    announcementId: props.body.announcementId,
-                                    consent: true
-                                }).then(() => alert("Message sended successfully")).catch((error) => alert(error));
-
-                                deleteMessage(props.body.messageId).catch((error) => alert(error));
-                            }}>Agree</Button>
-                            <Button onClick={() => {
-
-                                sendMessage({
-                                    messageType: RESPONSE_FOR_RENT_CONSENT,
-                                    tenantId: props.body.authorId,
-                                    announcementId: props.body.announcementId,
-                                    consent: false
-                                }).then(() => alert("Message sended successfully")).catch((error) => alert(error));
-
-                                deleteMessage(props.body.messageId).catch((error) => alert(error));
-                            }}>No, thanks</Button>
+                            Someone wants to rent a car from you
+                            <div>
+                                <Button
+                                    className={classes.button}
+                                    onClick={()=>history.replace("/users/" + props.body.authorId + "/profile")}
+                                >Profile</Button>
+                                <Button className={classes.button}>Announcement</Button>
+                                <Button  className={classes.okButton} onClick={() =>
+                                    handleAction(sendMessage({
+                                        messageType: RESPONSE_FOR_RENT_CONSENT,
+                                        tenantId: props.body.authorId,
+                                        announcementId: props.body.announcementId,
+                                        consent: true
+                                    }))
+                                }>Agree</Button>
+                                <Button className={classes.cancelButton} onClick={() =>
+                                    handleAction(sendMessage({
+                                        messageType: RESPONSE_FOR_RENT_CONSENT,
+                                        tenantId: props.body.authorId,
+                                        announcementId: props.body.announcementId,
+                                        consent: false
+                                    }))
+                                }>No, thanks</Button>
+                            </div>
                         </div>
                     }
                     {
@@ -110,15 +123,17 @@ export default function Message(props) {
                             <Typography>
                                 Tenant is ready for rent
                             </Typography>
-                            <Button onClick={() => {
-                                sendMessage({
-                                    messageType: RESPONSE_FOR_RENT_REALIZATION,
-                                    tenantId: props.body.authorId,
-                                    announcementId: props.body.announcementId,
-                                }).then(() => alert("Message sended successfully")).catch((error) => alert(error));
-
-                                deleteMessage(props.body.messageId).catch((error) => alert(error));
-                            }}>Ok</Button>
+                            <Button
+                                className={classes.okButton}
+                                onClick={() => handleAction(sendMessage({
+                                        messageType: RESPONSE_FOR_RENT_REALIZATION,
+                                        tenantId: props.body.authorId,
+                                        announcementId: props.body.announcementId,
+                                    }))
+                                }>Start rent</Button>
+                            <Button>
+                                Announcement
+                            </Button>
                         </div>
                     }
                     {
@@ -127,16 +142,17 @@ export default function Message(props) {
                                 <Typography>
                                     Success! Owner of announcement agreed for your rent request
                                 </Typography>
-                                <Button onClick={() => {
-                                    sendMessage({
-                                        messageType: REQUEST_FOR_RENT_REALIZATION,
-                                        // tenantId: props.body.tenantId,
-                                        tenantId: localStorage.getItem('userId'),
-                                        announcementId: props.body.announcementId,
-                                    }).then(() => alert("Message sended successfully")).catch((error) => alert(error));
-
-                                    deleteMessage(props.body.messageId).catch((error) => alert(error));
-                                }}>Rent</Button>
+                                <Button
+                                    className={classes.okButton}
+                                    onClick={() => handleAction(sendMessage({
+                                            messageType: REQUEST_FOR_RENT_REALIZATION,
+                                            tenantId: localStorage.getItem('userId'),
+                                            announcementId: props.body.announcementId,
+                                        }))
+                                }>Rent</Button>
+                                <Button>
+                                    Announcement
+                                </Button>
                             </div>
                     }
                     {
@@ -145,7 +161,9 @@ export default function Message(props) {
                                 <Typography>
                                     Unfortunately, owner is not interested in renting car for you
                                 </Typography>
-                                <Button onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>Ok:(</Button>
+                                <Button
+                                    className={classes.okButton}
+                                    onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>Ok</Button>
                             </div>
                     }
                     {
@@ -154,7 +172,10 @@ export default function Message(props) {
                                 <Typography>
                                     Success! You can now use borrowed car
                                 </Typography>
-                                <Button onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>Ok:)</Button>
+                                <Button
+                                    className={classes.okButton}
+                                    onClick={()=> deleteMessage(props.body.messageId).catch((error) => alert(error))
+                                    }>Ok</Button>
                             </div>
                     }
                     {

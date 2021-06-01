@@ -19,6 +19,13 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         boxShadow: 'none',
         paddingLeft: '3em',
+        [theme.breakpoints.down('xs')]: {
+            // display: 'none',
+            height: '88vh',
+            position: 'fixed',
+            width: '50%',
+            padding: '0 1em 0 1em'
+        }
     },
     button: {
         width: '100%',
@@ -27,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
         color: '#4BBEBAE0',
         '&:hover': {
             color: 'white'
+        },
+
+        [theme.breakpoints.down('xs')]: {
+            borderRadius: '30px'
         }
     },
     circle: {
@@ -46,6 +57,11 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             display: 'none'
         }
+    },
+    root: {
+        [theme.breakpoints.down('xs')]: {
+            // display: 'none'
+        }
     }
 }));
 
@@ -55,6 +71,11 @@ export default function LeftSidebar() {
 
     const [isLogged, setIsLogged] = useState(useSelector(state => state.isLogged));
 
+    const handleNavLinkClick = (e) => {
+        localStorage.getItem('token') === null &&
+            e.preventDefault();
+    }
+
     const handleLogout = () => {
         dispatch(logoutUser({
             userId: localStorage.getItem('userId')
@@ -63,32 +84,32 @@ export default function LeftSidebar() {
     };
 
     return (
-        <Grid item xs>
+        <Grid item xs className={classes.root}>
             <AppBar className={classes.bar} position={'relative'}>
-                <NavLink to={'/home'}>
+                <NavLink to={'/home'} onClick={(e)=>handleNavLinkClick(e)}>
                     <Box className={classes.circle}>
                         <Avatar src={logoImage} alt={''} className={classes.logo}/>
                     </Box>
                 </NavLink>
-                <NavLink to={"/add"}>
+                <NavLink to={"/add"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'} id={"addButton"}>
                         <PostAddIcon />
                         <Typography variant={"button"} className={classes.label}>add</Typography>
                     </Button>
                 </NavLink>
-                <NavLink to={"/home"}>
+                <NavLink to={"/home"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <HomeOutlinedIcon />
                         <Typography variant={"BUTTON"} className={classes.label}>home</Typography>
                     </Button>
                 </NavLink>
-                <NavLink to={"/user/{id}/rented"}>
+                <NavLink to={"/user/{id}/rented"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <AirportShuttleIcon />
                         <Typography variant={"BUTTON"} className={classes.label}>rented cars</Typography>
                     </Button>
                 </NavLink>
-                <NavLink to={"/login"}>
+                <NavLink to={"/login"} onClick={(e)=>handleNavLinkClick(e)}>
                     {isLogged.logged ? (
                         <Button className={classes.button} size={'large'} id={"logoutButton"} onClick={handleLogout}>
                             <ExitToAppIcon />
