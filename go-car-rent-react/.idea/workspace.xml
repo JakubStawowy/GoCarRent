@@ -2,26 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70d77224-5eb7-4f16-8aa7-30a64954ee67" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Message.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/messageTypes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/MessageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/actionRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/actionRepository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/urlRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/urlRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Announcement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Announcement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Messages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Message.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/messageTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/messageTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/messages.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/rentedCars.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/userCars.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/RentedCars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/RentedCars.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/api/dao/repositories/MessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/api/dao/repositories/MessageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/message/MessageLoaderController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/MessageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentLoadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentLoadController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentManageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentMessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentMessageController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentRequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentRequestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentResponseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/controllers/rent/RentResponseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/dto/RentMessageTransferObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/dto/MessageTransferObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/models/Announcement.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/models/Announcement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/models/File.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/dto/MessageTransferObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/dto/MessageTransferObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/dto/RentTransferObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/dto/RentTransferObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/enums/RentMessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/enums/RentMessageType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/models/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/system/RentPropertiesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../go-car-rent-spring-boot-application/src/main/java/com/example/gocarrentspringbootapplication/impl/system/RentPropertiesManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +150,7 @@
       <workItem from="1622319158856" duration="51000" />
       <workItem from="1622382618863" duration="3183000" />
       <workItem from="1622486811698" duration="6730000" />
-      <workItem from="1622524141293" duration="2278000" />
+      <workItem from="1622524141293" duration="9081000" />
     </task>
     <task id="LOCAL-00001" summary="Sidebar menus done // basic routing added">
       <created>1616079691946</created>

@@ -6,7 +6,6 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
@@ -42,6 +41,9 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "announcement_id")
     private Announcement announcement;
+
+    @Nullable
+    private Long rentId;
 
     public Message(@NotNull RentMessageType rentMessageType, @Nullable Boolean flag, User author, User tenant, User receiver, Announcement announcement) {
         this.rentMessageType = rentMessageType;
@@ -123,5 +125,14 @@ public class Message {
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
+    }
+
+    @Nullable
+    public Long getRentId() {
+        return rentId;
+    }
+
+    public void setRentId(@Nullable Long rentId) {
+        this.rentId = rentId;
     }
 }

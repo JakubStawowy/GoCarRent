@@ -14,18 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api/rents")
-public class RentLoadController {
+public class RentManageController {
 
     private final RentRepository rentRepository;
     private final IRentPropertiesManager rentPropertiesManager;
     private final RabbitTemplate rabbitTemplate;
 
     @Autowired
-    public RentLoadController(RentRepository rentRepository, IRentPropertiesManager rentPropertiesManager, RabbitTemplate rabbitTemplate) {
+    public RentManageController(RentRepository rentRepository, IRentPropertiesManager rentPropertiesManager, RabbitTemplate rabbitTemplate) {
         this.rentRepository = rentRepository;
         this.rentPropertiesManager = rentPropertiesManager;
         this.rabbitTemplate = rabbitTemplate;
@@ -37,6 +38,7 @@ public class RentLoadController {
         List<RentTransferObject> rentTransferObjects = new ArrayList<>();
         for (Rent rent: rents)
             rentTransferObjects.add(new RentTransferObject(
+                    rent.getId(),
                     new AnnouncementTransferObject(rent.getAnnouncement()),
                     rentPropertiesManager.getFee(rent),
                     rent.getRentedAt(),
@@ -56,5 +58,11 @@ public class RentLoadController {
         }
 
         return result;
+    }
+
+    @DeleteMapping(value = "/{rentId}/delete")
+    public void deleteRent(@PathVariable("rentId") Long rentId) {
+        Optional<Rent> optionalRent = rentRepository.findById(rentId);
+        optionalRent.ifPresent(rentRepository::delete);
     }
 }

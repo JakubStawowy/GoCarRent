@@ -2,11 +2,13 @@ package com.example.gocarrentspringbootapplication.impl.controllers.rent;
 
 import com.example.gocarrentspringbootapplication.api.dao.repositories.AnnouncementRepository;
 import com.example.gocarrentspringbootapplication.api.dao.repositories.MessageRepository;
+import com.example.gocarrentspringbootapplication.api.dao.repositories.RentRepository;
 import com.example.gocarrentspringbootapplication.api.dao.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.dto.MessageTransferObject;
 import com.example.gocarrentspringbootapplication.impl.enums.RentMessageType;
 import com.example.gocarrentspringbootapplication.impl.models.Announcement;
 import com.example.gocarrentspringbootapplication.impl.models.Message;
+import com.example.gocarrentspringbootapplication.impl.models.Rent;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import com.example.gocarrentspringbootapplication.impl.providers.RabbitMessageQueueManager;
 import com.example.gocarrentspringbootapplication.impl.repositories.RabbitMessageQueues;
@@ -26,6 +28,7 @@ public class RentRequestController {
     private final RabbitTemplate rabbitTemplate;
     private final UserRepository userRepository;
     private final AnnouncementRepository announcementRepository;
+    private final RentRepository rentRepository;
     private final MessageRepository messageRepository;
 
     @Autowired
@@ -34,13 +37,15 @@ public class RentRequestController {
             RabbitTemplate rabbitTemplate,
             UserRepository userRepository,
             AnnouncementRepository announcementRepository,
-            MessageRepository messageRepository
+            MessageRepository messageRepository,
+            RentRepository rentRepository
     ) {
         this.messageQueueManager = messageQueueManager;
         this.rabbitTemplate = rabbitTemplate;
         this.userRepository = userRepository;
         this.announcementRepository = announcementRepository;
         this.messageRepository = messageRepository;
+        this.rentRepository = rentRepository;
     }
 
     @GetMapping("/send/01")
@@ -63,14 +68,7 @@ public class RentRequestController {
             messageRepository.save(message);
 
             messageQueueManager.putNewQueue(queueName);
-            rabbitTemplate.convertAndSend(queueName, new MessageTransferObject(
-                    message.getId(),
-                    RentMessageType.REQUEST_FOR_RENT_CONSENT,
-                    tenantId,
-                    tenantId,
-                    announcementId,
-                    null
-            ));
+            rabbitTemplate.convertAndSend(queueName, new MessageTransferObject(message));
         }
     }
 
@@ -93,14 +91,33 @@ public class RentRequestController {
             );
             messageRepository.save(message);
             messageQueueManager.putNewQueue(queueName);
-            rabbitTemplate.convertAndSend(queueName, new MessageTransferObject(
-                    message.getId(),
-                    RentMessageType.REQUEST_FOR_RENT_REALIZATION,
-                    tenantId,
-                    tenantId,
-                    announcementId,
-                    null
-            ));
+            rabbitTemplate.convertAndSend(queueName, new MessageTransferObject(message));
+
+        }
+    }
+
+    @GetMapping("/send/05")
+    public void sendRequestForRentReturn(@RequestParam Long tenantId, @RequestParam Long rentId) {
+
+        Optional<User> optionalUser = userRepository.findById(tenantId);
+        Optional<Rent> optionalRent = rentRepository.findById(rentId);
+        if (optionalUser.isPresent() && optionalRent.isPresent()) {
+
+            final String queueName = RabbitMessageQueues.QUEUE_TEMPLATE.replace(":uid", optionalRent.get().getAnnouncement().getAuthor().getId().toString());
+            Message message = new Message(
+                    RentMessageType.REQUEST_FOR_RENT_RETURN,
+                    null,
+                    optionalUser.get(),
+                    optionalUser.get(),
+                    optionalRent.get().getAnnouncement().getAuthor(),
+                    optionalRent.get().getAnnouncement()
+            );
+            message.setRentId(optionalRent.get().getId());
+            messageRepository.save(message);
+            messageQueueManager.putNewQueue(queueName);
+            MessageTransferObject messageTransferObject = new MessageTransferObject(message);
+            messageTransferObject.setRentId(message.getRentId());
+            rabbitTemplate.convertAndSend(queueName, messageTransferObject);
 
         }
     }

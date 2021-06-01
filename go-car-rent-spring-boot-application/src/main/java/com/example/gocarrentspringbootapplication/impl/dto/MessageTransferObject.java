@@ -13,6 +13,7 @@ public class MessageTransferObject implements Serializable {
     private final Long tenantId;
     private final Long announcementId;
     private final Boolean flag;
+    private Long rentId;
 
     public MessageTransferObject(Long messageId, RentMessageType rentMessageType, Long authorId, Long tenantId, Long announcementId, Boolean flag) {
         this.messageId = messageId;
@@ -54,6 +55,14 @@ public class MessageTransferObject implements Serializable {
 
     public Boolean getFlag() {
         return flag;
+    }
+
+    public Long getRentId() {
+        return rentId;
+    }
+
+    public void setRentId(Long rentId) {
+        this.rentId = rentId;
     }
 }
 

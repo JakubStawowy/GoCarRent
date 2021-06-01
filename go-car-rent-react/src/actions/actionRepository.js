@@ -6,7 +6,7 @@ import {
     BASE_ANNOUNCEMENTS_FILTER_URL,
     BASE_ANNOUNCEMENTS_URL,
     BASE_BLOCK_ANNOUNCEMENT_URL,
-    BASE_DELETE_ANNOUNCEMENT_URL, BASE_DELETE_MESSAGE_URL,
+    BASE_DELETE_ANNOUNCEMENT_URL, BASE_DELETE_MESSAGE_URL, BASE_DELETE_RENT_URL,
     BASE_EDIT_ANNOUNCEMENT_URL,
     BASE_EDIT_USER_URL,
     BASE_FEEDBACK_URL, BASE_GET_ALL_USER_MESSAGES_URL,
@@ -14,7 +14,7 @@ import {
     BASE_LOGIN_URL,
     BASE_LOGOUT_URL,
     BASE_REGISTER_URL,
-    BASE_RENT_REGISTER_URL, BASE_SEND_MESSAGE_URL,
+    BASE_RENT_REGISTER_URL, BASE_SEND_MESSAGE_URL, BASE_SEND_RENT_RETURN_MESSAGE_URL,
     BASE_TENANT_RENTS_URL,
     BASE_UNLOCK_ANNOUNCEMENT_URL,
     BASE_USER_ANNOUNCEMENTS_URL,
@@ -24,8 +24,8 @@ import {
 import {getConfig} from "./getConfig";
 import {
     REQUEST_FOR_RENT_CONSENT,
-    REQUEST_FOR_RENT_REALIZATION, RESPONSE_FOR_RENT_CONSENT,
-    RESPONSE_FOR_RENT_REALIZATION
+    REQUEST_FOR_RENT_REALIZATION, REQUEST_FOR_RENT_RETURN, RESPONSE_FOR_RENT_CONSENT,
+    RESPONSE_FOR_RENT_REALIZATION, RESPONSE_FOR_RENT_RETURN
 } from "../data/messageTypes";
 
 export const addAnnouncement = (data) => async (dispatch) => await axios.post(BASE_ADD_ANNOUNCEMENT_URL, data, getConfig());
@@ -75,21 +75,45 @@ export const unlockAnnouncement = (announcementId) => async (dispatch) => await 
 export const getUserMessages = async (userId) => await axios.get(BASE_GET_USER_MESSAGES_URL.replace(":userId", userId), getConfig());
 export const sendMessage = async (body) => {
     let url = BASE_SEND_MESSAGE_URL.replace(":tenantId", body.tenantId).replace(":announcementId", body.announcementId);
-    if (body.messageType === REQUEST_FOR_RENT_REALIZATION) {
+    if (body.messageType === REQUEST_FOR_RENT_REALIZATION)
         return await axios.get(url.replace(":number", "03"), getConfig());
-    }
-    if (body.messageType === REQUEST_FOR_RENT_CONSENT) {
+
+    if (body.messageType === REQUEST_FOR_RENT_CONSENT)
         return await axios.get(url.replace(":number", "01"), getConfig());
-    }
-    if (body.messageType === RESPONSE_FOR_RENT_REALIZATION) {
+
+    if (body.messageType === RESPONSE_FOR_RENT_REALIZATION)
         return await axios.post(url.replace(":number", "04"), null, getConfig());
-    }
+
     if (body.messageType === RESPONSE_FOR_RENT_CONSENT) {
         if (body.consent !== undefined)
             url = url + "&consent=" + body.consent;
         return await axios.put(url.replace(":number", "02"), null, getConfig());
     }
 }
+
+export const sendRentReturnProcessMessage = async (body) => {
+    let url;
+    if (body.messageType === REQUEST_FOR_RENT_RETURN) {
+
+        url = BASE_SEND_RENT_RETURN_MESSAGE_URL
+            .replace(":tenantId", body.tenantId)
+            .replace(":rentId", body.rentId)
+            .replace(":number", "05");
+        alert(url);
+        return await axios.get(url, getConfig());
+    }
+
+    if (body.messageType === RESPONSE_FOR_RENT_RETURN) {
+        url = BASE_SEND_RENT_RETURN_MESSAGE_URL
+            .replace(":tenantId", body.tenantId)
+            .replace(":rentId", body.rentId)
+            .replace(":number", "06");
+        url = url + "&isReturned=" + body.isReturned;
+        alert(url);
+        return await axios.put(url, null, getConfig());
+    }
+}
+
 export const getAllUserMessages = async (userId) => await axios.get(BASE_GET_ALL_USER_MESSAGES_URL.replace(":userId", userId), getConfig());
 export const deleteMessage = async (messageId) => await axios.delete(BASE_DELETE_MESSAGE_URL.replace(":messageId", messageId), getConfig());
-
+export const deleteRent = async (rentId) => await axios.delete(BASE_DELETE_RENT_URL.replace(":rentId", rentId), getConfig());

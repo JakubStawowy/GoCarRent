@@ -3,11 +3,12 @@ import image from '../uploads/user.png';
 import {useHistory} from "react-router";
 import {
     REQUEST_FOR_RENT_CONSENT,
-    REQUEST_FOR_RENT_REALIZATION,
+    REQUEST_FOR_RENT_REALIZATION, REQUEST_FOR_RENT_RETURN,
     RESPONSE_FOR_RENT_CONSENT,
-    RESPONSE_FOR_RENT_REALIZATION
+    RESPONSE_FOR_RENT_REALIZATION, RESPONSE_FOR_RENT_RETURN
 } from "../data/messageTypes";
-import {deleteMessage, sendMessage} from "../actions/actionRepository";
+import {deleteMessage, sendMessage, sendRentReturnProcessMessage} from "../actions/actionRepository";
+import {useEffect} from "react";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -49,8 +50,27 @@ export default function Message(props) {
 
     /*  Hooks   */
     const classes = useStyles();
-    const history = useHistory();
+    useEffect(() => {
+        console.log(props.body);
+    }, []);
+    const sendRequestForReturn = () => {
+        sendRentReturnProcessMessage({
+            messageType: REQUEST_FOR_RENT_RETURN,
+            tenantId: localStorage.getItem('userId'),
+            rentId: props.body.rentId
+        }).then(()=>alert("Request for rent return sent successfully"))
+            .catch((error)=>alert(error));
+    }
 
+    const sendResponseForReturn = (isReturned) => {
+        sendRentReturnProcessMessage({
+            messageType: RESPONSE_FOR_RENT_RETURN,
+            tenantId: props.body.tenantId,
+            rentId: props.body.rentId,
+            isReturned: isReturned
+        }).then(()=>alert("Request for rent return sent successfully"))
+            .catch((error)=>alert(error));
+    }
 
     return (
         <Card className={classes.paper}>
@@ -134,6 +154,45 @@ export default function Message(props) {
                                     Success! You can now use borrowed car
                                 </Typography>
                                 <Button onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>Ok:)</Button>
+                            </div>
+                    }
+                    {
+                        props.body.rentMessageType === REQUEST_FOR_RENT_RETURN &&
+                            <div>
+                                <Typography>
+                                    Confirm car return
+                                </Typography>
+                                <Button onClick={()=> {
+                                    sendResponseForReturn(true);
+                                    deleteMessage(props.body.messageId).catch((error) => alert(error));
+                                }}>Car was successfully returned</Button>
+                                <Button onClick={()=> {
+                                    sendResponseForReturn(false);
+                                    deleteMessage(props.body.messageId).catch((error) => alert(error));
+                                }}>Car wasn't returned</Button>
+                            </div>
+                    }
+                    {
+                        props.body.rentMessageType === RESPONSE_FOR_RENT_RETURN && props.body.flag &&
+                            <div>
+                                <Typography>
+                                    {props.body.isReturned}
+
+                                    Rent was finished successfully. You can now settle accounts with the owner
+                                </Typography>
+                                <Button onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>Ok</Button>
+                            </div>
+                    }
+                    {
+                        props.body.rentMessageType === RESPONSE_FOR_RENT_RETURN && !props.body.flag &&
+                            <div>
+                                <Typography>
+                                    Owner claims that you still haven't returned the car
+                                </Typography>
+                                <Button onClick={()=> {
+                                    sendRequestForReturn();
+                                    deleteMessage(props.body.messageId).catch((error) => alert(error));
+                                }}>Try again</Button>
                             </div>
                     }
                 </Typography>

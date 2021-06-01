@@ -1,7 +1,6 @@
 package com.example.gocarrentspringbootapplication.api.dao.repositories;
 
 import com.example.gocarrentspringbootapplication.impl.models.Message;
-import com.example.gocarrentspringbootapplication.impl.models.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

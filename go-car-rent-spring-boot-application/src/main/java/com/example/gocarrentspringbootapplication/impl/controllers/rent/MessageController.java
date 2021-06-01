@@ -25,7 +25,9 @@ public class MessageController {
     public List<MessageTransferObject> getMessages(@RequestParam Long userId) {
         List<MessageTransferObject> result = new LinkedList<>();
         for (Message message: messageRepository.getAllByReceiver(userId)) {
-            result.add(new MessageTransferObject(message));
+            MessageTransferObject messageBuffer = new MessageTransferObject(message);
+            messageBuffer.setRentId(message.getRentId());
+            result.add(messageBuffer);
         }
         return result;
     }
