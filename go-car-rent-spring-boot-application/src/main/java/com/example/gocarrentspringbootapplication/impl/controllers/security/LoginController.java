@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.impl.controllers.security;
 
 import com.example.gocarrentspringbootapplication.api.providers.ITokenProvider;
-import com.example.gocarrentspringbootapplication.api.security.IAuthorizeService;
+import com.example.gocarrentspringbootapplication.api.services.IAuthorizeService;
 import com.example.gocarrentspringbootapplication.impl.dto.LoginTransferObject;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import com.example.gocarrentspringbootapplication.api.dao.repositories.UserRepository;

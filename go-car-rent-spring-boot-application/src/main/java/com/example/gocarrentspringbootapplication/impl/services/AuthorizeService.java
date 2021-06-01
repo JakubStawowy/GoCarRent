@@ -1,6 +1,6 @@
-package com.example.gocarrentspringbootapplication.impl.security;
+package com.example.gocarrentspringbootapplication.impl.services;
 
-import com.example.gocarrentspringbootapplication.api.security.IAuthorizeService;
+import com.example.gocarrentspringbootapplication.api.services.IAuthorizeService;
 import com.example.gocarrentspringbootapplication.api.dao.repositories.UserRepository;
 import com.example.gocarrentspringbootapplication.impl.models.User;
 import org.springframework.beans.factory.annotation.Autowired;

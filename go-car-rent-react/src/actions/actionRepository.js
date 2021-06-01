@@ -1,25 +1,14 @@
 import axios from "axios";
 
 import {
-    BASE_ADD_ANNOUNCEMENT_URL,
-    BASE_ANNOUNCEMENT_URL,
-    BASE_ANNOUNCEMENTS_FILTER_URL,
-    BASE_ANNOUNCEMENTS_URL,
-    BASE_BLOCK_ANNOUNCEMENT_URL,
-    BASE_DELETE_ANNOUNCEMENT_URL, BASE_DELETE_MESSAGE_URL, BASE_DELETE_RENT_URL,
-    BASE_EDIT_ANNOUNCEMENT_URL,
-    BASE_EDIT_USER_URL,
-    BASE_FEEDBACK_URL, BASE_GET_ALL_USER_MESSAGES_URL,
-    BASE_GET_USER_MESSAGES_URL,
-    BASE_LOGIN_URL,
-    BASE_LOGOUT_URL,
-    BASE_REGISTER_URL,
+    BASE_ADD_ANNOUNCEMENT_URL, BASE_ANNOUNCEMENT_URL, BASE_ANNOUNCEMENTS_FILTER_URL,
+    BASE_ANNOUNCEMENTS_URL, BASE_BLOCK_ANNOUNCEMENT_URL, BASE_DELETE_ANNOUNCEMENT_URL,
+    BASE_ARCHIVE_MESSAGE_URL, BASE_DELETE_RENT_URL, BASE_EDIT_ANNOUNCEMENT_URL,
+    BASE_EDIT_USER_URL, BASE_FEEDBACK_URL, BASE_GET_ALL_USER_MESSAGES_URL,
+    BASE_GET_USER_MESSAGES_URL, BASE_LOGIN_URL, BASE_LOGOUT_URL, BASE_REGISTER_URL,
     BASE_RENT_REGISTER_URL, BASE_SEND_MESSAGE_URL, BASE_SEND_RENT_RETURN_MESSAGE_URL,
-    BASE_TENANT_RENTS_URL,
-    BASE_UNLOCK_ANNOUNCEMENT_URL,
-    BASE_USER_ANNOUNCEMENTS_URL,
+    BASE_TENANT_RENTS_URL, BASE_UNLOCK_ANNOUNCEMENT_URL, BASE_USER_ANNOUNCEMENTS_URL,
     BASE_USER_DETAILS_URL,
-
 } from "./urlRepository";
 import {getConfig} from "./getConfig";
 import {
@@ -99,7 +88,6 @@ export const sendRentReturnProcessMessage = async (body) => {
             .replace(":tenantId", body.tenantId)
             .replace(":rentId", body.rentId)
             .replace(":number", "05");
-        alert(url);
         return await axios.get(url, getConfig());
     }
 
@@ -109,11 +97,10 @@ export const sendRentReturnProcessMessage = async (body) => {
             .replace(":rentId", body.rentId)
             .replace(":number", "06");
         url = url + "&isReturned=" + body.isReturned;
-        alert(url);
         return await axios.put(url, null, getConfig());
     }
 }
 
 export const getAllUserMessages = async (userId) => await axios.get(BASE_GET_ALL_USER_MESSAGES_URL.replace(":userId", userId), getConfig());
-export const deleteMessage = async (messageId) => await axios.delete(BASE_DELETE_MESSAGE_URL.replace(":messageId", messageId), getConfig());
+export const deleteMessage = async (messageId) => await axios.put(BASE_ARCHIVE_MESSAGE_URL.replace(":messageId", messageId), getConfig());
 export const deleteRent = async (rentId) => await axios.delete(BASE_DELETE_RENT_URL.replace(":rentId", rentId), getConfig());

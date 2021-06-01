@@ -26,13 +26,12 @@ public class Message {
     @Nullable
     private Boolean flag;
 
+    @NotNull
+    private Boolean archived;
+
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
-
-    @ManyToOne
-    @JoinColumn(name = "tenant_id")
-    private User tenant;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
@@ -45,11 +44,10 @@ public class Message {
     @Nullable
     private Long rentId;
 
-    public Message(@NotNull RentMessageType rentMessageType, @Nullable Boolean flag, User author, User tenant, User receiver, Announcement announcement) {
+    public Message(@NotNull RentMessageType rentMessageType, @Nullable Boolean flag, User author, User receiver, Announcement announcement) {
         this.rentMessageType = rentMessageType;
         this.flag = flag;
         this.author = author;
-        this.tenant = tenant;
         this.receiver = receiver;
         this.announcement = announcement;
     }
@@ -59,7 +57,8 @@ public class Message {
 
     @PrePersist
     public void setSentAt() {
-        this.sentAt = new Timestamp(System.currentTimeMillis());
+        sentAt = new Timestamp(System.currentTimeMillis());
+        archived = false;
     }
 
     public Long getId() {
@@ -103,14 +102,6 @@ public class Message {
         this.author = author;
     }
 
-    public User getTenant() {
-        return tenant;
-    }
-
-    public void setTenant(User tenant) {
-        this.tenant = tenant;
-    }
-
     public Announcement getAnnouncement() {
         return announcement;
     }
@@ -134,5 +125,13 @@ public class Message {
 
     public void setRentId(@Nullable Long rentId) {
         this.rentId = rentId;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 }

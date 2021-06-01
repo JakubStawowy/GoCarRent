@@ -46,9 +46,6 @@ public class User {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> authorMessages = new HashSet<>();
 
-    @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Message> tenantMessages = new HashSet<>();
-
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> receiverMessages = new HashSet<>();
 
@@ -191,14 +188,6 @@ public class User {
 
     public void setAuthorMessages(Set<Message> authorMessages) {
         this.authorMessages = authorMessages;
-    }
-
-    public Set<Message> getTenantMessages() {
-        return tenantMessages;
-    }
-
-    public void setTenantMessages(Set<Message> tenantMessages) {
-        this.tenantMessages = tenantMessages;
     }
 
     public Set<Message> getReceiverMessages() {

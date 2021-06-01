@@ -65,7 +65,7 @@ export default function Message(props) {
     const sendResponseForReturn = (isReturned) => {
         sendRentReturnProcessMessage({
             messageType: RESPONSE_FOR_RENT_RETURN,
-            tenantId: props.body.tenantId,
+            tenantId: props.body.authorId,
             rentId: props.body.rentId,
             isReturned: isReturned
         }).then(()=>alert("Request for rent return sent successfully"))
@@ -85,7 +85,7 @@ export default function Message(props) {
 
                                 sendMessage({
                                     messageType: RESPONSE_FOR_RENT_CONSENT,
-                                    tenantId: props.body.tenantId,
+                                    tenantId: props.body.authorId,
                                     announcementId: props.body.announcementId,
                                     consent: true
                                 }).then(() => alert("Message sended successfully")).catch((error) => alert(error));
@@ -96,7 +96,7 @@ export default function Message(props) {
 
                                 sendMessage({
                                     messageType: RESPONSE_FOR_RENT_CONSENT,
-                                    tenantId: props.body.tenantId,
+                                    tenantId: props.body.authorId,
                                     announcementId: props.body.announcementId,
                                     consent: false
                                 }).then(() => alert("Message sended successfully")).catch((error) => alert(error));
@@ -113,7 +113,7 @@ export default function Message(props) {
                             <Button onClick={() => {
                                 sendMessage({
                                     messageType: RESPONSE_FOR_RENT_REALIZATION,
-                                    tenantId: props.body.tenantId,
+                                    tenantId: props.body.authorId,
                                     announcementId: props.body.announcementId,
                                 }).then(() => alert("Message sended successfully")).catch((error) => alert(error));
 
@@ -130,7 +130,8 @@ export default function Message(props) {
                                 <Button onClick={() => {
                                     sendMessage({
                                         messageType: REQUEST_FOR_RENT_REALIZATION,
-                                        tenantId: props.body.tenantId,
+                                        // tenantId: props.body.tenantId,
+                                        tenantId: localStorage.getItem('userId'),
                                         announcementId: props.body.announcementId,
                                     }).then(() => alert("Message sended successfully")).catch((error) => alert(error));
 

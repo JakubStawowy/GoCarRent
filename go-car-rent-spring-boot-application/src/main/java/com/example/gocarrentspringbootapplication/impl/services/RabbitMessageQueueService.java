@@ -1,4 +1,4 @@
-package com.example.gocarrentspringbootapplication.impl.providers;
+package com.example.gocarrentspringbootapplication.impl.services;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @Service
-public class RabbitMessageQueueManager {
+public class RabbitMessageQueueService {
 
     private static final String host = "localhost";
 
