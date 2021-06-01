@@ -9,8 +9,8 @@ import {
     TableRow,
 } from "@material-ui/core";
 import {useHistory} from "react-router";
-import {getUserAnnouncements} from "../actions/getUserAnnouncements";
-import {getTenantRents} from "../actions/getTenantRents";
+import {deleteRent, getTenantRents, sendRentReturnProcessMessage} from "../actions/actionRepository";
+import {REQUEST_FOR_RENT_RETURN} from "../data/messageTypes";
 
 const useStyles = makeStyles((theme) => ({
     tableHead: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     table: {
         height: "10vh"
     },
-    waiting: {
+    rented: {
         background: "#FFD700"
     },
     returned: {
@@ -50,6 +50,21 @@ export default function RentedCars() {
         });
     }, []);
 
+    const handleReturnRequest = (rentId) => {
+        sendRentReturnProcessMessage({
+            messageType: REQUEST_FOR_RENT_RETURN,
+            tenantId: localStorage.getItem('userId'),
+            rentId: rentId
+        }).then(()=>alert("Request for rent return sent successfully"))
+            .catch((error)=>alert(error));
+    }
+
+    const handleDeleteRent = (rentId) => {
+        deleteRent(rentId)
+            .then(()=>alert("Rent deleted successfully"))
+            .catch((error)=>alert(error));
+    }
+
     return (
         <Container className={classes.container}>
             <TableContainer component={Paper}>
@@ -61,35 +76,13 @@ export default function RentedCars() {
                             <TableCell align={"center"}>Price</TableCell>
                             <TableCell align={"center"}>Time</TableCell>
                             <TableCell align={"center"}>Fee</TableCell>
-                            <TableCell align={"center"}>Action/Status</TableCell>
+                            <TableCell align={"center"}>Status</TableCell>
+                            <TableCell align={"center"}>Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {
                             rentedCars.map(rent => {
-                                let statusComponent;
-                                switch (rent.announcement.status) {
-                                    case 'RENTED':
-                                        statusComponent = (
-                                            <Fab variant={"extended"}>
-                                                Rented
-                                            </Fab>
-                                        );
-                                        break;
-                                    case 'RETURNED':
-                                        statusComponent = (
-                                            <Fab variant={"extended"} className={classes.waiting}>
-                                                Returned
-                                            </Fab>
-                                        );
-                                        break;
-                                    default:
-                                        statusComponent = (
-                                            <Fab variant={"extended"} className={classes.returned}>
-                                                Returned
-                                            </Fab>
-                                        );
-                                }
                                 return (
                                     <TableRow>
                                         <TableCell align={"center"}>{rent.announcement.carBrand}</TableCell>
@@ -98,7 +91,28 @@ export default function RentedCars() {
                                         <TableCell align={"center"}>{rent.rentTime} {rent.announcement.timeUnit.substr(0, 1)}</TableCell>
                                         <TableCell align={"center"}>{rent.fee} {rent.announcement.currency}</TableCell>
                                         <TableCell align={"center"}>
-                                            {statusComponent}
+                                            {
+                                                rent.announcement.status === 'RENTED' ?
+                                                    <Fab variant={"extended"} className={classes.rented}>
+                                                        Rented
+                                                    </Fab>
+                                                    :
+                                                    <Fab variant={"extended"} className={classes.returned}>
+                                                        Returned
+                                                    </Fab>
+                                            }
+                                        </TableCell>
+                                        <TableCell align={"center"}>
+                                            {
+                                                rent.announcement.status === 'RENTED' ?
+                                                <Fab variant={"extended"} onClick={()=> handleReturnRequest(rent.rentId)}>
+                                                    Return
+                                                </Fab>
+                                                :
+                                                <Fab variant={"extended"} onClick={()=>handleDeleteRent(rent.rentId)}>
+                                                    Delete
+                                                </Fab>
+                                            }
                                         </TableCell>
                                     </TableRow>
                                 );

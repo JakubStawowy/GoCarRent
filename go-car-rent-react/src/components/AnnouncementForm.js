@@ -16,11 +16,13 @@ import carBrands from "../data/carBrands";
 import ImageIcon from '@material-ui/icons/Image';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {useDispatch} from "react-redux";
-import {addAnnouncement} from "../actions/addAnnouncement";
-import {editAnnouncement} from "../actions/editAnnouncement";
-import {deleteAnnouncement} from "../actions/deleteAnnouncement";
+import {
+    addAnnouncement,
+    editAnnouncement,
+    deleteAnnouncement,
+    getAnnouncement
+} from "../actions/actionRepository";
 import {useHistory} from "react-router";
-import {getAnnouncement} from "../actions/getAnnouncement";
 
 const useStyles = makeStyles((theme) => ({
     container: {

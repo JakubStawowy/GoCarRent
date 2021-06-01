@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import carBrands from "../data/carBrands";
 import SearchIcon from "@material-ui/icons/Search";
-import {getAnnouncements} from "../actions/getAnnouncements";
+import {getAnnouncements} from "../actions/actionRepository";
 import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = makeStyles((theme) => ({

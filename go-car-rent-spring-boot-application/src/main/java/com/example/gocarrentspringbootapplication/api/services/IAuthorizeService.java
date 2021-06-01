@@ -1,4 +1,4 @@
-package com.example.gocarrentspringbootapplication.api.security;
+package com.example.gocarrentspringbootapplication.api.services;
 
 import com.example.gocarrentspringbootapplication.impl.models.User;
 

@@ -6,7 +6,7 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import logoImage from '../uploads/logo.png';
-import {logoutUser} from "../actions/logout";
+import {logoutUser} from "../actions/actionRepository";
 import {useDispatch, useSelector} from "react-redux";
 
 import {useState} from "react";

@@ -1,8 +1,7 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../components/components.css';
 import {
     Container,
-    Grid,
     makeStyles, Paper, Table, TableBody,
     TableCell,
     TableContainer,
@@ -12,7 +11,7 @@ import {
 
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
-import {getUserAnnouncements} from "../actions/getUserAnnouncements";
+import {getUserAnnouncements} from "../actions/actionRepository";
 import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme) => ({

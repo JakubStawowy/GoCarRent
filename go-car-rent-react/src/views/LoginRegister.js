@@ -1,14 +1,12 @@
 import {
-    Button, Card,
-    Container, Grid, List,
+    Button, Card, Grid,
     makeStyles,
     TextField, Typography
 } from "@material-ui/core";
 
 import {useDispatch} from "react-redux";
 import {useState} from "react";
-import {loginUser} from "../actions/login";
-import {registerUser} from "../actions/register";
+import {loginUser, registerUser} from "../actions/actionRepository";
 import {useHistory} from "react-router";
 import {ERROR_NOT_FOUND} from "../data/errors";
 

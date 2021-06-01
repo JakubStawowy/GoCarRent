@@ -1,9 +1,8 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../components/components.css';
-import {Container, Fab, FormControl, Grid, Input, makeStyles, Typography} from "@material-ui/core";
-import {getUserDetails} from "../actions/getUserDetails";
+import {Container, Fab, Grid, Input, makeStyles, Typography} from "@material-ui/core";
+import {getUserDetails, saveUser} from "../actions/actionRepository";
 import {useHistory} from "react-router";
-import {saveUser} from "../actions/saveUser"
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100%',

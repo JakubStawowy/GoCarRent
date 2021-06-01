@@ -3,9 +3,8 @@ import '../components/components.css';
 import {Button, Container, List, ListItem, makeStyles, Typography} from "@material-ui/core";
 import userImage from '../uploads/user.png';
 import Feedback from "../components/Feedback";
-import {getUserDetails} from "../actions/getUserDetails";
+import {getUserDetails, getFeedback} from "../actions/actionRepository";
 import {useHistory} from "react-router";
-import {getFeedback} from "../actions/getFeedback";
 import {ERROR_FORBIDDEN} from "../data/errors";
 const useStyles = makeStyles((theme) => ({
 

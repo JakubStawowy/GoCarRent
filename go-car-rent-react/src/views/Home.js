@@ -4,7 +4,7 @@ import {Container, Fab, List, ListItem, makeStyles, TextField} from "@material-u
 import Announcement from "../components/Announcement";
 import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
-import {getAnnouncements} from "../actions/getAnnouncements";
+import {getAnnouncements} from "../actions/actionRepository";
 import {useHistory} from "react-router";
 import FilteringPanel from "../components/FilteringPanel";
 
@@ -39,7 +39,6 @@ export default function Home() {
        }).catch(() => {
           localStorage.clear();
           history.replace("/login");
-
        });
     }, []);
 

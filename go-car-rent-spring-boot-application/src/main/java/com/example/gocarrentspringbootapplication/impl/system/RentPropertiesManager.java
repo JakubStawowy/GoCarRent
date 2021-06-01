@@ -27,7 +27,7 @@ public final class RentPropertiesManager implements IRentPropertiesManager {
         BigDecimal period;
 
         if ((period = getRentTime(rent)) != null)
-            return rent.getAnnouncement().getAnnouncementDetails().getAmount().multiply(period);
+            return rent.getAnnouncement().getAnnouncementDetails().getAmount().multiply(period.add(new BigDecimal("1")));
 
         return null;
     }
@@ -38,12 +38,17 @@ public final class RentPropertiesManager implements IRentPropertiesManager {
 
         TimeUnit timeUnit = rent.getAnnouncement().getAnnouncementDetails().getTimeUnit();
         long period = periodConverter.getPeriod(rent.getRentedAt(), rent.getReturnedAt());
+        BigDecimal rentTime;
 
-        if (timeUnit.equals(TimeUnit.HOURS))
-            return (BigDecimal) periodConverter.getNumberOfHoursFromPeriod(period);
+        if (timeUnit.equals(TimeUnit.HOURS)) {
+            rentTime = (BigDecimal) periodConverter.getNumberOfHoursFromPeriod(period);
+            return rentTime.add(new BigDecimal("1"));
+        }
 
-        if (timeUnit.equals(TimeUnit.DAYS))
-            return (BigDecimal) periodConverter.getNumberOfDaysFromPeriod(period);
+        if (timeUnit.equals(TimeUnit.DAYS)) {
+            rentTime = (BigDecimal) periodConverter.getNumberOfDaysFromPeriod(period);
+            return rentTime.add(new BigDecimal("1"));
+        }
 
         return null;
     }

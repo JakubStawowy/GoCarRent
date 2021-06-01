@@ -1,24 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../components/components.css';
 import {
     Container,
     List,
-    ListItemText,
     makeStyles,
-    Paper
+    Paper, Typography
 } from "@material-ui/core";
 
-import messages from "../data/messages";
-import MessageListItem from "../components/MessageListItem";
+import Message from "../components/Message";
+import {getAllUserMessages, getUserMessages} from "../actions/actionRepository";
 
 const useStyles = makeStyles((theme) => ({
     container: {
         marginTop: '1em',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'space-around'
     },
     list: {
-        maxHeight: '85vh',
+        // maxHeight: '40vh',
         overflow: "auto"
     },
     chat: {
@@ -38,21 +38,40 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Messages() {
     const classes = useStyles();
-    const messagesData = messages;
+    const [latestMessages, setLatestMessages] = useState([]);
+    const [allMessages, setAllMessages] = useState([]);
+    let index = 0;
+    useEffect(() => {
+            getUserMessages(localStorage.getItem('userId'))
+                .then((response) => setLatestMessages(response.data))
+                .catch((error) => alert(error));
+            getAllUserMessages(localStorage.getItem('userId'))
+                .then((response) => setAllMessages(response.data))
+                .catch((error) => alert(error));
+        }
+    , [])
+
+
+    const closeMessage = (messageIndex) => {
+        latestMessages.splice(messageIndex, 1);
+    }
+
     return (
         <Container className={classes.container}>
             <Paper className={`${classes.list} ${classes.messages}`}>
+                <Typography>
+                    Latest messages
+                </Typography>
                 <React.Fragment>
                     <List>
                         {
-                            messagesData.map(
+                            latestMessages.map(
                                 message => {
                                     return (
-                                        <MessageListItem
-                                            author={message.author}
-                                            content={message.content}
-                                            date={message.date}
-                                            displayed={message.displayed}
+                                        <Message
+                                            index={index++}
+                                            body={message}
+                                            action={closeMessage}
                                         />
                                     )
                                 }
@@ -61,33 +80,27 @@ export default function Messages() {
                     </List>
                 </React.Fragment>
             </Paper>
-            <Paper className={`${classes.list} ${classes.chat}`}>
-                <List className={classes.list}>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText primary={"Hello"} secondary={"12:00"}/>
-                    <ListItemText align={'right'} primary={"Hello"} secondary={"12:00"}/>
-                </List>
+            <Paper className={`${classes.list} ${classes.messages}`}>
+                <Typography>
+                    Unread messages
+                </Typography>
+                <React.Fragment>
+                    <List>
+                        {
+                            allMessages.map(
+                                message => {
+                                    return (
+                                        <Message
+                                            index={index++}
+                                            body={message}
+                                            action={closeMessage}
+                                        />
+                                    )
+                                }
+                            )
+                        }
+                    </List>
+                </React.Fragment>
             </Paper>
         </Container>
     );
