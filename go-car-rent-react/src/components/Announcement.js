@@ -11,7 +11,8 @@ import {useHistory} from "react-router";
 import {useState} from "react";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {blockAnnouncement, registerRent, unlockAnnouncement} from "../actions/actionRepository";
+import {blockAnnouncement, registerRent, sendMessage, unlockAnnouncement} from "../actions/actionRepository";
+import {REQUEST_FOR_RENT_CONSENT} from "../data/messageTypes";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -70,13 +71,14 @@ export default function Announcement(props) {
         });
     }
 
-    const handleRentRequest = () => {
-        dispatch(registerRent(props.announcementId, localStorage.getItem('userId'))).then(() => {
-           alert("Rent registered successfully");
-        }).catch((error) => {
-            alert(error);
-        });
-    }
+    const handleRentRequest = () => sendMessage({
+        tenantId: localStorage.getItem('userId'),
+        announcementId: props.announcementId,
+        messageType: REQUEST_FOR_RENT_CONSENT
+    }).then(()=>alert("Success!")).catch((error) => {
+        alert(error);
+    });
+
 
     return (
         <Card className={classes.paper}>

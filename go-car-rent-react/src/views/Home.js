@@ -39,7 +39,6 @@ export default function Home() {
        }).catch(() => {
           localStorage.clear();
           history.replace("/login");
-
        });
     }, []);
 

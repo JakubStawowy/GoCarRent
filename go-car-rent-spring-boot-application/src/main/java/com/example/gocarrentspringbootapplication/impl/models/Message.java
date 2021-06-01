@@ -1,6 +1,9 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
 
+import com.example.gocarrentspringbootapplication.impl.enums.RentMessageType;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -14,39 +17,47 @@ public class Message {
     private Long id;
 
     @NotNull
-    private String content;
+    @Column(name = "sent_at")
+    private Timestamp sentAt;
 
     @NotNull
-    @Column(name = "sended_at")
-    private Timestamp sendedAt;
+    @Enumerated(EnumType.STRING)
+    private RentMessageType rentMessageType;
 
-    @OneToOne(mappedBy = "message")
-    private File file;
+    @Nullable
+    private Boolean flag;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "sender_id")
-    private User sender;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
+    @JoinColumn(name = "tenant_id")
+    private User tenant;
+
+    @ManyToOne
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
-    public Message(@NotNull String content, User sender, User receiver) {
-        this.content = content;
-        this.sender = sender;
+    @ManyToOne
+    @JoinColumn(name = "announcement_id")
+    private Announcement announcement;
+
+    public Message(@NotNull RentMessageType rentMessageType, @Nullable Boolean flag, User author, User tenant, User receiver, Announcement announcement) {
+        this.rentMessageType = rentMessageType;
+        this.flag = flag;
+        this.author = author;
+        this.tenant = tenant;
         this.receiver = receiver;
+        this.announcement = announcement;
     }
 
     public Message() {
     }
 
-    public Timestamp getSendedAt() {
-        return sendedAt;
-    }
-
     @PrePersist
-    public void setSendedAt() {
-        this.sendedAt = new Timestamp(System.currentTimeMillis());
+    public void setSentAt() {
+        this.sentAt = new Timestamp(System.currentTimeMillis());
     }
 
     public Long getId() {
@@ -57,20 +68,53 @@ public class Message {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public Timestamp getSentAt() {
+        return sentAt;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setSentAt(Timestamp sentAt) {
+        this.sentAt = sentAt;
     }
 
-    public User getSender() {
-        return sender;
+    public RentMessageType getRentMessageType() {
+        return rentMessageType;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setRentMessageType(RentMessageType rentMessageType) {
+        this.rentMessageType = rentMessageType;
+    }
+
+    @Nullable
+    public Boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(@Nullable Boolean flag) {
+        this.flag = flag;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public User getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(User tenant) {
+        this.tenant = tenant;
+    }
+
+    public Announcement getAnnouncement() {
+        return announcement;
+    }
+
+    public void setAnnouncement(Announcement announcement) {
+        this.announcement = announcement;
     }
 
     public User getReceiver() {
@@ -79,17 +123,5 @@ public class Message {
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
-    }
-
-    public void setSendedAt(Timestamp sendedAt) {
-        this.sendedAt = sendedAt;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public File getFile() {
-        return file;
     }
 }

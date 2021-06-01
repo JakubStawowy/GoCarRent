@@ -43,11 +43,14 @@ public class User {
     @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;
 
-    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Message> messagesSent = new HashSet<>();
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Message> authorMessages = new HashSet<>();
+
+    @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Message> tenantMessages = new HashSet<>();
 
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Message> messagesReceived = new HashSet<>();
+    private Set<Message> receiverMessages = new HashSet<>();
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Feedback> feedbackSent = new HashSet<>();
@@ -58,7 +61,7 @@ public class User {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Announcement> announcements = new HashSet<>();
 
-    @OneToMany(mappedBy = "tenant")
+    @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Rent> rents;
 
     public User(@NotEmpty String email, @NotEmpty String password, @NotNull UserRoles role, UserDetails userDetails) {
@@ -134,22 +137,6 @@ public class User {
         this.feedbackReceived = feedbackReceived;
     }
 
-    public Set<Message> getMessagesSent() {
-        return messagesSent;
-    }
-
-    public void setMessagesSent(Set<Message> sendedMessages) {
-        this.messagesSent = sendedMessages;
-    }
-
-    public Set<Message> getMessagesReceived() {
-        return messagesReceived;
-    }
-
-    public void setMessagesReceived(Set<Message> messagesReceived) {
-        this.messagesReceived = messagesReceived;
-    }
-
     public UserDetails getUserDetails() {
         return userDetails;
     }
@@ -196,5 +183,29 @@ public class User {
 
     public void setRents(Set<Rent> rents) {
         this.rents = rents;
+    }
+
+    public Set<Message> getAuthorMessages() {
+        return authorMessages;
+    }
+
+    public void setAuthorMessages(Set<Message> authorMessages) {
+        this.authorMessages = authorMessages;
+    }
+
+    public Set<Message> getTenantMessages() {
+        return tenantMessages;
+    }
+
+    public void setTenantMessages(Set<Message> tenantMessages) {
+        this.tenantMessages = tenantMessages;
+    }
+
+    public Set<Message> getReceiverMessages() {
+        return receiverMessages;
+    }
+
+    public void setReceiverMessages(Set<Message> receiverMessages) {
+        this.receiverMessages = receiverMessages;
     }
 }

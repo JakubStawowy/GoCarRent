@@ -18,10 +18,11 @@ public class Announcement {
     @JoinColumn(name = "author_id")
     private User author;
 
-//    @ManyToMany(mappedBy = "rent")
-//    private Set<User> tenants;
     @OneToMany(mappedBy = "announcement")
     private Set<Rent> rents;
+
+    @OneToMany(mappedBy = "announcement")
+    private Set<Message> messages;
 
     public Long getId() {
         return id;
@@ -54,4 +55,13 @@ public class Announcement {
     public void setRents(Set<Rent> rents) {
         this.rents = rents;
     }
+
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
+    }
 }
+

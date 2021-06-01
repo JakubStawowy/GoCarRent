@@ -17,4 +17,7 @@ export const BASE_DELETE_ANNOUNCEMENT_URL = BASE_ANNOUNCEMENTS_URL + "/:announce
 export const BASE_EDIT_ANNOUNCEMENT_URL = BASE_ANNOUNCEMENTS_URL + "/:announcementId/edit";
 export const BASE_ANNOUNCEMENTS_FILTER_URL = BASE_ANNOUNCEMENTS_URL + "/filter?criteria=:criteria";
 export const BASE_UNLOCK_ANNOUNCEMENT_URL = BASE_ANNOUNCEMENTS_URL + "/:announcementId/unlock"
-
+export const BASE_GET_USER_MESSAGES_URL = BASE_API_URL + "/rents/messages?userId=:userId";
+export const BASE_SEND_MESSAGE_URL = BASE_API_URL + "/rents/send/:number?tenantId=:tenantId&announcementId=:announcementId";
+export const BASE_GET_ALL_USER_MESSAGES_URL = BASE_API_URL + "/messages/user?userId=:userId";
+export const BASE_DELETE_MESSAGE_URL = BASE_API_URL + "/messages/:messageId/delete";
