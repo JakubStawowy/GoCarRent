@@ -10,11 +10,13 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import userImage from '../uploads/user.png';
 import {useRightSideBarStyles} from "../style/RightSideBarStyles";
 import {useSideBarStyles} from "../style/SideBarStyles";
+import {useHistory} from "react-router";
 
 export default function RightSidebar(props) {
 
     const classes = useRightSideBarStyles();
     const sideBarClasses = useSideBarStyles();
+    const history = useHistory();
 
     const handleNavLinkClick = (e) => {
         props.action();
@@ -27,7 +29,7 @@ export default function RightSidebar(props) {
     return (
         <Grid item xs className={props.sideBarStatus && sideBarClasses.sideBar }>
             <AppBar className={classes.bar} position={'relative'}>
-                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'} onClick={(e)=>handleNavLinkClick(e)}>
+                <NavLink to={'/users/' + props.action1() + '/profile'} onClick={(e)=>handleNavLinkClick(e)}>
                     <div className={classes.circlePlate}>
                         <Avatar
                             src={userImage}
@@ -36,12 +38,10 @@ export default function RightSidebar(props) {
                         />
                     </div>
                 </NavLink>
-                <NavLink className={classes.navLink} to={'/users/' + localStorage.getItem('userId') + '/profile'} onClick={(e)=>handleNavLinkClick(e)}>
-                    <Button className={classes.button}>
-                        <Typography variant={"BUTTON"} size={'large'} className={classes.label}>profile</Typography>
-                        <PersonIcon />
-                    </Button>
-                </NavLink>
+                <Button className={classes.button} onClick={()=>history.replace('/users/' + localStorage.getItem('userId') + '/profile')}>
+                    <Typography variant={"BUTTON"} size={'large'} className={classes.label}>profile</Typography>
+                    <PersonIcon />
+                </Button>
                 <NavLink className={classes.navLink} to={"/users/messages"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"} className={classes.label}>messages</Typography>

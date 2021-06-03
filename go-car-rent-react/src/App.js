@@ -26,7 +26,11 @@ function App() {
     const classes = useAppStyles();
     const loggedSelector = useSelector((state) => state.isLogged);
     const [sideBarOpened, setSideBarOpened] = useState(true);
+    const [logged, setLogged] = useState(loggedSelector.isLogged);
     const changeSideBarState = () => setSideBarOpened(!sideBarOpened);
+    const getUserId = () => {
+        return localStorage.getItem('userId');
+    }
     return (
         <Router>
             <img src={logo} alt={''} className={classes.logo}/>
@@ -48,7 +52,7 @@ function App() {
                                 <Route path={'/announcement/filter'} component={FilteringPanel}/>
                                 <Route path={'/add'} component={AddAnnouncement}/>
                                 <Route path={'/user/{id}/rented'} component={RentedCars}/>
-                                <Route path={'/login'} component={LoginRegister}/>
+                                <Route path={'/login'} component={LoginRegister} />
                                 <Route path={'/users/:id/profile'} component={Profile}/>
                                 <Route path={'/users/messages'} component={Messages}/>
                                 <Route path={'/users/{id}/cars'} component={UserCars}/>
@@ -58,6 +62,7 @@ function App() {
                         <Grid item component={RightSidebar}
                               sideBarStatus={sideBarOpened}
                               action={changeSideBarState}
+                              action1={getUserId}
                         />
                         <Grid item component={Footer} action={changeSideBarState}/>
                     </Grid>

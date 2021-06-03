@@ -4,14 +4,14 @@ import {
 } from "@material-ui/core";
 
 import {useDispatch} from "react-redux";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {loginUser, registerUser} from "../actions/actionRepository";
 import {useHistory} from "react-router";
 import {ERROR_CONFLICT, ERROR_NOT_FOUND} from "../data/errors";
 import {useLoginRegisterStyles} from "../style/LoginRegisterStyles";
 import {useValidatedStyles} from "../style/ValidatedStyles";
 
-export default function LoginRegister() {
+export default function LoginRegister(props) {
     const classes = useLoginRegisterStyles();
     const validationStyles = useValidatedStyles();
     const [email, setEmail] = useState('');
@@ -26,6 +26,7 @@ export default function LoginRegister() {
     const [confirmedPasswordCorrect, setConfirmedPasswordCorrect] = useState(true);
     const dispatch = useDispatch();
     const history = useHistory();
+
     const handleLoginSubmit = (e) => {
         e.preventDefault();
         dispatch(loginUser({
