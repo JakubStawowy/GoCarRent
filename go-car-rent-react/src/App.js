@@ -1,4 +1,3 @@
-import './App.css';
 
 import LeftSidebar from "./components/LeftSidebar";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
@@ -17,37 +16,14 @@ import Messages from "./views/Messages";
 import {Redirect} from "react-router";
 import logo from "./uploads/background-logo.png";
 import RentedCars from "./views/RentedCars";
+import Announcement from "./views/Announcement";
 import {useSelector} from "react-redux";
 import Footer from "./components/Footer";
+import {useAppStyles} from "./style/AppStyle";
 
-const useStyles = makeStyles((theme) => ({
-    main: {
-        [theme.breakpoints.down('xs')]: {
-            maxWidth: '100%',
-            flexBasis: '100%'
-        },
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        maxHeight: '100vh',
-        overflow: 'auto'
-    },
-    subContainer: {
-        flex: '16',
-    },
-    logo: {
-        position: 'fixed',
-        // height: '90%',
-        width: '50vw',
-        left: '50%',
-        marginLeft: '-25%',
-        opacity: 0.3,
-        zIndex: -1
-    }
-}));
 function App() {
 
-    const classes = useStyles();
+    const classes = useAppStyles();
     const loggedSelector = useSelector((state) => state.isLogged);
     const [compressedMenuOpened, setCompressedMenuOpened] = useState(true);
     const openMenu = () => setCompressedMenuOpened(!compressedMenuOpened);
@@ -67,6 +43,7 @@ function App() {
                                     {loggedSelector.logged ? <Redirect to={'/home'}/> : <Redirect to={'/login'}/>}
                                 </Route>
                                 <Route path={'/home'} component={Home}/>
+                                <Route path={'/announcement/:id'} component={Announcement}/>
                                 <Route path={'/announcement/:id/edit'} component={EditAnnouncement}/>
                                 <Route path={'/announcement/filter'} component={FilteringPanel}/>
                                 <Route path={'/add'} component={AddAnnouncement}/>

@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import '../components/components.css';
 import {
-    Container, Fab,
-    makeStyles, Paper, Table, TableBody,
+    Container, Fab,Paper, Table, TableBody,
     TableCell,
     TableContainer,
     TableHead,
@@ -11,33 +9,11 @@ import {
 import {useHistory} from "react-router";
 import {deleteRent, getTenantRents, sendRentReturnProcessMessage} from "../actions/actionRepository";
 import {REQUEST_FOR_RENT_RETURN} from "../data/messageTypes";
+import {useRentedCarsStyles} from "../style/RentedCarsStyles";
 
-const useStyles = makeStyles((theme) => ({
-    tableHead: {
-        background: '#4BBEBAE0',
-    },
-    container: {
-        padding: '1em'
-    },
-    check: {
-        color: "green"
-    },
-    clear: {
-        color: "red"
-    },
-    table: {
-        height: "10vh"
-    },
-    rented: {
-        background: "#FFD700"
-    },
-    returned: {
-        background: "#32CD32"
-    }
-}));
 
 export default function RentedCars() {
-    const classes = useStyles();
+    const classes = useRentedCarsStyles();
     const history = useHistory();
     const [rentedCars, setRentedCars] = useState([]);
 

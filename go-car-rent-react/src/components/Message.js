@@ -1,5 +1,4 @@
-import {Avatar, Button, Card, Container, makeStyles, Typography} from "@material-ui/core";
-import image from '../uploads/user.png';
+import {Button, Card, Container, Typography} from "@material-ui/core";
 import {
     REQUEST_FOR_RENT_CONSENT,
     REQUEST_FOR_RENT_REALIZATION, REQUEST_FOR_RENT_RETURN,
@@ -10,52 +9,12 @@ import {deleteMessage, sendMessage, sendRentReturnProcessMessage} from "../actio
 import {useEffect} from "react";
 import AirportShuttleIcon from "@material-ui/icons/AirportShuttle";
 import {useHistory} from "react-router";
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        padding: '1em'
-    },
-    img: {
-        width: '10vh',
-        height: '10vh'
-    },
-    content: {
-        height: '100%',
-        padding: '0',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-    },
-    p: {
-        padding: 0
-    },
-    feedbackTop: {
-        display: 'flex',
-        justifyContent: 'space-between'
-    },
-    stars: {
-        color: '#4BBEBAE0',
-    },
-    feedbackAuthorLabel: {
-
-    },
-    cancelButton: {
-        background: '#FA8072'
-    },
-    okButton: {
-        background: '#4BBEBAE0'
-    }
-}));
-
+import {useMessageStyles} from "../style/MessageStyles";
 
 export default function Message(props) {
 
     /*  Hooks   */
-    const classes = useStyles();
+    const classes = useMessageStyles();
     const history = useHistory();
     useEffect(() => {
         console.log(props.body);
@@ -89,6 +48,9 @@ export default function Message(props) {
         <Card className={classes.paper}>
             <AirportShuttleIcon fontSize={'large'}/>
             <Container className={classes.content} style={{padding: '1em'}}>
+                <Typography>
+                    {props.body.sentAt.replace("T", " ").substr(0, 16)}
+                </Typography>
                 <Typography variant={"h5"}>
                     {
                         props.body.rentMessageType === REQUEST_FOR_RENT_CONSENT && <div>
@@ -98,7 +60,11 @@ export default function Message(props) {
                                     className={classes.button}
                                     onClick={()=>history.replace("/users/" + props.body.authorId + "/profile")}
                                 >Profile</Button>
-                                <Button className={classes.button}>Announcement</Button>
+                                <Button
+                                    className={classes.button}
+                                    onClick={()=>history.replace("/announcement/" + props.body.announcementId)}
+
+                                >Announcement</Button>
                                 <Button  className={classes.okButton} onClick={() =>
                                     handleAction(sendMessage({
                                         messageType: RESPONSE_FOR_RENT_CONSENT,
@@ -131,7 +97,7 @@ export default function Message(props) {
                                         announcementId: props.body.announcementId,
                                     }))
                                 }>Start rent</Button>
-                            <Button>
+                            <Button onClick={()=>history.replace("/announcement/" + props.body.announcementId)}>
                                 Announcement
                             </Button>
                         </div>
@@ -150,7 +116,7 @@ export default function Message(props) {
                                             announcementId: props.body.announcementId,
                                         }))
                                 }>Rent</Button>
-                                <Button>
+                                <Button onClick={()=>history.replace("/announcement/" + props.body.announcementId)}>
                                     Announcement
                                 </Button>
                             </div>
@@ -163,7 +129,12 @@ export default function Message(props) {
                                 </Typography>
                                 <Button
                                     className={classes.okButton}
-                                    onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>Ok</Button>
+                                    onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>
+                                    Ok
+                                </Button>
+                                <Button onClick={()=>history.replace("/announcement/" + props.body.announcementId)}>
+                                    Announcement
+                                </Button>
                             </div>
                     }
                     {
@@ -175,7 +146,12 @@ export default function Message(props) {
                                 <Button
                                     className={classes.okButton}
                                     onClick={()=> deleteMessage(props.body.messageId).catch((error) => alert(error))
-                                    }>Ok</Button>
+                                    }>
+                                    Ok
+                                </Button>
+                                <Button onClick={()=>history.replace("/announcement/" + props.body.announcementId)}>
+                                    Announcement
+                                </Button>
                             </div>
                     }
                     {
@@ -184,14 +160,22 @@ export default function Message(props) {
                                 <Typography>
                                     Confirm car return
                                 </Typography>
-                                <Button onClick={()=> {
+                                <Button
+                                    className={classes.okButton}
+                                    onClick={()=> {
                                     sendResponseForReturn(true);
                                     deleteMessage(props.body.messageId).catch((error) => alert(error));
                                 }}>Car was successfully returned</Button>
-                                <Button onClick={()=> {
+                                <Button
+                                    className={classes.cancelButton}
+                                    onClick={()=> {
                                     sendResponseForReturn(false);
                                     deleteMessage(props.body.messageId).catch((error) => alert(error));
                                 }}>Car wasn't returned</Button>
+
+                                <Button onClick={()=>history.replace("/announcement/" + props.body.announcementId)}>
+                                    Announcement
+                                </Button>
                             </div>
                     }
                     {
@@ -202,7 +186,14 @@ export default function Message(props) {
 
                                     Rent was finished successfully. You can now settle accounts with the owner
                                 </Typography>
-                                <Button onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>Ok</Button>
+                                <Button
+                                    className={classes.okButton}
+                                    onClick={()=>deleteMessage(props.body.messageId).catch((error) => alert(error))}>Ok</Button>
+
+                                <Button
+                                    className={classes.button}
+                                    onClick={()=>history.replace("/users/" + props.body.receiverId + "/profile")}
+                                >Owner</Button>
                             </div>
                     }
                     {
@@ -211,10 +202,16 @@ export default function Message(props) {
                                 <Typography>
                                     Owner claims that you still haven't returned the car
                                 </Typography>
-                                <Button onClick={()=> {
+                                <Button
+                                    className={classes.okButton}
+                                    onClick={()=> {
                                     sendRequestForReturn();
                                     deleteMessage(props.body.messageId).catch((error) => alert(error));
                                 }}>Try again</Button>
+
+                                <Button onClick={()=>history.replace("/announcement/" + props.body.announcementId)}>
+                                    Announcement
+                                </Button>
                             </div>
                     }
                 </Typography>

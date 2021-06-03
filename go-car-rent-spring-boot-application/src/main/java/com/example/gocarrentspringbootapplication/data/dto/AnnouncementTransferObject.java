@@ -4,10 +4,12 @@ import com.example.gocarrentspringbootapplication.data.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.data.po.Announcement;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class AnnouncementTransferObject implements Serializable {
 
     private Long id;
+    private Timestamp createdAt;
     private final String title;
     private final String amount;
     private final String currency;
@@ -30,6 +32,7 @@ public class AnnouncementTransferObject implements Serializable {
 
     public AnnouncementTransferObject(Announcement announcement) {
         id = announcement.getId();
+        createdAt = announcement.getAnnouncementDetails().getCreatedAt();
         title = announcement.getAnnouncementDetails().getTitle();
         amount = announcement.getAnnouncementDetails().getAmount().toPlainString();
         currency = announcement.getAnnouncementDetails().getCurrency().getCurrencyCode();
@@ -74,5 +77,9 @@ public class AnnouncementTransferObject implements Serializable {
 
     public AnnouncementStatus getStatus() {
         return status;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 }

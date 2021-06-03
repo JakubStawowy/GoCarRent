@@ -4,6 +4,7 @@ import com.example.gocarrentspringbootapplication.amqp.enums.RentMessageType;
 import com.example.gocarrentspringbootapplication.amqp.po.Message;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class MessageTransferObject implements Serializable {
 
@@ -13,6 +14,7 @@ public class MessageTransferObject implements Serializable {
     private final Long receiverId;
     private final Long announcementId;
     private final Boolean flag;
+    private final Timestamp sentAt;
     private Long rentId;
 
     public MessageTransferObject(Message message) {
@@ -22,6 +24,7 @@ public class MessageTransferObject implements Serializable {
         receiverId = message.getReceiver().getId();
         announcementId = message.getAnnouncement().getId();
         flag = message.isFlag();
+        sentAt = message.getSentAt();
     }
 
     public Long getMessageId() {
@@ -54,6 +57,10 @@ public class MessageTransferObject implements Serializable {
 
     public void setRentId(Long rentId) {
         this.rentId = rentId;
+    }
+
+    public Timestamp getSentAt() {
+        return sentAt;
     }
 }
 

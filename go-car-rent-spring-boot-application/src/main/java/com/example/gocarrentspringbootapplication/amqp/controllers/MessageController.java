@@ -31,9 +31,9 @@ public class MessageController {
     }
 
     @GetMapping("/user")
-    public List<MessageTransferObject> getMessages(@RequestParam Long userId) {
+    public List<MessageTransferObject> getMessages(@RequestParam Long userId, @RequestParam Boolean archived) {
         List<MessageTransferObject> result = new LinkedList<>();
-        for (Message message: messageRepository.getAllByReceiverAndArchived(userId, false)) {
+        for (Message message: messageRepository.getAllByReceiverAndArchived(userId, archived)) {
             MessageTransferObject messageBuffer = new MessageTransferObject(message);
             messageBuffer.setRentId(message.getRentId());
             result.add(messageBuffer);

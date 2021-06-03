@@ -3,47 +3,12 @@ import image from '../uploads/user.png';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import {useHistory} from "react-router";
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        // height: '15vh',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        padding: '1em'
-    },
-    img: {
-        width: '10vh',
-        height: '10vh'
-    },
-    content: {
-        height: '100%',
-        padding: '0',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-    },
-    p: {
-        padding: 0
-    },
-    feedbackTop: {
-        display: 'flex',
-        justifyContent: 'space-between'
-    },
-    stars: {
-        color: '#4BBEBAE0',
-    },
-    feedbackAuthorLabel: {
-
-    }
-}));
-
+import {useFeedbackStyles} from "../style/FeedbackStyles";
 
 export default function Feedback(props) {
 
     /*  Hooks   */
-    const classes = useStyles();
+    const classes = useFeedbackStyles();
     const history = useHistory();
 
     let starsArray = [];

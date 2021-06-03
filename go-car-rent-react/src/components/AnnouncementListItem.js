@@ -1,7 +1,6 @@
-import {Button, Card, Container, ListItemIcon, makeStyles, Typography} from "@material-ui/core";
+import {Button, Card, Container, ListItemIcon, Typography} from "@material-ui/core";
 import image from '../uploads/transit.png';
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
-import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 import MessageIcon from "@material-ui/icons/Message";
 import SettingsIcon from '@material-ui/icons/Settings';
 import {NavLink} from "react-router-dom";
@@ -11,55 +10,21 @@ import {useHistory} from "react-router";
 import {useState} from "react";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {blockAnnouncement, registerRent, sendMessage, unlockAnnouncement} from "../actions/actionRepository";
+import {blockAnnouncement, sendMessage, unlockAnnouncement} from "../actions/actionRepository";
 import {REQUEST_FOR_RENT_CONSENT} from "../data/messageTypes";
+import {useAnnouncementListItemStyles} from "../style/AnnouncementListItemStyles";
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        height: '30vh',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    img: {
-        height: '90%',
-        flex: '3'
-    },
-    content: {
-        height: '100%',
-        flex: '7',
-        padding: '0',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around'
-    },
-    p: {
-        padding: 0
-    },
-    cancelButton: {
-        background: '#FA8072'
-    },
-    blockButton: {
-        background: '#4BBEBAE0'
-    },
-    image: {
-        width: '15vw',
-        height: '15vw',
-        objectFit: 'cover'
-    }
-}));
-
-export default function Announcement(props) {
+export default function AnnouncementListItem(props) {
 
     const dispatch = useDispatch();
     const history = useHistory();
     const [isBlock, setIsBlock] = useState(false);
-    const classes = useStyles();
+    const classes = useAnnouncementListItemStyles();
 
     const changeBlock = () => setIsBlock(!isBlock);
     const handleBlock = () => {
         dispatch(blockAnnouncement(props.announcementId)).then(() => {
-            alert('Announcement blocked successfully');
+            alert('AnnouncementListItem blocked successfully');
             history.replace('/');
         }).catch((error) => {
             alert(error);
@@ -69,7 +34,7 @@ export default function Announcement(props) {
 
     const handleUnlock = () => {
         dispatch(unlockAnnouncement(props.announcementId)).then(() => {
-            alert('Announcement unlocked successfully');
+            alert('AnnouncementListItem unlocked successfully');
             history.replace('/');
         }).catch((error) => {
             alert(error);
@@ -90,12 +55,16 @@ export default function Announcement(props) {
                 <img src={image} alt={"No-image"} className={classes.image}/>
             </div>
             <Container className={classes.content} style={{padding: '1em'}}>
-                <Typography variant={"h5"}>
+                <Typography variant={"h5"} className={classes.title}>
                     {props.title}
-                    <Typography variant={"body1"}>{props.date}</Typography>
                 </Typography>
-                <NavLink to={'/users/' + props.authorId + '/profile'}>
-                    Author
+                <Typography variant={"subtitle2"}>
+                    {props.createdAt.replace("T", " ").substr(0, 16)}
+                </Typography>
+                <NavLink to={'/users/' + props.authorId + '/profile'} className={classes.navLink}>
+                    <Typography>
+                        Author
+                    </Typography>
                 </NavLink>
                 <Typography variant={'h6'}>
                     {props.price} {props.currency} / {props.timeUnit}
@@ -104,8 +73,11 @@ export default function Announcement(props) {
                         props.authorId === parseInt(localStorage.getItem("userId")) ?
                             <ListItemIcon>
 
-                                <Button>
-                                    <DirectionsCarIcon fontSize={"large"}/>
+                                <Button
+                                    className={classes.iconButton}
+                                    onClick={()=>history.replace("/announcement/" + props.announcementId)}
+                                >
+                                    <DirectionsCarIcon fontSize={"large"} className={classes.icon}/>
                                 </Button>
                                 <NavLink to={"/announcement/"+props.announcementId+"/edit"}>
                                     <Button>
@@ -140,9 +112,6 @@ export default function Announcement(props) {
                             <ListItemIcon>
                                 <Button>
                                     <DirectionsCarIcon fontSize={"large"}/>
-                                </Button>
-                                <Button>
-                                    <PhoneEnabledIcon fontSize={"large"}/>
                                 </Button>
                                 <Button>
                                     <MessageIcon fontSize={"large"}/>
