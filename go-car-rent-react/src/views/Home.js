@@ -1,32 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import '../components/components.css';
-import {Container, Fab, List, ListItem, makeStyles, TextField} from "@material-ui/core";
-import Announcement from "../components/Announcement";
+import {Container, Fab, List, ListItem, TextField} from "@material-ui/core";
+import AnnouncementListItem from "../components/AnnouncementListItem";
 import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
 import {getAnnouncements} from "../actions/actionRepository";
 import {useHistory} from "react-router";
 import FilteringPanel from "../components/FilteringPanel";
-
-const useStyles = makeStyles((theme) => ({
-    list: {
-        maxHeight: '85vh',
-        marginTop: '2em',
-        overflow: 'auto'
-    },
-    container: {marginTop: '2em'},
-    buttonContainer: {
-        display: "flex",
-        justifyContent: "space-around",
-    },
-    button: {
-        background: '#4BBEBAE0',
-        width: '40%',
-    }
-}));
+import ClearIcon from "@material-ui/icons/Clear";
+import {useHomeStyles} from "../style/HomeStyles";
 
 export default function Home() {
-    const classes = useStyles();
+    const classes = useHomeStyles();
     const history = useHistory();
 
     const [announcements, setAnnouncements] = useState([]);
@@ -85,26 +69,36 @@ export default function Home() {
                 }
                 {
                     searchOpen &&
-                        <Container>
-                            <TextField
-                                type={'text'}
-                                label={'Search'}
-                                // value={searchValue}
-                                onChange={(e) =>
-                                    handleSearch(e.target.value)
-                                }
-                            />
-                            <Fab variant={'extended'} onClick={() => handleSearch()}>Search</Fab>
-                            <Fab variant={'extended'} onClick={() => changeSearchOpen()}>Cancel</Fab>
+                        <Container className={classes.searchingPanel}>
+                            <div className={classes.searchField}>
+                                <TextField
+                                    type={'text'}
+                                    label={'Search'}
+                                    className={classes.textField}
+                                    onChange={(e) =>
+                                        handleSearch(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <Fab variant={'extended'} onClick={() => handleSearch()}>
+                                    search
+                                    <SearchIcon fontSize={"large"}/>
+                                </Fab>
+                                <Fab variant={'extended'} onClick={() => changeSearchOpen()}>
+                                    cancel
+                                    <ClearIcon fontSize={"large"}/>
+                                </Fab>
+                            </div>
                         </Container>
                 }
                 {announcements.map(announcement => {
                     return (
                         <ListItem>
-                            <Announcement
+                            <AnnouncementListItem
                                 announcementId={announcement.id}
                                 title={announcement.title}
-                                date={announcement.createdAt}
+                                createdAt={announcement.createdAt}
                                 price={announcement.amount}
                                 currency={announcement.currency}
                                 timeUnit={announcement.timeUnit}

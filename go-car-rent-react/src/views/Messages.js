@@ -1,45 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import '../components/components.css';
 import {
+    Button,
     Container,
     List,
-    makeStyles,
-    Paper, Typography
+    Paper, Tab, Tabs, Typography
 } from "@material-ui/core";
 
 import Message from "../components/Message";
-import {getAllUserMessages, getUserMessages} from "../actions/actionRepository";
+import {getAllUserMessages, getArchivedUserMessages, getUserMessages} from "../actions/actionRepository";
+import {useMessagesStyles} from "../style/MessagesStyles";
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        marginTop: '1em',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around'
-    },
-    list: {
-        // maxHeight: '40vh',
-        overflow: "auto"
-    },
-    chat: {
-        flex: 6,
-        padding: '0 1em',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        [theme.breakpoints.down('sm')]: {
-            display:'none'
-        }
-    },
-    messages: {
-        flex: 4,
-    }
-}));
 
 export default function Messages() {
-    const classes = useStyles();
+    const classes = useMessagesStyles();
     const [latestMessages, setLatestMessages] = useState([]);
     const [allMessages, setAllMessages] = useState([]);
+    const [archivedMessages, setArchivedMessages] = useState([]);
+    const [type, setType] = useState("unread");
     let index = 0;
     useEffect(() => {
             getUserMessages(localStorage.getItem('userId'))
@@ -48,6 +25,9 @@ export default function Messages() {
             getAllUserMessages(localStorage.getItem('userId'))
                 .then((response) => setAllMessages(response.data))
                 .catch((error) => alert(error));
+            getArchivedUserMessages(localStorage.getItem('userId'))
+                .then((response)=>setArchivedMessages(response.data))
+                .catch((error)=>alert(error));
         }
     , [])
 
@@ -59,12 +39,15 @@ export default function Messages() {
     return (
         <Container className={classes.container}>
             <Paper className={`${classes.list} ${classes.messages}`}>
-                <Typography>
-                    Latest messages
-                </Typography>
+                <Tabs>
+                    <Tab onClick={()=>setType("unread")} label={"Unread messages"}/>
+                    <Tab onClick={()=>setType("all")} label={"All messages"}/>
+                    <Tab onClick={()=>setType("archived")} label={"Archived messages"}/>
+                </Tabs>
                 <React.Fragment>
                     <List>
                         {
+                            type === "unread" &&
                             latestMessages.map(
                                 message => {
                                     return (
@@ -77,17 +60,23 @@ export default function Messages() {
                                 }
                             )
                         }
-                    </List>
-                </React.Fragment>
-            </Paper>
-            <Paper className={`${classes.list} ${classes.messages}`}>
-                <Typography>
-                    Unread messages
-                </Typography>
-                <React.Fragment>
-                    <List>
                         {
+                            type === "all" &&
                             allMessages.map(
+                                message => {
+                                    return (
+                                        <Message
+                                            index={index++}
+                                            body={message}
+                                            action={closeMessage}
+                                        />
+                                    )
+                                }
+                            )
+                        }
+                        {
+                            type === "archived" &&
+                            archivedMessages.map(
                                 message => {
                                     return (
                                         <Message

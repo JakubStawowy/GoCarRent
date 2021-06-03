@@ -1,6 +1,5 @@
-import React from 'react';
-import './components.css';
-import {AppBar, makeStyles, Typography, Button, Grid, Avatar} from "@material-ui/core";
+import React, {useEffect} from 'react';
+import {AppBar, Typography, Button, Grid, Avatar} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
@@ -9,51 +8,25 @@ import MessageIcon from '@material-ui/icons/Message';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import userImage from '../uploads/user.png';
+import {useRightSideBarStyles} from "../style/RightSideBarStyles";
+import {useSideBarStyles} from "../style/SideBarStyles";
 
-const useStyles = makeStyles((theme) => ({
-    bar: {
-        background: 'transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box',
-        height: '100%',
-        position: 'relative',
-        justifyContent: 'space-around',
-        boxShadow: 'none',
-        paddingRight: '3em'
-    },
-    button: {
-        background: 'white',
-        width: '100%',
-        borderRadius: '0 30px 30px 0',
-        color: '#4BBEBAE0',
-        '&:hover': {
-            color: 'white'
-        }
-    },
-    circlePlate: {
-        display: "flex",
-        justifyContent: "flex-end"
-    },
-    circle: {
-        width: '10vw',
-        height: '10vw',
-    },
-    img: {
-        borderRadius: '50%',
-        width: '100%',
-        objectFit: 'cover'
-    },
-    label: {
-        [theme.breakpoints.down('sm')]: {
-            display: 'none'
-        }
-    },
-}));
+export default function RightSidebar(props) {
 
-export default function RightSidebar() {
-    const classes = useStyles();
+    const classes = useRightSideBarStyles();
+    const sideBarClasses = useSideBarStyles();
+
+    const handleNavLinkClick = (e) => {
+        if (localStorage.getItem('token') === null) {
+            e.preventDefault();
+            alert("You don't have access to resources. You must be logged in");
+        }
+    }
+
     return (
-        <Grid item xs >
+        <Grid item xs className={props.sideBarStatus && sideBarClasses.sideBar }>
             <AppBar className={classes.bar} position={'relative'}>
-                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'}>
+                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'} onClick={(e)=>handleNavLinkClick(e)}>
                     <div className={classes.circlePlate}>
                         <Avatar
                             src={userImage}
@@ -62,25 +35,25 @@ export default function RightSidebar() {
                         />
                     </div>
                 </NavLink>
-                <NavLink to={'/users/' + localStorage.getItem('userId') + '/profile'}>
+                <NavLink className={classes.navLink} to={'/users/' + localStorage.getItem('userId') + '/profile'} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button}>
                         <Typography variant={"BUTTON"} size={'large'} className={classes.label}>profile</Typography>
                         <PersonIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/users/{id}/messages"}>
+                <NavLink className={classes.navLink} to={"/users/{id}/messages"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"} className={classes.label}>messages</Typography>
                         <MessageIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/users/{id}/cars"}>
+                <NavLink className={classes.navLink} to={"/users/{id}/cars"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"} className={classes.label}>your cars</Typography>
                         <DirectionsCarIcon />
                     </Button>
                 </NavLink>
-                <NavLink to={"/settings"}>
+                <NavLink className={classes.navLink} to={"/settings"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"} className={classes.label}>settings</Typography>
                         <SettingsIcon />

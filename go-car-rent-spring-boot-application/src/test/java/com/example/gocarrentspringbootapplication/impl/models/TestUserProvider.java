@@ -1,6 +1,8 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
-import com.example.gocarrentspringbootapplication.impl.enums.UserRoles;
+import com.example.gocarrentspringbootapplication.data.po.User;
+import com.example.gocarrentspringbootapplication.data.po.UserDetails;
+import com.example.gocarrentspringbootapplication.data.enums.UserRoles;
 
 public class TestUserProvider {
 

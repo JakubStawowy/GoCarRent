@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import '../components/components.css';
 import {
-    Container,
-    makeStyles, Paper, Table, TableBody,
+    Container, Paper, Table, TableBody,
     TableCell,
     TableContainer,
     TableHead,
@@ -13,24 +11,10 @@ import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import {getUserAnnouncements} from "../actions/actionRepository";
 import {useHistory} from "react-router";
-
-const useStyles = makeStyles((theme) => ({
-    tableHead: {
-        background: '#4BBEBAE0',
-    },
-    container: {
-        padding: '1em'
-    },
-    check: {
-        color: "green"
-    },
-    clear: {
-        color: "red"
-    }
-}));
+import {useUserCarsStyles} from "../style/UserCarsStyles";
 
 export default function UserCars() {
-    const classes = useStyles();
+    const classes = useUserCarsStyles();
     const history = useHistory();
     const [userCars, setUserCars] = useState([]);
     useEffect(() => {

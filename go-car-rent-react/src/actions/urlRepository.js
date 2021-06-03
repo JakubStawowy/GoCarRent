@@ -20,6 +20,6 @@ export const BASE_UNLOCK_ANNOUNCEMENT_URL = BASE_ANNOUNCEMENTS_URL + "/:announce
 export const BASE_GET_USER_MESSAGES_URL = BASE_API_URL + "/messages/load?userId=:userId";
 export const BASE_SEND_MESSAGE_URL = BASE_API_URL + "/rents/send/:number?tenantId=:tenantId&announcementId=:announcementId";
 export const BASE_SEND_RENT_RETURN_MESSAGE_URL = BASE_API_URL + "/rents/send/:number?tenantId=:tenantId&rentId=:rentId";
-export const BASE_GET_ALL_USER_MESSAGES_URL = BASE_API_URL + "/messages/user?userId=:userId";
+export const BASE_GET_ALL_USER_MESSAGES_URL = BASE_API_URL + "/messages/user?userId=:userId&archived=:archived";
 export const BASE_ARCHIVE_MESSAGE_URL = BASE_API_URL + "/messages/:messageId/archive";
 export const BASE_DELETE_RENT_URL = BASE_API_URL + "/rents/:rentId/delete";

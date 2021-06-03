@@ -1,11 +1,10 @@
-import './App.css';
 
 import LeftSidebar from "./components/LeftSidebar";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Home from "./views/Home";
 import RightSidebar from "./components/RightSidebar";
 import FilteringPanel from "./components/FilteringPanel";
-import React from "react";
+import React, {useState} from "react";
 import {Grid, List, makeStyles} from "@material-ui/core";
 import AddAnnouncement from "./views/AddAnnouncement";
 import EditAnnouncement from "./views/EditAnnouncement";
@@ -17,57 +16,31 @@ import Messages from "./views/Messages";
 import {Redirect} from "react-router";
 import logo from "./uploads/background-logo.png";
 import RentedCars from "./views/RentedCars";
+import Announcement from "./views/Announcement";
 import {useSelector} from "react-redux";
+import Footer from "./components/Footer";
+import {useAppStyles} from "./style/AppStyle";
 
-const useStyles = makeStyles((theme) => ({
-    main: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        maxHeight: '100vh',
-        overflow: 'auto'
-    },
-    footer: {
-        background: '#6A6464C2 0% 0% no-repeat padding-box',
-        opacity: 1,
-        display: 'flex',
-        justifyContent: 'end',
-        borderRadius: 0,
-        '&:hover': {
-            background: '#8C8686E4 0% 0% no-repeat padding-box'
-        },
-        flex: '1'
-    },
-    subContainer: {
-        flex: '16'
-    },
-    logo: {
-        position: 'fixed',
-        height: '90%',
-        left: '50%',
-        marginLeft: '-25%',
-        opacity: 0.3,
-        zIndex: -1
-    }
-}));
 function App() {
 
-    const classes = useStyles();
+    const classes = useAppStyles();
     const loggedSelector = useSelector((state) => state.isLogged);
-
+    const [sideBarOpened, setSideBarOpened] = useState(true);
+    const openMenu = () => setSideBarOpened(!sideBarOpened);
     return (
         <Router>
             <img src={logo} alt={''} className={classes.logo}/>
             <div className={"container"}>
                 <Switch>
                     <Grid container style={{height: '100vh'}} wrap={"nowrap"}>
-                        <Grid item component={LeftSidebar}/>
+                        <Grid item component={LeftSidebar} sideBarStatus={sideBarOpened}/>
                         <Grid container xs={8} component={List} className={classes.main} wrap={'nowrap'}>
                             <Grid item className={classes.subContainer}>
                                 <Route exact path={'/'}>
                                     {loggedSelector.logged ? <Redirect to={'/home'}/> : <Redirect to={'/login'}/>}
                                 </Route>
                                 <Route path={'/home'} component={Home}/>
+                                <Route path={'/announcement/:id'} component={Announcement}/>
                                 <Route path={'/announcement/:id/edit'} component={EditAnnouncement}/>
                                 <Route path={'/announcement/filter'} component={FilteringPanel}/>
                                 <Route path={'/add'} component={AddAnnouncement}/>
@@ -79,7 +52,8 @@ function App() {
                                 <Route path={'/settings'} component={Settings}/>
                             </Grid>
                         </Grid>
-                        <Grid item component={RightSidebar}/>
+                        <Grid item component={RightSidebar} sideBarStatus={sideBarOpened}/>
+                        <Grid item component={Footer} action={openMenu}/>
                     </Grid>
                 </Switch>
             </div>
