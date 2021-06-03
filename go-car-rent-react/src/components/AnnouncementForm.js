@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import '../components/components.css';
 import {
     Button, Card,
     Container, Fab,
     Grid,
-    makeStyles,
     MenuItem,
     Select,
     TextField,
@@ -16,57 +14,17 @@ import carBrands from "../data/carBrands";
 import ImageIcon from '@material-ui/icons/Image';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {useDispatch} from "react-redux";
-import {addAnnouncement} from "../actions/addAnnouncement";
-import {editAnnouncement} from "../actions/editAnnouncement";
-import {deleteAnnouncement} from "../actions/deleteAnnouncement";
+import {
+    addAnnouncement,
+    editAnnouncement,
+    deleteAnnouncement,
+    getAnnouncement
+} from "../actions/actionRepository";
 import {useHistory} from "react-router";
-import {getAnnouncement} from "../actions/getAnnouncement";
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        justifyContent: 'space-around'
-    },
-    form: {
-        height: '70%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-    item: {
-        width: '90%'
-    },
-    gridContainer: {
-        background: 'transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box',
-        height: '80%',
-        borderRadius: '2em'
-    },
-    button: {
-        background: '#4BBEBAE0',
-    },
-    deleteButton: {
-        background: '#FA8072'
-    },
-    titleField: {
-        marginTop: '2em'
-    },
-    confirmArea: {
-        borderRadius: '2em',
-        background: '#FA8072',
-        display: 'flex',
-        justifyContent: 'center',
-        // alignItems: 'center'
-    },
-    confirmField: {
-        background: '#FCA294',
-        width: '40%',
-    }
-}));
+import {useAnnouncementFormStyles} from "../style/AnnouncementFormStyles";
 
 export default function AnnouncementForm(props) {
-    const classes = useStyles();
+    const classes = useAnnouncementFormStyles();
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [timeUnit, setTimeUnit] = useState('');
@@ -110,13 +68,13 @@ export default function AnnouncementForm(props) {
 
         props.edit ?
             dispatch(editAnnouncement(data, props.announcementId)).then(
-                () => handleSuccess('Announcement edited successfully', "/")
+                () => handleSuccess('AnnouncementListItem edited successfully', "/")
             ).catch(
                 (error) => alert(error)
             )
             :
             dispatch(addAnnouncement(data)).then(
-                () => handleSuccess('Announcement added successfully', "/")
+                () => handleSuccess('AnnouncementListItem added successfully', "/")
             ).catch(
                 (error) => alert(error)
             );
@@ -131,7 +89,7 @@ export default function AnnouncementForm(props) {
             "announcementId": props.announcementId,
             "password": password
         })).then(
-            () => handleSuccess('Announcement deleted successfully', "/")
+            () => handleSuccess('AnnouncementListItem deleted successfully', "/")
         ).catch(
             (error) => alert(error)
         );

@@ -1,5 +1,8 @@
 package com.example.gocarrentspringbootapplication.impl.models;
 
+import com.example.gocarrentspringbootapplication.data.po.Announcement;
+import com.example.gocarrentspringbootapplication.data.po.AnnouncementDetails;
+
 import java.math.BigDecimal;
 import java.time.temporal.ChronoUnit;
 import java.util.Currency;

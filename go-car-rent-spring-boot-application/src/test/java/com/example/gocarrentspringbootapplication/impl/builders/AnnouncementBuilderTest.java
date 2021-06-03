@@ -1,9 +1,10 @@
 package com.example.gocarrentspringbootapplication.impl.builders;
 
-import com.example.gocarrentspringbootapplication.api.builders.IAnnouncementBuilder;
-import com.example.gocarrentspringbootapplication.api.dao.repositories.UserRepository;
-import com.example.gocarrentspringbootapplication.impl.models.Announcement;
-import com.example.gocarrentspringbootapplication.impl.models.AnnouncementDetails;
+import com.example.gocarrentspringbootapplication.data.api.IAnnouncementBuilder;
+import com.example.gocarrentspringbootapplication.data.dao.UserRepository;
+import com.example.gocarrentspringbootapplication.data.builders.AnnouncementBuilder;
+import com.example.gocarrentspringbootapplication.data.po.Announcement;
+import com.example.gocarrentspringbootapplication.data.po.AnnouncementDetails;
 import com.example.gocarrentspringbootapplication.impl.models.TestAnnouncementProvider;
 import com.example.gocarrentspringbootapplication.impl.models.TestUserProvider;
 import org.junit.jupiter.api.Test;

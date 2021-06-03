@@ -1,44 +1,19 @@
 import React, {useState} from 'react';
-import '../components/components.css';
 import {
     Container, Fab,
     Grid,
-    makeStyles,
     MenuItem,
     Select,
     TextField,
 } from "@material-ui/core";
 import carBrands from "../data/carBrands";
 import SearchIcon from "@material-ui/icons/Search";
-import {getAnnouncements} from "../actions/getAnnouncements";
+import {getAnnouncements} from "../actions/actionRepository";
 import ClearIcon from "@material-ui/icons/Clear";
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        justifyContent: 'space-around'
-    },
-    form: {
-        height: '70%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-    item: {
-        width: '90%'
-    },
-    gridContainer: {
-        background: 'transparent linear-gradient(180deg, #4FC7C3E0 0%, #4BBEBAE0 72%, #286462E0 100%) 0% 0% no-repeat padding-box',
-        height: '80%',
-        borderRadius: '2em',
-        padding: '2em'
-    },
-}));
+import {useFilteringPanelStyles} from "../style/FilteringPanelStyles";
 
 export default function FilteringPanel(props) {
-    const classes = useStyles();
+    const classes = useFilteringPanelStyles();
     const [priceFrom, setPriceFrom] = useState('');
     const [priceTo, setPriceTo] = useState('');
     const [timeUnit, setTimeUnit] = useState('');
@@ -196,13 +171,15 @@ export default function FilteringPanel(props) {
 
                     </Grid>
 
-                    <Grid item xs={5}>
+                    <Grid item xs={5}
+                          className={classes.buttonGridItem}>
                         <Fab variant={'extended'} className={classes.button} type={"submit"}>
                             Search
                             <SearchIcon fontSize={"large"}/>
                         </Fab>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={5}
+                          className={classes.buttonGridItem}>
                         <Fab variant={'extended'} className={classes.button} onClick={props.action1}>
                             Cancel
                             <ClearIcon fontSize={"large"}/>

@@ -1,40 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import '../components/components.css';
 import {Button, Container, List, ListItem, makeStyles, Typography} from "@material-ui/core";
 import userImage from '../uploads/user.png';
 import Feedback from "../components/Feedback";
-import {getUserDetails} from "../actions/getUserDetails";
+import {getUserDetails, getFeedback} from "../actions/actionRepository";
 import {useHistory} from "react-router";
-import {getFeedback} from "../actions/getFeedback";
 import {ERROR_FORBIDDEN} from "../data/errors";
-const useStyles = makeStyles((theme) => ({
-
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%'
-    },
-    img: {
-        width: '20%',
-        borderRadius: '50%'
-    },
-    list: {
-        maxHeight: '30vh',
-        overflow: 'auto',
-        width: '100%'
-    },
-    button: {
-        background: '#4BBEBAE0',
-        color: 'white'
-    }
-}));
+import {useProfileStyles} from "../style/ProfileStyles";
 
 export default function Profile(props) {
 
     /*  Hooks   */
-    const classes = useStyles();
+    const classes = useProfileStyles();
     const history = useHistory();
 
     /*  User Data   */
