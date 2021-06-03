@@ -26,14 +26,17 @@ function App() {
     const classes = useAppStyles();
     const loggedSelector = useSelector((state) => state.isLogged);
     const [sideBarOpened, setSideBarOpened] = useState(true);
-    const openMenu = () => setSideBarOpened(!sideBarOpened);
+    const changeSideBarState = () => setSideBarOpened(!sideBarOpened);
     return (
         <Router>
             <img src={logo} alt={''} className={classes.logo}/>
             <div className={"container"}>
                 <Switch>
                     <Grid container style={{height: '100vh'}} wrap={"nowrap"}>
-                        <Grid item component={LeftSidebar} sideBarStatus={sideBarOpened}/>
+                        <Grid item component={LeftSidebar}
+                              sideBarStatus={sideBarOpened}
+                              action={changeSideBarState}
+                        />
                         <Grid container xs={8} component={List} className={classes.main} wrap={'nowrap'}>
                             <Grid item className={classes.subContainer}>
                                 <Route exact path={'/'}>
@@ -47,13 +50,16 @@ function App() {
                                 <Route path={'/user/{id}/rented'} component={RentedCars}/>
                                 <Route path={'/login'} component={LoginRegister}/>
                                 <Route path={'/users/:id/profile'} component={Profile}/>
-                                <Route path={'/users/{id}/messages'} component={Messages}/>
+                                <Route path={'/users/messages'} component={Messages}/>
                                 <Route path={'/users/{id}/cars'} component={UserCars}/>
                                 <Route path={'/settings'} component={Settings}/>
                             </Grid>
                         </Grid>
-                        <Grid item component={RightSidebar} sideBarStatus={sideBarOpened}/>
-                        <Grid item component={Footer} action={openMenu}/>
+                        <Grid item component={RightSidebar}
+                              sideBarStatus={sideBarOpened}
+                              action={changeSideBarState}
+                        />
+                        <Grid item component={Footer} action={changeSideBarState}/>
                     </Grid>
                 </Switch>
             </div>

@@ -23,6 +23,7 @@ export default function LeftSidebar(props) {
     const [isLogged, setIsLogged] = useState(useSelector(state => state.isLogged));
 
     const handleNavLinkClick = (e) => {
+        props.action();
         if (localStorage.getItem('token') === null) {
             e.preventDefault();
             alert("You don't have access to resources. You must be logged in");

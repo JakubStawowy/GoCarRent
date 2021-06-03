@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {AppBar, Typography, Button, Grid, Avatar} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 
@@ -17,6 +17,7 @@ export default function RightSidebar(props) {
     const sideBarClasses = useSideBarStyles();
 
     const handleNavLinkClick = (e) => {
+        props.action();
         if (localStorage.getItem('token') === null) {
             e.preventDefault();
             alert("You don't have access to resources. You must be logged in");
@@ -41,7 +42,7 @@ export default function RightSidebar(props) {
                         <PersonIcon />
                     </Button>
                 </NavLink>
-                <NavLink className={classes.navLink} to={"/users/{id}/messages"} onClick={(e)=>handleNavLinkClick(e)}>
+                <NavLink className={classes.navLink} to={"/users/messages"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <Typography variant={"BUTTON"} className={classes.label}>messages</Typography>
                         <MessageIcon />
