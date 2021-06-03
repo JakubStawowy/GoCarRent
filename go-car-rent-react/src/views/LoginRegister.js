@@ -7,7 +7,7 @@ import {useDispatch} from "react-redux";
 import {useState} from "react";
 import {loginUser, registerUser} from "../actions/actionRepository";
 import {useHistory} from "react-router";
-import {ERROR_NOT_FOUND} from "../data/errors";
+import {ERROR_CONFLICT, ERROR_NOT_FOUND} from "../data/errors";
 import {useLoginRegisterStyles} from "../style/LoginRegisterStyles";
 import {useValidatedStyles} from "../style/ValidatedStyles";
 
@@ -42,7 +42,8 @@ export default function LoginRegister() {
 
     const handleSubmitRegister = (e) => {
         e.preventDefault();
-        validateEmail(registeredEmail) &&
+        emailCorrect && passwordCorrect && confirmedPasswordCorrect &&
+            name.length !== 0 && surname.length !== 0 ?
         dispatch(registerUser({
             'email': registeredEmail,
             'password': registeredPassword,
@@ -55,8 +56,13 @@ export default function LoginRegister() {
         })).then(() => {
             alert('User registered');
         }).catch((error) => {
-            alert(error);
-        });
+            error.response !== undefined && error.response.status === ERROR_CONFLICT ?
+                alert("User with this email already exists")
+                :
+                alert(error);
+        })
+            :
+            alert("Wrong register user data");
     }
 
     const validateEmail = (email) => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);

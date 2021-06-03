@@ -25,18 +25,15 @@ function App() {
 
     const classes = useAppStyles();
     const loggedSelector = useSelector((state) => state.isLogged);
-    const [compressedMenuOpened, setCompressedMenuOpened] = useState(true);
-    const openMenu = () => setCompressedMenuOpened(!compressedMenuOpened);
+    const [sideBarOpened, setSideBarOpened] = useState(true);
+    const openMenu = () => setSideBarOpened(!sideBarOpened);
     return (
         <Router>
             <img src={logo} alt={''} className={classes.logo}/>
             <div className={"container"}>
                 <Switch>
                     <Grid container style={{height: '100vh'}} wrap={"nowrap"}>
-                        {
-                            compressedMenuOpened &&
-                            <Grid item component={LeftSidebar}/>
-                        }
+                        <Grid item component={LeftSidebar} sideBarStatus={sideBarOpened}/>
                         <Grid container xs={8} component={List} className={classes.main} wrap={'nowrap'}>
                             <Grid item className={classes.subContainer}>
                                 <Route exact path={'/'}>
@@ -55,10 +52,7 @@ function App() {
                                 <Route path={'/settings'} component={Settings}/>
                             </Grid>
                         </Grid>
-                        {
-                            compressedMenuOpened &&
-                            <Grid item component={RightSidebar}/>
-                        }
+                        <Grid item component={RightSidebar} sideBarStatus={sideBarOpened}/>
                         <Grid item component={Footer} action={openMenu}/>
                     </Grid>
                 </Switch>

@@ -51,5 +51,8 @@ export const useLeftSideBarStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             // display: 'none'
         }
+    },
+    navLink: {
+        textDecoration: 'none'
     }
 }));

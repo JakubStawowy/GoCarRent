@@ -49,8 +49,9 @@ export const useRightSideBarStyles = makeStyles((theme) => ({
         }
     },
     root: {
-        [theme.breakpoints.down('xs')]: {
-            // display: 'none'
-        }
+
+    },
+    navLink: {
+        textDecoration: 'none'
     }
 }));

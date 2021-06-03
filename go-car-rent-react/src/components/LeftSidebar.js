@@ -11,9 +11,13 @@ import {useDispatch, useSelector} from "react-redux";
 
 import {useState} from "react";
 import {useLeftSideBarStyles} from "../style/LeftSideBarStyles";
+import {useSideBarStyles} from "../style/SideBarStyles";
 
-export default function LeftSidebar() {
+export default function LeftSidebar(props) {
+
     const classes = useLeftSideBarStyles();
+    const sideBarClasses = useSideBarStyles();
+
     const dispatch = useDispatch();
 
     const [isLogged, setIsLogged] = useState(useSelector(state => state.isLogged));
@@ -33,32 +37,32 @@ export default function LeftSidebar() {
     };
 
     return (
-        <Grid item xs className={classes.root}>
+        <Grid item xs className={props.sideBarStatus && sideBarClasses.sideBar}>
             <AppBar className={classes.bar} position={'relative'}>
                 <NavLink to={'/home'} onClick={(e)=>handleNavLinkClick(e)}>
                     <Box className={classes.circle}>
                         <Avatar src={logoImage} alt={''} className={classes.logo}/>
                     </Box>
                 </NavLink>
-                <NavLink to={"/add"} onClick={(e)=>handleNavLinkClick(e)}>
+                <NavLink className={classes.navLink} to={"/add"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'} id={"addButton"}>
                         <PostAddIcon />
                         <Typography variant={"button"} className={classes.label}>add</Typography>
                     </Button>
                 </NavLink>
-                <NavLink to={"/home"} onClick={(e)=>handleNavLinkClick(e)}>
+                <NavLink className={classes.navLink} to={"/home"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <HomeOutlinedIcon />
                         <Typography variant={"BUTTON"} className={classes.label}>home</Typography>
                     </Button>
                 </NavLink>
-                <NavLink to={"/user/{id}/rented"} onClick={(e)=>handleNavLinkClick(e)}>
+                <NavLink className={classes.navLink} to={"/user/{id}/rented"} onClick={(e)=>handleNavLinkClick(e)}>
                     <Button className={classes.button} size={'large'}>
                         <AirportShuttleIcon />
                         <Typography variant={"BUTTON"} className={classes.label}>rented cars</Typography>
                     </Button>
                 </NavLink>
-                <NavLink to={"/login"} onClick={(e)=>handleNavLinkClick(e)}>
+                <NavLink className={classes.navLink} to={"/login"} onClick={(e)=>handleNavLinkClick(e)}>
                     {isLogged.logged ? (
                         <Button className={classes.button} size={'large'} id={"logoutButton"} onClick={handleLogout}>
                             <ExitToAppIcon />

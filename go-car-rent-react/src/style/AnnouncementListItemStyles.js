@@ -44,6 +44,7 @@ export const useAnnouncementListItemStyles = makeStyles((theme) => ({
         color: 'black'
     },
     title: {
-        overflow: 'hidden'
+        overflow: 'hidden',
+        
     }
 }));
