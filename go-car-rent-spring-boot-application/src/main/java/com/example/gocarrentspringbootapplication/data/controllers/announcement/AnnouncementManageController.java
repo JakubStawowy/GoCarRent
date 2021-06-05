@@ -49,6 +49,7 @@ public final class AnnouncementManageController {
                     announcementTransferObject,
                     announcementBuilder
             );
+            announcement.setImage(announcementTransferObject.getImage());
             announcementRepository.save(announcement);
             return new ResponseEntity<>(HttpStatus.OK);
         }

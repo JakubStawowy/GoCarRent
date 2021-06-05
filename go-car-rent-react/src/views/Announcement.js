@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {
     getAnnouncement,
 } from "../actions/actionRepository";
-import image from "../uploads/transit.png";
 import {NavLink} from "react-router-dom";
 import {useAnnouncementStyles} from "../style/AnnouncementStyles";
 
@@ -21,6 +20,7 @@ export default function Announcement(props) {
     const [status, setStatus] = useState();
     const [timeUnit, setTimeUnit] = useState();
     const [title, setTitle] = useState();
+    const [image, setImage] = useState();
 
     useEffect(()=>{
         getAnnouncement(props.match.params.id).then((response)=>{
@@ -32,6 +32,7 @@ export default function Announcement(props) {
             setStatus(response.data.status);
             setTimeUnit(response.data.timeUnit);
             setTitle(response.data.title);
+            setImage(response.data.image);
         }).catch((error)=>alert(error));
     }, [])
 

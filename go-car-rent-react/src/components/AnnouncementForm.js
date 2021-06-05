@@ -32,6 +32,7 @@ export default function AnnouncementForm(props) {
     const [model, setModel] = useState('');
     const [deleteStatus, setDeleteStatus] = useState(false);
     const [password, setPassword] = useState('');
+    const [file, setFile] = useState();
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -53,31 +54,46 @@ export default function AnnouncementForm(props) {
         }
     }, []);
 
+    const prepareImage = async () => {
+        const resp = (fileParam) => new Promise((resolve, reject) => {
+            let reader = new FileReader();
+            reader.readAsDataURL(fileParam);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        return await resp(file);
+    }
     const handleSubmit = (e) => {
+
         e.preventDefault();
 
-        const data = {
-            "title": title,
-            "amount": price,
-            "currency": "PLN",
-            "timeUnit": timeUnit,
-            "carBrand": brand,
-            "carModel": model,
-            "authorId": localStorage.getItem("userId")
-        };
+        prepareImage().then((result)=> {
+            alert(result);
+            const data = {
+                "title": title,
+                "amount": price,
+                "currency": "PLN",
+                "timeUnit": timeUnit,
+                "carBrand": brand,
+                "carModel": model,
+                "authorId": localStorage.getItem("userId"),
+                "image": result
+            };
 
-        props.edit ?
-            dispatch(editAnnouncement(data, props.announcementId)).then(
-                () => handleSuccess('AnnouncementListItem edited successfully', "/")
-            ).catch(
-                (error) => alert(error)
-            )
-            :
-            dispatch(addAnnouncement(data)).then(
-                () => handleSuccess('AnnouncementListItem added successfully', "/")
-            ).catch(
-                (error) => alert(error)
-            );
+            props.edit ?
+                dispatch(editAnnouncement(data, props.announcementId)).then(
+                    () => handleSuccess('AnnouncementListItem edited successfully', "/")
+                ).catch(
+                    (error) => alert(error)
+                )
+                :
+                dispatch(addAnnouncement(data)).then(
+                    () => handleSuccess('AnnouncementListItem added successfully', "/")
+                ).catch(
+                    (error) => alert(error)
+                );
+        }).catch((error)=>alert(error));
     }
 
     const handleDelete = () => {
@@ -178,10 +194,11 @@ export default function AnnouncementForm(props) {
                         </Button>
                     </Grid>
                     <Grid item xs={5}>
-                        <Button className={classes.item}>
-                            Image
-                            <ImageIcon />
-                        </Button>
+                        {/*<Button className={classes.item}>*/}
+                        {/*    Image*/}
+                        {/*    <ImageIcon />*/}
+                        {/*</Button>*/}
+                        <input type={'file'} onChange={(e)=>setFile(e.target.files[0])}/>
                     </Grid>
                 </Grid>
                 <Fab variant={'extended'} className={classes.button} type={"submit"}>

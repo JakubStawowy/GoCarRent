@@ -18,8 +18,9 @@ public class AnnouncementTransferObject implements Serializable {
     private final String carModel;
     private final Long authorId;
     private final AnnouncementStatus status;
+    private final String image;
 
-    public AnnouncementTransferObject(String title, String amount, String currency, String timeUnit, String carBrand, String carModel, Long authorId, AnnouncementStatus status) {
+    public AnnouncementTransferObject(String title, String amount, String currency, String timeUnit, String carBrand, String carModel, Long authorId, AnnouncementStatus status, String image) {
         this.title = title;
         this.amount = amount;
         this.currency = currency;
@@ -28,6 +29,7 @@ public class AnnouncementTransferObject implements Serializable {
         this.carModel = carModel;
         this.authorId = authorId;
         this.status = status;
+        this.image = image;
     }
 
     public AnnouncementTransferObject(Announcement announcement) {
@@ -41,6 +43,7 @@ public class AnnouncementTransferObject implements Serializable {
         carModel = announcement.getAnnouncementDetails().getCarModel();
         authorId = announcement.getAuthor().getId();
         status = announcement.getAnnouncementDetails().getRentStatus();
+        image = announcement.getImage();
     }
 
     public Long getId() {
@@ -81,5 +84,9 @@ public class AnnouncementTransferObject implements Serializable {
 
     public Timestamp getCreatedAt() {
         return createdAt;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

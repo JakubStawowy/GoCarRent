@@ -3,7 +3,7 @@ import {Container, Fab, List, ListItem, TextField} from "@material-ui/core";
 import AnnouncementListItem from "../components/AnnouncementListItem";
 import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
-import {getAnnouncements} from "../actions/actionRepository";
+import {downloadImage, getAnnouncements} from "../actions/actionRepository";
 import {useHistory} from "react-router";
 import FilteringPanel from "../components/FilteringPanel";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -104,6 +104,7 @@ export default function Home() {
                                 timeUnit={announcement.timeUnit}
                                 authorId={announcement.authorId}
                                 status={announcement.status}
+                                image={announcement.image}
                             />
                         </ListItem>
                     );

@@ -52,7 +52,7 @@ export default function AnnouncementListItem(props) {
     return (
         <Card className={classes.paper}>
             <div className={classes.img}>
-                <img src={image} alt={"No-image"} className={classes.image}/>
+                <img src={props.image} alt={"No-image"} className={classes.image}/>
             </div>
             <Container className={classes.content} style={{padding: '1em'}}>
                 <Typography variant={"h5"} className={classes.title}>

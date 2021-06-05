@@ -17,6 +17,9 @@ public class Announcement {
     @JoinColumn(name = "announcement_details_id")
     private AnnouncementDetails announcementDetails;
 
+    @Lob
+    private String image;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id")
     private User author;
@@ -65,6 +68,14 @@ public class Announcement {
 
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
 
