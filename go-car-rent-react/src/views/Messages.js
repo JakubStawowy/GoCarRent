@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-    Button,
     Container,
     List,
     Paper, Tab, Tabs, Typography
@@ -10,7 +9,6 @@ import Message from "../components/Message";
 import {getAllUserMessages, getArchivedUserMessages, getUserMessages} from "../actions/actionRepository";
 import {useMessagesStyles} from "../style/MessagesStyles";
 
-
 export default function Messages() {
     const classes = useMessagesStyles();
     const [latestMessages, setLatestMessages] = useState([]);
@@ -18,24 +16,21 @@ export default function Messages() {
     const [archivedMessages, setArchivedMessages] = useState([]);
     const [type, setType] = useState("unread");
     let index = 0;
-    useEffect(() => {
-            getUserMessages(localStorage.getItem('userId'))
-                .then((response) => setLatestMessages(response.data))
-                .catch((error) => alert(error));
-            getAllUserMessages(localStorage.getItem('userId'))
-                .then((response) => setAllMessages(response.data))
-                .catch((error) => alert(error));
-            getArchivedUserMessages(localStorage.getItem('userId'))
-                .then((response)=>setArchivedMessages(response.data))
-                .catch((error)=>alert(error));
-        }
-    , [])
-
-
-    const closeMessage = (messageIndex) => {
-        latestMessages.splice(messageIndex, 1);
+    const flush = () => {
+        getUserMessages(localStorage.getItem('userId'))
+            .then((response) => setLatestMessages(response.data.reverse()))
+            .catch((error) => alert(error));
+        getAllUserMessages(localStorage.getItem('userId'))
+            .then((response) => setAllMessages(response.data))
+            .catch((error) => alert(error));
+        getArchivedUserMessages(localStorage.getItem('userId'))
+            .then((response)=>setArchivedMessages(response.data))
+            .catch((error)=>alert(error));
     }
 
+    useEffect(() => flush(), []);
+
+    const emptySectionLabel = <Typography>This section is empty</Typography>
     return (
         <Container className={classes.container}>
             <Paper className={`${classes.list} ${classes.messages}`}>
@@ -54,11 +49,16 @@ export default function Messages() {
                                         <Message
                                             index={index++}
                                             body={message}
-                                            action={closeMessage}
+                                            action={flush}
+                                            archived={false}
                                         />
                                     )
                                 }
                             )
+                        }
+                        {
+                            type === 'unread' && latestMessages.length === 0 &&
+                                emptySectionLabel
                         }
                         {
                             type === "all" &&
@@ -68,11 +68,16 @@ export default function Messages() {
                                         <Message
                                             index={index++}
                                             body={message}
-                                            action={closeMessage}
+                                            action={flush}
+                                            archived={false}
                                         />
                                     )
                                 }
                             )
+                        }
+                        {
+                            type === 'all' && allMessages.length === 0 &&
+                            emptySectionLabel
                         }
                         {
                             type === "archived" &&
@@ -82,11 +87,16 @@ export default function Messages() {
                                         <Message
                                             index={index++}
                                             body={message}
-                                            action={closeMessage}
+                                            action={flush}
+                                            archived={true}
                                         />
                                     )
                                 }
                             )
+                        }
+                        {
+                            type === 'archived' && archivedMessages.length === 0 &&
+                            emptySectionLabel
                         }
                     </List>
                 </React.Fragment>

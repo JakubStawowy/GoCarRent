@@ -36,8 +36,6 @@ export default function UserCars() {
                             <TableCell align={"center"}>Model</TableCell>
                             <TableCell align={"center"}>Price</TableCell>
                             <TableCell align={"center"}>Rented</TableCell>
-                            <TableCell align={"center"}>Time</TableCell>
-                            <TableCell align={"center"}>Fee</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -58,8 +56,6 @@ export default function UserCars() {
                                                   <ClearIcon className={classes.clear}/>
                                               </TableCell>
                                       }
-                                      <TableCell align={"center"}>12</TableCell>
-                                      <TableCell align={"center"}>34</TableCell>
                                   </TableRow>
                                 );
                             })

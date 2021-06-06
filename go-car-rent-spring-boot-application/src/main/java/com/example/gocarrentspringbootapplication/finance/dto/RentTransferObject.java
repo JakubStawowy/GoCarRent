@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.finance.dto;
 
 import com.example.gocarrentspringbootapplication.data.dto.AnnouncementTransferObject;
+import com.example.gocarrentspringbootapplication.finance.enums.RentStatus;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,13 +14,15 @@ public class RentTransferObject implements Serializable {
     private final BigDecimal fee;
     private final Timestamp rentedAt;
     private final BigDecimal rentTime;
+    private final RentStatus rentStatus;
 
-    public RentTransferObject(Long rentId, AnnouncementTransferObject announcement, BigDecimal fee, Timestamp rentedAt, BigDecimal rentTime) {
+    public RentTransferObject(Long rentId, AnnouncementTransferObject announcement, BigDecimal fee, Timestamp rentedAt, BigDecimal rentTime, RentStatus rentStatus) {
         this.rentId = rentId;
         this.announcement = announcement;
         this.fee = fee;
         this.rentedAt = rentedAt;
         this.rentTime = rentTime;
+        this.rentStatus = rentStatus;
     }
 
     public Long getRentId() {
@@ -40,5 +43,9 @@ public class RentTransferObject implements Serializable {
 
     public BigDecimal getRentTime() {
         return rentTime;
+    }
+
+    public RentStatus getRentStatus() {
+        return rentStatus;
     }
 }

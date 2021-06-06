@@ -2,6 +2,7 @@ package com.example.gocarrentspringbootapplication.finance.po;
 
 import com.example.gocarrentspringbootapplication.data.po.Announcement;
 import com.example.gocarrentspringbootapplication.data.po.User;
+import com.example.gocarrentspringbootapplication.finance.enums.RentStatus;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -13,11 +14,16 @@ import java.sql.Timestamp;
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "announcement_id")
-    Announcement announcement;
+    private Announcement announcement;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "rent_status")
+    private RentStatus rentStatus;
 
     @ManyToOne
     @JoinColumn(name = "tenant_id")
@@ -42,6 +48,7 @@ public class Rent {
     @PrePersist
     public void setInitial() {
         rentedAt = new Timestamp(System.currentTimeMillis());
+        rentStatus = RentStatus.ON_GOING;
     }
 
     public Long getId() {
@@ -83,5 +90,13 @@ public class Rent {
 
     public void setReturnedAt(@Nullable Timestamp returnedAt) {
         this.returnedAt = returnedAt;
+    }
+
+    public RentStatus getRentStatus() {
+        return rentStatus;
+    }
+
+    public void setRentStatus(RentStatus rentStatus) {
+        this.rentStatus = rentStatus;
     }
 }

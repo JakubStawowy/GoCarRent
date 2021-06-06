@@ -51,33 +51,36 @@ export default function AnnouncementForm(props) {
                 setModel(response.data.carModel);
             })
         }
+
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (title !== '' && price !== '' && timeUnit !== '' && brand !== '' && model !== '') {
+            const data = {
+                "title": title,
+                "amount": price,
+                "currency": "PLN",
+                "timeUnit": timeUnit,
+                "carBrand": brand,
+                "carModel": model,
+                "authorId": localStorage.getItem("userId")
+            };
 
-        const data = {
-            "title": title,
-            "amount": price,
-            "currency": "PLN",
-            "timeUnit": timeUnit,
-            "carBrand": brand,
-            "carModel": model,
-            "authorId": localStorage.getItem("userId")
-        };
-
-        props.edit ?
-            dispatch(editAnnouncement(data, props.announcementId)).then(
-                () => handleSuccess('AnnouncementListItem edited successfully', "/")
-            ).catch(
-                (error) => alert(error)
-            )
-            :
-            dispatch(addAnnouncement(data)).then(
-                () => handleSuccess('AnnouncementListItem added successfully', "/")
-            ).catch(
-                (error) => alert(error)
-            );
+            props.edit ?
+                dispatch(editAnnouncement(data, props.announcementId)).then(
+                    () => handleSuccess('AnnouncementListItem edited successfully', "/")
+                ).catch(
+                    (error) => alert(error)
+                )
+                :
+                dispatch(addAnnouncement(data)).then(
+                    () => handleSuccess('AnnouncementListItem added successfully', "/")
+                ).catch(
+                    (error) => alert(error)
+                );
+        }
+        else alert("Incorrect announcement data");
     }
 
     const handleDelete = () => {
@@ -163,7 +166,8 @@ export default function AnnouncementForm(props) {
                             onChange={(e) => setModel(e.target.value)}
                         >
                             {
-                                carBrands[0].models.map(model => {
+                                carBrands.find(elem=>elem.brand===brand) !== undefined &&
+                                carBrands.find(elem=>elem.brand===brand).models.map(model => {
                                     return (
                                         <MenuItem value={model}>{model}</MenuItem>
                                     );
@@ -190,27 +194,27 @@ export default function AnnouncementForm(props) {
                 </Fab>
             </form>
 
-            {(props.edit && !deleteStatus) &&
-            <Fab variant={'extended'} className={classes.deleteButton} onClick={handleDelete}>
-                Delete
-                <DeleteForeverIcon/>
-            </Fab>
+            {/*{(props.edit && !deleteStatus) &&*/}
+            {/*<Fab variant={'extended'} className={classes.deleteButton} onClick={handleDelete}>*/}
+            {/*    Delete*/}
+            {/*    <DeleteForeverIcon/>*/}
+            {/*</Fab>*/}
                 }
-            {
-                deleteStatus &&
-                <Card className={classes.confirmArea}>
-                    <TextField
-                        label={'password'}
-                        type={'password'}
-                        value={password}
-                        onChange={(e) => handlePasswordChange(e.target.value)}
-                    />
-                    <Fab variant={"extended"} className={classes.confirmField} onClick={handleConfirmedDelete}>
-                        Confirm
-                        <DeleteForeverIcon />
-                    </Fab>
-                </Card>
-            }
+            {/*{*/}
+            {/*    deleteStatus &&*/}
+            {/*    <Card className={classes.confirmArea}>*/}
+            {/*        <TextField*/}
+            {/*            label={'password'}*/}
+            {/*            type={'password'}*/}
+            {/*            value={password}*/}
+            {/*            onChange={(e) => handlePasswordChange(e.target.value)}*/}
+            {/*        />*/}
+            {/*        <Fab variant={"extended"} className={classes.confirmField} onClick={handleConfirmedDelete}>*/}
+            {/*            Confirm*/}
+            {/*            <DeleteForeverIcon />*/}
+            {/*        </Fab>*/}
+            {/*    </Card>*/}
+            {/*}*/}
         </Container>
     );
 }

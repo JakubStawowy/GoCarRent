@@ -6,6 +6,7 @@ import {getUserDetails, getFeedback} from "../actions/actionRepository";
 import {useHistory} from "react-router";
 import {ERROR_FORBIDDEN} from "../data/errors";
 import {useProfileStyles} from "../style/ProfileStyles";
+import {NavLink} from "react-router-dom";
 
 export default function Profile(props) {
 
@@ -48,7 +49,9 @@ export default function Profile(props) {
                 {`${userData.name} ${userData.surname}`}
             </Typography>
             <Typography gutterBottom={'true'}>
-                <Button variant={'contained'} className={classes.button}>User announcements</Button>
+                <NavLink to={'/users/' + props.match.params.id + '/announcements'}>
+                    <Button variant={'contained'} className={classes.button}>User announcements</Button>
+                </NavLink>
             </Typography>
             <Typography variant={'h4'} gutterBottom={'true'}>
                 Feedback

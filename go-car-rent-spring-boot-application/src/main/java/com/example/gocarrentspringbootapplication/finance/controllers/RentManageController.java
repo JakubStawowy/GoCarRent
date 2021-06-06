@@ -36,7 +36,8 @@ public class RentManageController {
                     new AnnouncementTransferObject(rent.getAnnouncement()),
                     rentPropertiesManager.getFee(rent),
                     rent.getRentedAt(),
-                    rentPropertiesManager.getRentTime(rent)
+                    rentPropertiesManager.getRentTime(rent),
+                    rent.getRentStatus()
             ));
         return rentTransferObjects;
     }

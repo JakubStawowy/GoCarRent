@@ -26,34 +26,46 @@ function App() {
     const classes = useAppStyles();
     const loggedSelector = useSelector((state) => state.isLogged);
     const [sideBarOpened, setSideBarOpened] = useState(true);
-    const openMenu = () => setSideBarOpened(!sideBarOpened);
+    const [logged, setLogged] = useState(loggedSelector.isLogged);
+    const changeSideBarState = () => setSideBarOpened(!sideBarOpened);
+    const getUserId = () => {
+        return localStorage.getItem('userId');
+    }
     return (
         <Router>
             <img src={logo} alt={''} className={classes.logo}/>
             <div className={"container"}>
                 <Switch>
                     <Grid container style={{height: '100vh'}} wrap={"nowrap"}>
-                        <Grid item component={LeftSidebar} sideBarStatus={sideBarOpened}/>
+                        <Grid item component={LeftSidebar}
+                              sideBarStatus={sideBarOpened}
+                              action={changeSideBarState}
+                        />
                         <Grid container xs={8} component={List} className={classes.main} wrap={'nowrap'}>
                             <Grid item className={classes.subContainer}>
                                 <Route exact path={'/'}>
                                     {loggedSelector.logged ? <Redirect to={'/home'}/> : <Redirect to={'/login'}/>}
                                 </Route>
-                                <Route path={'/home'} component={Home}/>
-                                <Route path={'/announcement/:id'} component={Announcement}/>
-                                <Route path={'/announcement/:id/edit'} component={EditAnnouncement}/>
-                                <Route path={'/announcement/filter'} component={FilteringPanel}/>
-                                <Route path={'/add'} component={AddAnnouncement}/>
-                                <Route path={'/user/{id}/rented'} component={RentedCars}/>
-                                <Route path={'/login'} component={LoginRegister}/>
-                                <Route path={'/users/:id/profile'} component={Profile}/>
-                                <Route path={'/users/{id}/messages'} component={Messages}/>
-                                <Route path={'/users/{id}/cars'} component={UserCars}/>
-                                <Route path={'/settings'} component={Settings}/>
+                                <Route exact path={'/home'} component={Home}/>
+                                <Route exact path={'/announcement/:id'} component={Announcement}/>
+                                <Route exact path={'/announcement/:id/edit'} component={EditAnnouncement}/>
+                                <Route exact path={'/announcement/filter'} component={FilteringPanel}/>
+                                <Route exact path={'/add'} component={AddAnnouncement}/>
+                                <Route exact path={'/user/{id}/rented'} component={RentedCars}/>
+                                <Route exact path={'/login'} component={LoginRegister} />
+                                <Route exact path={'/users/:id/profile'} component={Profile}/>
+                                <Route exact path={'/users/messages'} component={Messages}/>
+                                <Route exact path={'/users/{id}/cars'} component={UserCars}/>
+                                <Route exact path={'/users/:id/announcements'} component={Home}/>
+                                <Route exact path={'/settings'} component={Settings}/>
                             </Grid>
                         </Grid>
-                        <Grid item component={RightSidebar} sideBarStatus={sideBarOpened}/>
-                        <Grid item component={Footer} action={openMenu}/>
+                        <Grid item component={RightSidebar}
+                              sideBarStatus={sideBarOpened}
+                              action={changeSideBarState}
+                              action1={getUserId}
+                        />
+                        <Grid item component={Footer} action={changeSideBarState}/>
                     </Grid>
                 </Switch>
             </div>

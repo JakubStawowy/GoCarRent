@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
 
-    @Query(value = "SELECT * FROM messages WHERE receiver_id=?1 AND archived=?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM messages WHERE receiver_id=?1 AND archived=?2 ORDER BY sent_at DESC", nativeQuery = true)
     List<Message> getAllByReceiverAndArchived(Long userId, Boolean archived);
 }
