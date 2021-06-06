@@ -46,17 +46,18 @@ function App() {
                                 <Route exact path={'/'}>
                                     {loggedSelector.logged ? <Redirect to={'/home'}/> : <Redirect to={'/login'}/>}
                                 </Route>
-                                <Route path={'/home'} component={Home}/>
-                                <Route path={'/announcement/:id'} component={Announcement}/>
-                                <Route path={'/announcement/:id/edit'} component={EditAnnouncement}/>
-                                <Route path={'/announcement/filter'} component={FilteringPanel}/>
-                                <Route path={'/add'} component={AddAnnouncement}/>
-                                <Route path={'/user/{id}/rented'} component={RentedCars}/>
-                                <Route path={'/login'} component={LoginRegister} />
-                                <Route path={'/users/:id/profile'} component={Profile}/>
-                                <Route path={'/users/messages'} component={Messages}/>
-                                <Route path={'/users/{id}/cars'} component={UserCars}/>
-                                <Route path={'/settings'} component={Settings}/>
+                                <Route exact path={'/home'} component={Home}/>
+                                <Route exact path={'/announcement/:id'} component={Announcement}/>
+                                <Route exact path={'/announcement/:id/edit'} component={EditAnnouncement}/>
+                                <Route exact path={'/announcement/filter'} component={FilteringPanel}/>
+                                <Route exact path={'/add'} component={AddAnnouncement}/>
+                                <Route exact path={'/user/{id}/rented'} component={RentedCars}/>
+                                <Route exact path={'/login'} component={LoginRegister} />
+                                <Route exact path={'/users/:id/profile'} component={Profile}/>
+                                <Route exact path={'/users/messages'} component={Messages}/>
+                                <Route exact path={'/users/{id}/cars'} component={UserCars}/>
+                                <Route exact path={'/users/:id/announcements'} component={Home}/>
+                                <Route exact path={'/settings'} component={Settings}/>
                             </Grid>
                         </Grid>
                         <Grid item component={RightSidebar}

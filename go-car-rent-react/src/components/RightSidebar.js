@@ -38,7 +38,10 @@ export default function RightSidebar(props) {
                         />
                     </div>
                 </NavLink>
-                <Button className={classes.button} onClick={()=>history.replace('/users/' + localStorage.getItem('userId') + '/profile')}>
+                <Button className={classes.button} onClick={(e)=> {
+                    history.replace('/users/' + localStorage.getItem('userId') + '/profile');
+                    handleNavLinkClick(e)
+                }}>
                     <Typography variant={"BUTTON"} size={'large'} className={classes.label}>profile</Typography>
                     <PersonIcon />
                 </Button>

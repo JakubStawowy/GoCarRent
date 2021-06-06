@@ -8,6 +8,7 @@ import com.example.gocarrentspringbootapplication.data.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.amqp.enums.RentMessageType;
 import com.example.gocarrentspringbootapplication.data.po.Announcement;
 import com.example.gocarrentspringbootapplication.amqp.po.Message;
+import com.example.gocarrentspringbootapplication.finance.enums.RentStatus;
 import com.example.gocarrentspringbootapplication.finance.po.Rent;
 import com.example.gocarrentspringbootapplication.data.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,7 @@ public class RentResponseController {
                 optionalRent.get().getAnnouncement().getAnnouncementDetails().setRentStatus(AnnouncementStatus.FREE);
                 announcementRepository.save(optionalRent.get().getAnnouncement());
                 optionalRent.get().setReturnedAt(new Timestamp(System.currentTimeMillis()));
+                optionalRent.get().setRentStatus(RentStatus.FINISHED);
                 rentRepository.save(optionalRent.get());
             }
             Message message = new Message(

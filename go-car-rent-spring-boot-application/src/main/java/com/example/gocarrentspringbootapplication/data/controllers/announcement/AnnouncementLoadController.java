@@ -35,7 +35,13 @@ public final class AnnouncementLoadController {
 
     @GetMapping(value = {"/", ""})
     public List<AnnouncementTransferObject> getAnnouncements() {
-        return getFilteredAnnouncements("rentStatus!=BLOCKED");
+//        return getFilteredAnnouncements("rentStatus!=BLOCKED");
+
+        List<AnnouncementDetails> announcements = announcementDetailsRepository.findAll();
+        List<AnnouncementTransferObject> announcementTransferObjects = new LinkedList<>();
+        for (AnnouncementDetails announcement: announcements)
+            announcementTransferObjects.add(new AnnouncementTransferObject(announcement.getAnnouncement()));
+        return announcementTransferObjects;
     }
 
     // TOREMOVE

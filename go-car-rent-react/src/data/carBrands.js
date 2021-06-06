@@ -2,19 +2,51 @@ const carBrands = [
     {
         brand: "volkswagen",
         models: [
-            "Golf",
-            "Passat",
-            "Polo",
-            "Transporter"
+            "transporter",
+            "crafter",
+            "caddy"
         ]
     },
     {
-        brand: "toyota",
+        brand: "ford",
         models: [
-            "Yaris",
-            "Auris",
-            "Corolla",
-            "Previa"
+            "transit",
+            "tourneo",
+        ]
+    },
+    {
+        brand: "renault",
+        models: [
+            "master",
+            "kangoo",
+        ]
+    },
+    {
+        brand: "citroen",
+        models: [
+            "berlingo",
+            "jumper",
+        ]
+    },
+    {
+        brand: "peugeot",
+        models: [
+            "boxer",
+            "traveller",
+        ]
+    },
+    {
+        brand: "fiat",
+        models: [
+            "ducato",
+            "doblo",
+        ]
+    },
+    {
+        brand: 'opel',
+        models: [
+            "combo",
+            "vivaro"
         ]
     }
 ];

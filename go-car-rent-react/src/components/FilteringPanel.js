@@ -22,7 +22,8 @@ export default function FilteringPanel(props) {
     const [status, setStatus] = useState('');
 
     const validatePrice = (price) => {
-        return /^\d+\.?\d$/.test(price);
+        // return /^\d+\.?\d$/.test(price);
+        return /^\d+(\.\d*)?\d?$/.test(price);
     }
 
     const handleSubmit = (e) => {
@@ -143,8 +144,17 @@ export default function FilteringPanel(props) {
                             value={model}
                             onChange={(e) => setModel(e.target.value)}
                         >
+                            {/*{*/}
+                            {/*    carBrands.find(elem=>elem===)*/}
+                            {/*    carBrands[0].models.map(model => {*/}
+                            {/*        return (*/}
+                            {/*            <MenuItem value={model}>{model}</MenuItem>*/}
+                            {/*        );*/}
+                            {/*    })*/}
+                            {/*}*/}
                             {
-                                carBrands[0].models.map(model => {
+                                carBrands.find(elem=>elem.brand===brand) !== undefined &&
+                                carBrands.find(elem=>elem.brand===brand).models.map(model => {
                                     return (
                                         <MenuItem value={model}>{model}</MenuItem>
                                     );

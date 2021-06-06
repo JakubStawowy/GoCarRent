@@ -1,5 +1,5 @@
 import {Button, Card, Container, ListItemIcon, Typography} from "@material-ui/core";
-import image from '../uploads/transit.png';
+import image from '../uploads/car.png';
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import MessageIcon from "@material-ui/icons/Message";
 import SettingsIcon from '@material-ui/icons/Settings';

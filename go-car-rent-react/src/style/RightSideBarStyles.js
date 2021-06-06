@@ -37,11 +37,12 @@ export const useRightSideBarStyles = makeStyles((theme) => ({
     circle: {
         width: '10vw',
         height: '10vw',
+        background: 'white'
     },
     img: {
         borderRadius: '50%',
         width: '100%',
-        objectFit: 'cover'
+        objectFit: 'cover',
     },
     label: {
         [theme.breakpoints.down('sm')]: {

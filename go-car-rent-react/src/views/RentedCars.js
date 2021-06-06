@@ -68,19 +68,19 @@ export default function RentedCars() {
                                         <TableCell align={"center"}>{rent.fee} {rent.announcement.currency}</TableCell>
                                         <TableCell align={"center"}>
                                             {
-                                                rent.announcement.status === 'RENTED' ?
+                                                rent.rentStatus === 'ON_GOING' ?
                                                     <Fab variant={"extended"} className={classes.rented}>
-                                                        Rented
+                                                        on going
                                                     </Fab>
                                                     :
                                                     <Fab variant={"extended"} className={classes.returned}>
-                                                        Returned
+                                                        finished
                                                     </Fab>
                                             }
                                         </TableCell>
                                         <TableCell align={"center"}>
                                             {
-                                                rent.announcement.status === 'RENTED' ?
+                                                rent.rentStatus === 'ON_GOING' ?
                                                 <Fab variant={"extended"} onClick={()=> handleReturnRequest(rent.rentId)}>
                                                     Return
                                                 </Fab>

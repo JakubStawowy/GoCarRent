@@ -34,6 +34,7 @@ export default function Settings() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        password === confirmedPassword ?
         saveUser({
             name,
             surname,
@@ -48,6 +49,8 @@ export default function Settings() {
                 history.replace('/');
             }
         })
+            :
+            alert("Passwords does not match")
     }
 
     return (
@@ -77,7 +80,7 @@ export default function Settings() {
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
                         <Input
-                            type={'text'}
+                            type={'password'}
                             className={classes.input}
                             placeholder={"password"}
                             value={password}
