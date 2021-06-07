@@ -2,8 +2,8 @@ package com.example.gocarrentspringbootapplication.data.specifications;
 
 import com.example.gocarrentspringbootapplication.data.api.SpecificationTemplate;
 import com.example.gocarrentspringbootapplication.data.enums.AnnouncementStatus;
-import com.example.gocarrentspringbootapplication.data.api.AnnouncementKeysRepository;
-import com.example.gocarrentspringbootapplication.data.api.OperationsRepository;
+import com.example.gocarrentspringbootapplication.repositories.AnnouncementKeysRepository;
+import com.example.gocarrentspringbootapplication.repositories.OperationsRepository;
 import com.example.gocarrentspringbootapplication.data.po.AnnouncementDetails;
 
 import javax.persistence.criteria.CriteriaBuilder;

@@ -2,13 +2,15 @@ package com.example.gocarrentspringbootapplication.security.controllers;
 
 import com.example.gocarrentspringbootapplication.data.po.User;
 import com.example.gocarrentspringbootapplication.data.dao.UserRepository;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
 @RequestMapping(value = "/api")
 public final class RegisterController {
@@ -20,7 +22,7 @@ public final class RegisterController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(value = "/register", consumes = "application/json")
+    @PostMapping(value = EndpointRepository.REGISTER_USER_ENDPOINT, consumes = "application/json")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         if(userRepository.getUserByEmail(user.getEmail()).isPresent()) {
             return new ResponseEntity<>(

@@ -1,4 +1,4 @@
-package com.example.gocarrentspringbootapplication.data.api;
+package com.example.gocarrentspringbootapplication.repositories;
 
 public interface OperationsRepository {
     String[] OPERATIONS = {">=", "<=", "<", ">", "!=", "="};

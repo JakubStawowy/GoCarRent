@@ -2,6 +2,7 @@ package com.example.gocarrentspringbootapplication.data.controllers.feedback;
 
 import com.example.gocarrentspringbootapplication.data.po.Feedback;
 import com.example.gocarrentspringbootapplication.data.dao.FeedbackRepository;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -22,13 +23,13 @@ public final class FeedbackManageController {
         this.feedbackRepository = feedbackRepository;
     }
 
-    @PostMapping(path = "/add", consumes = "application/json")
+    @PostMapping(path = EndpointRepository.ADD_FEEDBACK_ENDPOINT, consumes = "application/json")
     public Feedback addFeedback(@RequestBody Feedback feedback) {
         return feedbackRepository.save(feedback);
     }
 
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping(EndpointRepository.DELETE_FEEDBACK_ENDPOINT)
     public ResponseEntity<?> deleteFeedback(@PathVariable("id") Long id) {
         try{
             feedbackRepository.deleteById(id);
@@ -38,7 +39,7 @@ public final class FeedbackManageController {
         }
     }
 
-    @PutMapping(value = "/{id}/edit", consumes = "application/json")
+    @PutMapping(value = EndpointRepository.EDIT_FEEDBACK_ENDPOINT, consumes = "application/json")
     public ResponseEntity<?> editFeedback(@PathVariable("id") Long id, @RequestBody Feedback feedback) {
         Optional<Feedback> optionalFeedback = feedbackRepository.findById(id);
         if(optionalFeedback.isPresent()) {

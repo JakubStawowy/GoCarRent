@@ -3,6 +3,8 @@ package com.example.gocarrentspringbootapplication.data.controllers.user;
 import com.example.gocarrentspringbootapplication.data.dto.UserTransferObject;
 import com.example.gocarrentspringbootapplication.data.po.User;
 import com.example.gocarrentspringbootapplication.data.dao.UserRepository;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
 @RequestMapping("/api/users")
 public final class UserLoaderController {
@@ -31,7 +33,7 @@ public final class UserLoaderController {
         return users;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(EndpointRepository.USER_ENDPOINT)
     public ResponseEntity<UserTransferObject> getUser(@PathVariable("id") Long id){
         Optional<User> optionalUser = userRepository.findById(id);
 

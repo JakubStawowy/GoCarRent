@@ -1,5 +1,7 @@
 package com.example.gocarrentspringbootapplication.security.controllers;
 
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import com.example.gocarrentspringbootapplication.security.api.ITokenProvider;
 import com.example.gocarrentspringbootapplication.security.api.IAuthorizeService;
 import com.example.gocarrentspringbootapplication.security.dto.LoginTransferObject;
@@ -10,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
 @RequestMapping(value = "/api")
 public final class LoginController {
@@ -26,7 +28,7 @@ public final class LoginController {
         this.authorizeService = authorizeService;
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = EndpointRepository.LOGIN_ENDPOINT)
     public ResponseEntity<LoginTransferObject> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         User user;
         if ((user = authorizeService.authorizeUserWithEmailAndPassword(email, password)) != null) {

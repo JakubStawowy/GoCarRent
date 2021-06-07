@@ -6,6 +6,8 @@ import com.example.gocarrentspringbootapplication.data.api.ISpecificationListPro
 import com.example.gocarrentspringbootapplication.data.dto.AnnouncementTransferObject;
 import com.example.gocarrentspringbootapplication.data.po.Announcement;
 import com.example.gocarrentspringbootapplication.data.po.AnnouncementDetails;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
 @RequestMapping(value = "/api/announcements")
 public final class AnnouncementLoadController {
@@ -45,12 +47,12 @@ public final class AnnouncementLoadController {
     }
 
     // TOREMOVE
-    @GetMapping(value = "/blocked")
+    @GetMapping(value = EndpointRepository.BLOCKED_ANNOUNCEMENTS_ENDPOINT)
     public List<AnnouncementTransferObject> getBlockedAnnouncements() {
         return getFilteredAnnouncements("rentStatus=BLOCKED");
     }
 
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = EndpointRepository.USER_ANNOUNCEMENTS_ENDPOINT)
     public List<AnnouncementTransferObject> getUserAnnouncements(@PathVariable("id") Long userId) {
         List<Announcement> announcements = announcementRepository.getAllByAuthor(userId);
         List<AnnouncementTransferObject> announcementTransferObjects = new ArrayList<>();
@@ -59,7 +61,7 @@ public final class AnnouncementLoadController {
         return announcementTransferObjects;
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = EndpointRepository.ANNOUNCEMENT_ENDPOINT)
     public ResponseEntity<AnnouncementTransferObject> getAnnouncement(@PathVariable("id") Long id) {
         Optional<Announcement> optionalAnnouncement = announcementRepository.findById(id);
         return optionalAnnouncement.map(
@@ -67,7 +69,7 @@ public final class AnnouncementLoadController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping(value = "/filter")
+    @GetMapping(value = EndpointRepository.FILTERED_ANNOUNCEMENTS_ENDPOINT)
     public List<AnnouncementTransferObject> getFilteredAnnouncements(@RequestParam("criteria") String criteria) {
 
         List<AnnouncementTransferObject> announcementTransferObjects = new ArrayList<>();
