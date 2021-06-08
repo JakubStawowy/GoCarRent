@@ -4,6 +4,7 @@ package com.example.gocarrentspringbootapplication.amqp.po;
 import com.example.gocarrentspringbootapplication.amqp.enums.RentMessageType;
 import com.example.gocarrentspringbootapplication.data.po.Announcement;
 import com.example.gocarrentspringbootapplication.data.po.User;
+import com.example.gocarrentspringbootapplication.repositories.TableNamesRepository;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "messages")
+@Table(name = TableNamesRepository.MESSAGE_TABLE_NAME)
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

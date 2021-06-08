@@ -11,16 +11,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
-public final class AuthenticationTokenProvider implements IAuthenticationTokenProvider<UsernamePasswordAuthenticationToken> {
+public final class UsernamePasswordAuthenticationTokenProvider implements IAuthenticationTokenProvider<UsernamePasswordAuthenticationToken> {
+
+    private static final String USERNAME_PREFIX = "name";
+    private static final String ROLE_PREFIX = "role";
 
     @Override
     public UsernamePasswordAuthenticationToken getAuthenticationToken(final String header) throws ExpiredJwtException {
 
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(TokenKeyRepository.KEY.getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(header.replace("Bearer ",""));
+                .parseClaimsJws(header.replace(TOKEN_PREFIX,""));
 
-        String username = claimsJws.getBody().get("name").toString();
-        String roles = claimsJws.getBody().get("role").toString();
+        String username = claimsJws.getBody().get(USERNAME_PREFIX).toString();
+        String roles = claimsJws.getBody().get(ROLE_PREFIX).toString();
         return new UsernamePasswordAuthenticationToken(
                 username,
                 null,

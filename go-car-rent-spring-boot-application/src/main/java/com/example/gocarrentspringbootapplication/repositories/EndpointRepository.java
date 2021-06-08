@@ -1,6 +1,8 @@
 package com.example.gocarrentspringbootapplication.repositories;
 
 public interface EndpointRepository {
+    String INDEX_ENDPOINT = "";
+    String INDEX_ENDPOINT_SLASH = "/";
     String REGISTER_USER_ENDPOINT = "/register";
     String LOGOUT_ENDPOINT = "/logout";
     String LOGIN_ENDPOINT = "/login";

@@ -11,11 +11,12 @@ import java.util.Set;
 
 public interface ISpecificationListProvider<T> {
 
+    String REGEX = ";";
     List<Specification<T>> getSpecificationListWithDecompressedCriteria(Set<String[]> criteria);
 
     default List<Specification<T>> getSpecificationListWithCompressedCriteria(String criteria) {
         Set<String[]> result = new HashSet<>();
-        String[] criteriaArray = criteria.split(";");
+        String[] criteriaArray = criteria.split(REGEX);
         for (String spec: criteriaArray) {
             int i;
             for (i = 0; i < OperationsRepository.OPERATIONS.length; i++)

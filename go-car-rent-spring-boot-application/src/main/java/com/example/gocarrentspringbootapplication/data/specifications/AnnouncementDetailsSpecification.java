@@ -5,6 +5,7 @@ import com.example.gocarrentspringbootapplication.data.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.repositories.AnnouncementKeysRepository;
 import com.example.gocarrentspringbootapplication.repositories.OperationsRepository;
 import com.example.gocarrentspringbootapplication.data.po.AnnouncementDetails;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,7 +21,7 @@ public final class AnnouncementDetailsSpecification extends SpecificationTemplat
     }
 
     @Override
-    public Predicate toPredicate(Root<AnnouncementDetails> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(@NotNull Root<AnnouncementDetails> root, @NotNull CriteriaQuery<?> criteriaQuery, @NotNull CriteriaBuilder criteriaBuilder) {
 
         Predicate predicate;
         if ((predicate = super.toPredicate(root, criteriaQuery, criteriaBuilder)) != null)
@@ -66,7 +67,7 @@ public final class AnnouncementDetailsSpecification extends SpecificationTemplat
     }
 
     @Override
-    public void validate(final String key, final String operation, final String value) {
+    protected void validate(final String key, final String operation, final String value) {
 
     }
 }

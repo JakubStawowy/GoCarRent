@@ -16,9 +16,10 @@ import java.util.logging.Logger;
 
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(UserManageController.BASE_ENDPOINT)
 public final class UserManageController {
 
+    public static final String BASE_ENDPOINT = "/api/users";
     private final UserRepository userRepository;
 
     @Autowired

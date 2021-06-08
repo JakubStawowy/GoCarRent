@@ -2,12 +2,13 @@ package com.example.gocarrentspringbootapplication.data.po;
 
 import com.example.gocarrentspringbootapplication.amqp.po.Message;
 import com.example.gocarrentspringbootapplication.finance.po.Rent;
+import com.example.gocarrentspringbootapplication.repositories.TableNamesRepository;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "announcements")
+@Table(name = TableNamesRepository.ANNOUNCEMENT_TABLE_NAME)
 public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

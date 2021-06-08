@@ -13,9 +13,10 @@ import java.util.Optional;
 
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = LogoutController.BASE_ENDPOINT)
 public final class LogoutController {
 
+    public static final String BASE_ENDPOINT = "/api";
     private final UserRepository userRepository;
 
     @Autowired
