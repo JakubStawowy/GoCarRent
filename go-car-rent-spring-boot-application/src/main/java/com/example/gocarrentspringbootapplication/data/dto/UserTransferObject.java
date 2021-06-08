@@ -1,6 +1,6 @@
 package com.example.gocarrentspringbootapplication.data.dto;
 
-import com.example.gocarrentspringbootapplication.data.enums.UserRoles;
+import com.example.gocarrentspringbootapplication.security.enums.UserRoles;
 import com.example.gocarrentspringbootapplication.data.po.User;
 
 import java.io.Serializable;

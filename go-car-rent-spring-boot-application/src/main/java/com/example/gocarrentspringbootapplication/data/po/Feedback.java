@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.data.po;
 
 import com.example.gocarrentspringbootapplication.data.enums.FeedbackRate;
+import com.example.gocarrentspringbootapplication.repositories.TableNamesRepository;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -8,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "user_feedback")
+@Table(name = TableNamesRepository.FEEDBACK_TABLE_NAME)
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

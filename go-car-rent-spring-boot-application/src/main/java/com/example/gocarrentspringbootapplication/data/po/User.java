@@ -1,8 +1,9 @@
 package com.example.gocarrentspringbootapplication.data.po;
 
 import com.example.gocarrentspringbootapplication.amqp.po.Message;
-import com.example.gocarrentspringbootapplication.data.enums.UserRoles;
+import com.example.gocarrentspringbootapplication.security.enums.UserRoles;
 import com.example.gocarrentspringbootapplication.finance.po.Rent;
+import com.example.gocarrentspringbootapplication.repositories.TableNamesRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = TableNamesRepository.USER_TABLE_NAME)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

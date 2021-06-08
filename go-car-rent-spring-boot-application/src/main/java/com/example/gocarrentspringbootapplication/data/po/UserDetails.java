@@ -1,12 +1,13 @@
 package com.example.gocarrentspringbootapplication.data.po;
 
+import com.example.gocarrentspringbootapplication.repositories.TableNamesRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "user_details")
+@Table(name = TableNamesRepository.USER_DETAILS_TABLE_NAME)
 public class UserDetails {
 
     @Id

@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.data.api;
 
 import com.example.gocarrentspringbootapplication.repositories.OperationsRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 
@@ -22,11 +23,11 @@ public abstract class SpecificationTemplate<T> implements Specification<T> {
         this.value = value;
     }
 
-    public abstract void validate(String key, String operation, String value);
+    protected abstract void validate(String key, String operation, String value);
 
     @Override
     @Nullable
-    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(@NotNull Root<T> root, @NotNull CriteriaQuery<?> criteriaQuery, @NotNull CriteriaBuilder criteriaBuilder) {
 
         if (operation.equalsIgnoreCase(OperationsRepository.GREATER_THAN))
             return criteriaBuilder.greaterThan(root.get(key), value);

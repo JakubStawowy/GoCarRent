@@ -16,9 +16,10 @@ import java.util.Optional;
 
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping(value = "/api/rents")
+@RequestMapping(value = RentManageController.BASE_ENDPOINT)
 public class RentManageController {
 
+    public static final String BASE_ENDPOINT = "/api/rents";
     private final RentRepository rentRepository;
     private final IRentPropertiesManager rentPropertiesManager;
 

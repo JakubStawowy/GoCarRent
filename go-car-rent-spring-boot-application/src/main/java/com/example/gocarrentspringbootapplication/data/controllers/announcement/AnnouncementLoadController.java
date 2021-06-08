@@ -18,9 +18,10 @@ import java.util.*;
 
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping(value = "/api/announcements")
+@RequestMapping(value = AnnouncementLoadController.BASE_ENDPOINT)
 public final class AnnouncementLoadController {
 
+    public static final String BASE_ENDPOINT = "/api/announcements";
     private final AnnouncementRepository announcementRepository;
     private final AnnouncementDetailsRepository announcementDetailsRepository;
     private final ISpecificationListProvider<AnnouncementDetails> specificationListProvider;
@@ -35,7 +36,7 @@ public final class AnnouncementLoadController {
         this.specificationListProvider = specificationListProvider;
     }
 
-    @GetMapping(value = {"/", ""})
+    @GetMapping({EndpointRepository.INDEX_ENDPOINT, EndpointRepository.INDEX_ENDPOINT_SLASH})
     public List<AnnouncementTransferObject> getAnnouncements() {
 //        return getFilteredAnnouncements("rentStatus!=BLOCKED");
 

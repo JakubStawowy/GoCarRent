@@ -1,6 +1,7 @@
 package com.example.gocarrentspringbootapplication.data.po;
 
 import com.example.gocarrentspringbootapplication.data.enums.AnnouncementStatus;
+import com.example.gocarrentspringbootapplication.repositories.TableNamesRepository;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -11,7 +12,7 @@ import java.util.Currency;
 import java.util.concurrent.TimeUnit;
 
 @Entity
-@Table(name = "announcement_details")
+@Table(name = TableNamesRepository.ANNOUNCEMENT_DETAILS_TABLE_NAME)
 public class AnnouncementDetails {
 
     @Id

@@ -17,9 +17,10 @@ import java.util.Optional;
 
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping(value = "/api/messages")
+@RequestMapping(value = MessageController.BASE_ENDPOINT)
 public class MessageController {
 
+    public static final String BASE_ENDPOINT = "/api/messages";
     private final MessageRepository messageRepository;
     private final RabbitTemplate rabbitTemplate;
     private final IQueueService queueService;

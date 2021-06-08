@@ -3,6 +3,7 @@ package com.example.gocarrentspringbootapplication.data.controllers.feedback;
 import com.example.gocarrentspringbootapplication.data.po.Feedback;
 import com.example.gocarrentspringbootapplication.data.dao.FeedbackRepository;
 import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -11,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping("/api/feedback")
+@RequestMapping(FeedbackManageController.BASE_ENDPOINT)
 public final class FeedbackManageController {
 
+    public static final String BASE_ENDPOINT = "/api/feedback";
     private final FeedbackRepository feedbackRepository;
 
     @Autowired

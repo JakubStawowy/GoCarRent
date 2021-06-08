@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping(value = "/api/announcements")
+@RequestMapping(value = AnnouncementRemoveController.BASE_ENDPOINT)
 public final class AnnouncementRemoveController {
 
+    public static final String BASE_ENDPOINT = "/api/announcements";
     private final AnnouncementRepository announcementRepository;
     private final IAuthorizeService authorizeService;
 

@@ -16,9 +16,10 @@ import java.util.Optional;
 
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(UserLoaderController.BASE_ENDPOINT)
 public final class UserLoaderController {
 
+    public static final String BASE_ENDPOINT = "/api/users";
     private final UserRepository userRepository;
 
     @Autowired
@@ -26,7 +27,7 @@ public final class UserLoaderController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping({EndpointRepository.INDEX_ENDPOINT, EndpointRepository.INDEX_ENDPOINT_SLASH})
     public List<UserTransferObject> getUsers(){
         List<UserTransferObject> users = new ArrayList<>();
         userRepository.findAll().forEach(user -> users.add(new UserTransferObject(user)));

@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(LoginController.BASE_ENDPOINT)
 public final class LoginController {
 
+    public static final String BASE_ENDPOINT = "/api";
     private final UserRepository userRepository;
     private final ITokenProvider tokenProvider;
     private final IAuthorizeService authorizeService;

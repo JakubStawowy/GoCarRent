@@ -21,9 +21,10 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
-@RequestMapping(value = "/api/rents")
+@RequestMapping(value = RentResponseController.BASE_ENDPOINT)
 public class RentResponseController {
 
+    public static final String BASE_ENDPOINT = "/api/rents";
     private final UserRepository userRepository;
     private final AnnouncementRepository announcementRepository;
     private final RentRepository rentRepository;
