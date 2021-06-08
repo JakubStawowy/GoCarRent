@@ -2,6 +2,7 @@ package com.example.gocarrentspringbootapplication.data.controllers.feedback;
 
 import com.example.gocarrentspringbootapplication.data.dao.FeedbackRepository;
 import com.example.gocarrentspringbootapplication.data.dto.FeedbackTransferObject;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class FeedbackLoadController {
     }
 
 
-    @GetMapping("/user/{id}")
+    @GetMapping(EndpointRepository.USER_FEEDBACK_ENDPOINT)
     public List<FeedbackTransferObject> getUserFeedback(@PathVariable("id") Long id) {
         List<FeedbackTransferObject> result = new ArrayList<>();
         feedbackRepository.getFeedbacksByUserId(id).forEach(feedback -> result.add(new FeedbackTransferObject(feedback)));

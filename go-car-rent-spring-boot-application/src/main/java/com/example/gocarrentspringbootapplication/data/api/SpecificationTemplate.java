@@ -1,5 +1,6 @@
 package com.example.gocarrentspringbootapplication.data.api;
 
+import com.example.gocarrentspringbootapplication.repositories.OperationsRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 

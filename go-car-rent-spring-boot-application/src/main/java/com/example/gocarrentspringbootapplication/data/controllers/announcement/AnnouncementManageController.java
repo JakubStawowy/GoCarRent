@@ -8,6 +8,8 @@ import com.example.gocarrentspringbootapplication.data.enums.AnnouncementStatus;
 import com.example.gocarrentspringbootapplication.data.po.Announcement;
 import com.example.gocarrentspringbootapplication.data.dao.AnnouncementRepository;
 import com.example.gocarrentspringbootapplication.data.po.User;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
 @RequestMapping(value = "/api/announcements")
 public final class AnnouncementManageController {
@@ -38,7 +40,7 @@ public final class AnnouncementManageController {
         this.announcementBuilder = announcementBuilder;
         this.announcementBuilderSupervisor = announcementBuilderSupervisor;
     }
-    @PostMapping(value = "/add", consumes = "application/json")
+    @PostMapping(value = EndpointRepository.ADD_ANNOUNCEMENTS_ENDPOINT, consumes = "application/json")
     public ResponseEntity<?> addAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject) {
 
         Optional<User> author = userRepository.findById(announcementTransferObject.getAuthorId());
@@ -55,7 +57,7 @@ public final class AnnouncementManageController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/{id}/edit", consumes = "application/json")
+    @PutMapping(value = EndpointRepository.EDIT_ANNOUNCEMENT_ENDPOINT, consumes = "application/json")
     public ResponseEntity<?> editAnnouncement(@RequestBody AnnouncementTransferObject announcementTransferObject, @PathVariable("id") Long id) {
 
         announcementBuilder.refresh();
@@ -76,7 +78,7 @@ public final class AnnouncementManageController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/block")
+    @PutMapping(EndpointRepository.BLOCK_ANNOUNCEMENT_ENDPOINT)
     public ResponseEntity<?> blockAnnouncement(@PathVariable("id") Long announcementId) {
         Optional<Announcement> announcement = announcementRepository.findById(announcementId);
         if(announcement.isPresent()) {
@@ -87,7 +89,7 @@ public final class AnnouncementManageController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/unlock")
+    @PutMapping(EndpointRepository.UNLOCK_ANNOUNCEMENT_ENDPOINT)
     public ResponseEntity<?> unlockAnnouncement(@PathVariable("id") Long announcementId) {
         Optional<Announcement> announcement = announcementRepository.findById(announcementId);
         if(announcement.isPresent()) {

@@ -1,6 +1,8 @@
 package com.example.gocarrentspringbootapplication.data.api;
 
 import com.example.gocarrentspringbootapplication.data.enums.AnnouncementStatus;
+import com.example.gocarrentspringbootapplication.repositories.AnnouncementKeysRepository;
+import com.example.gocarrentspringbootapplication.repositories.OperationsRepository;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.HashSet;

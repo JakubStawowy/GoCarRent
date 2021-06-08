@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.security.providers;
 
 import com.example.gocarrentspringbootapplication.security.api.IAuthenticationTokenProvider;
-import com.example.gocarrentspringbootapplication.security.api.TokenKeyRepository;
+import com.example.gocarrentspringbootapplication.repositories.TokenKeyRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;

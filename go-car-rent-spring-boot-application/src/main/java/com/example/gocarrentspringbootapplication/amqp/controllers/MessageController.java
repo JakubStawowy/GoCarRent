@@ -4,8 +4,9 @@ import com.example.gocarrentspringbootapplication.amqp.api.IQueueService;
 import com.example.gocarrentspringbootapplication.amqp.dao.MessageRepository;
 import com.example.gocarrentspringbootapplication.amqp.dto.MessageTransferObject;
 import com.example.gocarrentspringbootapplication.amqp.po.Message;
-import com.example.gocarrentspringbootapplication.amqp.api.QueueTemplateRepository;
-import com.rabbitmq.client.ShutdownSignalException;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
+import com.example.gocarrentspringbootapplication.repositories.QueueTemplateRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
 @RequestMapping(value = "/api/messages")
 public class MessageController {
@@ -30,7 +31,7 @@ public class MessageController {
         this.queueService = queueService;
     }
 
-    @GetMapping("/user")
+    @GetMapping(EndpointRepository.USER_MESSAGES_ENDPOINT)
     public List<MessageTransferObject> getMessages(@RequestParam Long userId, @RequestParam Boolean archived) {
         List<MessageTransferObject> result = new LinkedList<>();
         for (Message message: messageRepository.getAllByReceiverAndArchived(userId, archived)) {
@@ -41,7 +42,7 @@ public class MessageController {
         return result;
     }
 
-    @PutMapping("/{id}/archive")
+    @PutMapping(EndpointRepository.ARCHIVE_MESSAGE_ENDPOINT)
     public void archiveMessage(@PathVariable("id") Long messageId) {
         Optional<Message> optionalMessage = messageRepository.findById(messageId);
         optionalMessage.ifPresent(message->{
@@ -50,7 +51,7 @@ public class MessageController {
         });
     }
 
-    @GetMapping(value = "/load")
+    @GetMapping(value = EndpointRepository.LOAD_MESSAGES_ENDPOINT)
     public List<MessageTransferObject> loadMessages(@RequestParam Long userId) {
 
         List<MessageTransferObject> result = new LinkedList<>();

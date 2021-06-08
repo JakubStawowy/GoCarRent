@@ -11,6 +11,8 @@ import com.example.gocarrentspringbootapplication.amqp.po.Message;
 import com.example.gocarrentspringbootapplication.finance.enums.RentStatus;
 import com.example.gocarrentspringbootapplication.finance.po.Rent;
 import com.example.gocarrentspringbootapplication.data.po.User;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +20,7 @@ import java.sql.Timestamp;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RequestMapping(value = "/api/rents")
 public class RentResponseController {
 
@@ -35,7 +37,7 @@ public class RentResponseController {
         this.messageService = messageService;
     }
 
-    @PutMapping("/send/02")
+    @PutMapping(EndpointRepository.SEND_02_ENDPOINT)
     public void sendResponseForRentConsent(@RequestParam Long tenantId, @RequestParam Long announcementId, @RequestParam boolean consent) {
 
         Optional<User> optionalUser = userRepository.findById(tenantId);
@@ -59,7 +61,7 @@ public class RentResponseController {
         }
     }
 
-    @PostMapping("/send/04")
+    @PostMapping(EndpointRepository.SEND_04_ENDPOINT)
     public void sendResponseForRentRealization(@RequestParam Long tenantId, @RequestParam Long announcementId) {
 
         Optional<User> optionalUser = userRepository.findById(tenantId);
@@ -77,7 +79,7 @@ public class RentResponseController {
         }
     }
 
-    @PutMapping("/send/06")
+    @PutMapping(EndpointRepository.SEND_06_ENDPOINT)
     public void sendResponseForRentReturn(@RequestParam Long tenantId, @RequestParam Long rentId, @RequestParam Boolean isReturned) {
         Optional<User> optionalUser = userRepository.findById(tenantId);
         Optional<Rent> optionalRent = rentRepository.findById(rentId);

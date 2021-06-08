@@ -5,7 +5,7 @@ import com.example.gocarrentspringbootapplication.amqp.dao.MessageRepository;
 import com.example.gocarrentspringbootapplication.amqp.api.IMessageService;
 import com.example.gocarrentspringbootapplication.amqp.dto.MessageTransferObject;
 import com.example.gocarrentspringbootapplication.amqp.po.Message;
-import com.example.gocarrentspringbootapplication.amqp.api.QueueTemplateRepository;
+import com.example.gocarrentspringbootapplication.repositories.QueueTemplateRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 

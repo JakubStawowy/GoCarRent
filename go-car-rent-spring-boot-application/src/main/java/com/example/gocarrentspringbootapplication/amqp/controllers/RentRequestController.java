@@ -9,13 +9,15 @@ import com.example.gocarrentspringbootapplication.data.po.Announcement;
 import com.example.gocarrentspringbootapplication.amqp.po.Message;
 import com.example.gocarrentspringbootapplication.finance.po.Rent;
 import com.example.gocarrentspringbootapplication.data.po.User;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RequestMapping(value = "/api/rents")
 public class RentRequestController {
 
@@ -31,7 +33,7 @@ public class RentRequestController {
         this.messageService = messageService;
     }
 
-    @GetMapping("/send/01")
+    @GetMapping(EndpointRepository.SEND_01_ENDPOINT)
     public void sendRequestForRentConsent(@RequestParam Long tenantId, @RequestParam Long announcementId) {
 
         Optional<User> optionalUser = userRepository.findById(tenantId);
@@ -47,7 +49,7 @@ public class RentRequestController {
         }
     }
 
-    @GetMapping("/send/03")
+    @GetMapping(EndpointRepository.SEND_03_ENDPOINT)
     public void sendRequestForRentRealization(@RequestParam Long tenantId, @RequestParam Long announcementId) {
 
         Optional<User> optionalUser = userRepository.findById(tenantId);
@@ -63,7 +65,7 @@ public class RentRequestController {
         }
     }
 
-    @GetMapping("/send/05")
+    @GetMapping(EndpointRepository.SEND_05_ENDPOINT)
     public void sendRequestForRentReturn(@RequestParam Long tenantId, @RequestParam Long rentId) {
 
         Optional<User> optionalUser = userRepository.findById(tenantId);

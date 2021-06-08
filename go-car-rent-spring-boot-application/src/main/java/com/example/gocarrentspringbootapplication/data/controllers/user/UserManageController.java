@@ -3,6 +3,8 @@ package com.example.gocarrentspringbootapplication.data.controllers.user;
 import com.example.gocarrentspringbootapplication.data.dao.UserRepository;
 import com.example.gocarrentspringbootapplication.data.po.User;
 import com.example.gocarrentspringbootapplication.data.po.UserDetails;
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
 @RequestMapping("/api/users")
 public final class UserManageController {
@@ -24,7 +26,7 @@ public final class UserManageController {
         this.userRepository = userRepository;
     }
 
-    @PutMapping(path = "/{id}/edit", consumes = "application/json")
+    @PutMapping(path = EndpointRepository.EDIT_USER_ENDPOINT, consumes = "application/json")
     public ResponseEntity<?> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if(optionalUser.isPresent()) {

@@ -1,7 +1,7 @@
 package com.example.gocarrentspringbootapplication.security.providers;
 
 import com.example.gocarrentspringbootapplication.security.api.ITokenProvider;
-import com.example.gocarrentspringbootapplication.security.api.TokenKeyRepository;
+import com.example.gocarrentspringbootapplication.repositories.TokenKeyRepository;
 import com.example.gocarrentspringbootapplication.data.po.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

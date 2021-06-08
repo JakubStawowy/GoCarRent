@@ -1,5 +1,7 @@
 package com.example.gocarrentspringbootapplication.data.controllers.announcement;
 
+import com.example.gocarrentspringbootapplication.repositories.EndpointRepository;
+import com.example.gocarrentspringbootapplication.repositories.OriginsRepository;
 import com.example.gocarrentspringbootapplication.security.api.IAuthorizeService;
 import com.example.gocarrentspringbootapplication.data.dao.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = OriginsRepository.LOCALHOST_ORIGIN)
 @RestController
 @RequestMapping(value = "/api/announcements")
 public final class AnnouncementRemoveController {
@@ -22,7 +24,7 @@ public final class AnnouncementRemoveController {
         this.authorizeService = authorizeService;
     }
 
-    @DeleteMapping(value = "/{id}/remove")
+    @DeleteMapping(value = EndpointRepository.REMOVE_ANNOUNCEMENT_ENDPOINT)
     public ResponseEntity<Boolean> removeAnnouncement(@PathVariable("id") Long id, @RequestParam("userId") Long userId, @RequestParam("password") String password) {
         try {
             if(authorizeService.authorizeUserWithIdAndPassword(userId, password)) {

@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface AnnouncementDetailsRepository
         extends JpaRepository<AnnouncementDetails, Long>, JpaSpecificationExecutor<AnnouncementDetails> {
-    String FIND_ALL_QUERY = "SELECT * FROM announcement_details ORDER BY created_at DESC";
+    String FIND_ALL_QUERY = "SELECT * FROM announcement_details WHERE rent_status != 'BLOCKED' ORDER BY created_at DESC";
     @NotNull
     @Query(value = FIND_ALL_QUERY, nativeQuery = true)
     List<AnnouncementDetails> findAll();
