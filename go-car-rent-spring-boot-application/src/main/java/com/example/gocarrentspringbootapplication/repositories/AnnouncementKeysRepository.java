@@ -1,7 +1,8 @@
 package com.example.gocarrentspringbootapplication.repositories;
 
-public interface AnnouncementKeysRepository {
-    String TITLE = "title";
-    String TIME_UNIT = "timeUnit";
-    String STATUS = "rentStatus";
+public class AnnouncementKeysRepository {
+    public static final String TITLE = "title";
+    public static final String TIME_UNIT = "timeUnit";
+    public static final String STATUS = "rentStatus";
+    private AnnouncementKeysRepository() {}
 }
