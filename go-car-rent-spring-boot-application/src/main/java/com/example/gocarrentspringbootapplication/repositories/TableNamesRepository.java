@@ -1,11 +1,12 @@
 package com.example.gocarrentspringbootapplication.repositories;
 
-public interface TableNamesRepository {
-    String MESSAGE_TABLE_NAME = "messages";
-    String ANNOUNCEMENT_TABLE_NAME = "announcements";
-    String ANNOUNCEMENT_DETAILS_TABLE_NAME = "announcement_details";
-    String FEEDBACK_TABLE_NAME = "user_feedback";
-    String USER_TABLE_NAME = "users";
-    String USER_DETAILS_TABLE_NAME = "user_details";
-    String RENT_TABLE_NAME = "rents";
+public class TableNamesRepository {
+    public static final String MESSAGE_TABLE_NAME = "messages";
+    public static final String ANNOUNCEMENT_TABLE_NAME = "announcements";
+    public static final String ANNOUNCEMENT_DETAILS_TABLE_NAME = "announcement_details";
+    public static final String FEEDBACK_TABLE_NAME = "user_feedback";
+    public static final String USER_TABLE_NAME = "users";
+    public static final String USER_DETAILS_TABLE_NAME = "user_details";
+    public static final String RENT_TABLE_NAME = "rents";
+    private TableNamesRepository() {}
 }
