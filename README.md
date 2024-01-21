@@ -2,7 +2,7 @@
 
 ## Description
 
-GoCarRent is a monolithic client-server Java Spring Boot + React.js web application that allows users to rent their cars
+GoCarRent is a monolithic client-server Java Spring Boot + React.js single-page web application that allows users to rent their cars.
 
 ## Technologies used
 
